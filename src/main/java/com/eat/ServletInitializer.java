@@ -1,4 +1,4 @@
-package kr.co.himedia;
+package com.eat;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
