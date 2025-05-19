@@ -30,25 +30,27 @@ public class MainController {
 	
 	//댓글 작성
 	@PostMapping(value = "/comment_insert")
-	public Map<String, Object> insert (@RequestBody Map<String, String> params,
-			@RequestHeader Map<String, String> header){
+	public Map<String, Object> insert (@RequestBody Map<String, String> params
+			/*@RequestHeader Map<String, String> header*/){
 		
 		log.info("params : " + params);
-		log.info("header : {} " , header);
+		/* log.info("header : {} " , header); */
 		resp = new HashMap<String, Object>();
 		boolean login = false;
-		String token = header.get("authorization");
+		/* String token = header.get("authorization"); */
 		
-		Map<String, Object> payload = JwtUtil.readToken(token);
-		String loginId = (String) payload.get("id");
-		
-		if(loginId != null && loginId.equals(params.get("id"))) {
+		/*
+		 * Map<String, Object> payload = JwtUtil.readToken(token); String loginId =
+		 * (String) payload.get("id");
+		 * 
+		 * if(loginId != null && loginId.equals(params.get("id"))) {
+		 */
 			boolean success = service.comment_insert(params);
 			resp.put("success", success);
 			login = true;
-		}
+		//}
 		
-		resp.put("loginYN", login);
+		// resp.put("loginYN", login);
 		
 		return resp;
 	}
@@ -59,20 +61,22 @@ public class MainController {
 			@RequestHeader Map<String, String> header){
 		
 		log.info("params : " + params);
-		log.info("header : {} " , header);
+		/* log.info("header : {} " , header); */
 		resp = new HashMap<String, Object>();
 		boolean login = false;
-		String token = header.get("authorization");
-		
-		Map<String, Object> payload = JwtUtil.readToken(token);
-		String loginId = (String) payload.get("id");
-		
-		if(loginId != null && loginId.equals(params.get("user_id"))) {
+		/*
+		 * String token = header.get("authorization");
+		 * 
+		 * Map<String, Object> payload = JwtUtil.readToken(token); String loginId =
+		 * (String) payload.get("id");
+		 * 
+		 * if(loginId != null && loginId.equals(params.get("user_id"))) {
+		 */
 			boolean success = service.comment_update(params);
 			resp.put("success", success);
 			login = true;
-		}
-		resp.put("loginYN", login);
+		//}
+		/* resp.put("loginYN", login); */
 		
 		return resp;
 	}
@@ -83,20 +87,21 @@ public class MainController {
 			@RequestHeader Map<String, String> header){
 	
 		log.info("params : " + params);
-		log.info("header : {} " , header);
+		/* log.info("header : {} " , header); */
 		resp = new HashMap<String, Object>();
 		boolean login = false;
-		String token = header.get("authorization");
+	/*	String token = header.get("authorization");
 		
 		Map<String, Object> payload = JwtUtil.readToken(token);
 		String loginId = (String) payload.get("id");
 		
-		if(loginId != null && loginId.equals(params.get("user_id"))) {
+		if(loginId != null && loginId.equals(params.get("user_id"))) {*/
 			boolean success = service.comment_del(params);
 			resp.put("success", success);
 			login = true;
-		}
-		resp.put("loginYN", login);
+			/*
+			 * } resp.put("loginYN", login);
+			 */
 		
 		return resp;
 	}
