@@ -13,7 +13,7 @@ public class MypageDTO {
 	private boolean admin;
 	private boolean withdraw;
 
-	private List<Tag_preferDTO> tagList;
+	private List<TagPreferDTO> tagList;
 
 	// photo
 	private int img_idx;
@@ -84,11 +84,11 @@ public class MypageDTO {
 		this.withdraw = withdraw;
 	}
 
-	public List<Tag_preferDTO> getTagList() {
+	public List<TagPreferDTO> getTagList() {
 		return tagList;
 	}
 
-	public void setTagList(List<Tag_preferDTO> tagList) {
+	public void setTagList(List<TagPreferDTO> tagList) {
 		this.tagList = tagList;
 	}
 

@@ -1,6 +1,6 @@
 package com.eat.mypage;
 
-public class Tag_preferDTO {
+public class TagPreferDTO {
 
 	// tag_prefer
 		private int idx;
