@@ -19,6 +19,18 @@ public class MypageService {
 		int row = dao.member_update(dto);
 		return row > 0;
 	}
+	
+	// 닉네임 중복체크
+	public boolean nickNameOverlay(String nickname, String user_id) {
+		int count = dao.nickNameOverlay(nickname, user_id);
+		return count > 0;
+	}
+	
+	// 이메일 중복체크
+	public boolean emailOverlay(String email, String user_id) {
+		int count = dao.emailOverlay(email, user_id);
+		return count > 0;
+	}
 
 	
 	
