@@ -1,3 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<mapper namespace="com.eat.member.MemberDAO">
+
+<select id="login" parameterType="map" 
+resultType="int">
+	SELECT COUNT(user_id) FROM member 
+	WHERE user_id = #{user_id} AND pass = #{pass}
+</select>
+
+<insert id="join" parameterType="com.eat.member.MemberDTO">
+	INSERT INTO member (
+		user_id, pass, email, nickname, bio, location, admin
+	)VALUES(
+		#{user_id}
+		,#{pass}
+		,#{email}
+		,#{nickname}
+		,#{bio}
+		,#{location}
+		,${admin}
+	)
+</insert>
+
+<select id="overlayId" resultType="int">
+	SELECT COUNT(user_id) FROM member 
+	WHERE user_id = #{param1}
+</select>
+
+<select id="overlayNick" resultType="int">
+	SELECT COUNT(nickname) FROM member
+	 WHERE nickname = #{param1}
+</select>
+
+</mapper>

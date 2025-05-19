@@ -23,7 +23,7 @@ public class NoticeController {
 	Map<String, Object> resp = null;
 
 	// 공지사항 리스트를 불러옵니다.
-	@GetMapping("/notice/{page}")
+	@GetMapping("/notice_list/{page}")
 	public Map<String, Object> list(@RequestHeader Map<String, String> header, @PathVariable String page) {
 		resp = new HashMap<String, Object>();
 		Map<String, Object> noticeList = service.list(page);

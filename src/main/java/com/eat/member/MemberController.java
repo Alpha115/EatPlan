@@ -1,5 +1,63 @@
 package com.eat.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 public class MemberController {
+
+	@Autowired
+	MemberService service;
+
+	Map<String, Object> resp = new HashMap<String, Object>();
+	Logger log = LoggerFactory.getLogger(getClass());
+
+	// 로그인
+	@PostMapping(value = "/login")
+	public Map<String, Object> login(
+			@RequestBody Map<String, String> params, 
+			HttpSession session) {
+		log.info("session ID: " + session.getId());
+		resp = new HashMap<String, Object>();
+		boolean success = service.login(params);
+		resp.put("success", success);
+		return resp;
+	}
+
+	// 회원가입
+	@PostMapping(value = "/join")
+	public Map<String, Object> join(@RequestBody MemberDTO dto) {
+		resp = new HashMap<String, Object>();
+		boolean success = service.join(dto);
+		resp.put("success", success);
+		return resp;
+	}
+
+	// 아이디 중복 체크
+	@GetMapping(value="/overlay/{user_id}")
+	public Map<String, Object> overlayId(@PathVariable String user_id) {
+		resp = new HashMap<String, Object>();
+		boolean success = service.overlayId(user_id);
+		resp.put("success", success);
+		return resp;
+	}
+	
+	// 닉네임 중복 체크
+	@GetMapping(value="/overlay/{nickname}")
+	public Map<String, Object> overlayNick(@PathVariable String nickname) {
+		resp = new HashMap<String, Object>();
+		boolean success = service.overlayNick(nickname);
+		resp.put("success", success);
+		return resp;
+	}
 
 }

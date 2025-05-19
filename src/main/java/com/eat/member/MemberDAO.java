@@ -1,5 +1,18 @@
 package com.eat.member;
 
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
 public interface MemberDAO {
 
+	int login(Map<String, String> params);
+
+	int join(MemberDTO dto);
+
+	int overlayId(String user_id);
+
+	int overlayNick(String nickname);
+	
 }
