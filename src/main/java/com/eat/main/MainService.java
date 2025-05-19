@@ -15,9 +15,15 @@ public class MainService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	//댓글 작성
-	public boolean insert(Map<String, String> params) {
-		int row = dao.insert(params);
+	public boolean comment_insert(Map<String, String> params) {
+		int row = dao.comment_insert(params);
 		
+		return row>0;
+	}
+	
+	//댓글 수정
+	public boolean comment_update(Map<String, String> params) {
+		int row = dao.comment_update(params);
 		return row>0;
 	}
 

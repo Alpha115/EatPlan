@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MainDAO {
 
 	//댓글 작성
-	int insert(Map<String, String> params);
+	int comment_insert(Map<String, String> params);
+	
+	//댓글 수정
+	int comment_update(Map<String, String> params);
 
 }
