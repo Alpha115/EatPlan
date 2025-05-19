@@ -17,8 +17,8 @@
 	</update>
 	
 	<!-- 댓글 삭제 -->
-	<delete id="commetn_del">
-	DELETE FROM eatplan WHERE comment_idx = #{param1}
+	<delete id="comment_del">
+	DELETE FROM eatplan WHERE comment_idx = #{comment_idx}
 	</delete>
 	
 </mapper>
