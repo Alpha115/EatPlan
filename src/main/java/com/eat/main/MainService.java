@@ -26,5 +26,12 @@ public class MainService {
 		int row = dao.comment_update(params);
 		return row>0;
 	}
+	
+	//댓글 삭제
+	public boolean comment_del(Map<String, String> params) {
+	    int commentIdx = Integer.parseInt(params.get("comment_idx"));
+	    int row = dao.comment_del(commentIdx);
+	    return row > 0;
+	}
 
 }

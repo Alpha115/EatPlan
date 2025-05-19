@@ -2,15 +2,23 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.eat.main.MainDAO">
+	
+	<!-- 댓글 작성 -->
 	<insert id="comment_insert" parameterType="map">
 	INSERT INTO
 	eatplan(nick,user_id,post_idx,content)
 	VALUES (#{nick}, #{user_id}, #{post_idx},#{content})
 	</insert>
 
+	<!-- 댓글 수정 -->
 	<update id="comment_update" parameterType="map">
 	UPDATE eatplan SET content =#{content}
 	WHERE comment_idx = #{comment_idx}
 	</update>
-
+	
+	<!-- 댓글 삭제 -->
+	<delete id="commetn_del">
+	DELETE FROM eatplan WHERE comment_idx = #{param1}
+	</delete>
+	
 </mapper>

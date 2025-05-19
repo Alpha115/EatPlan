@@ -12,5 +12,8 @@ public interface MainDAO {
 	
 	//댓글 수정
 	int comment_update(Map<String, String> params);
+	
+	//댓글 삭제
+	int comment_del(int comment_del);
 
 }
