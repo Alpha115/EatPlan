@@ -23,12 +23,6 @@ public interface MainDAO {
 	// 코스 페이지 처리 
 	int pages(int limit);
 
-	// 코스 태그 불러오기 수정필요
-	String course_tag(int idx);
-
-	// 코스 사진 불러오기 수정필요
-	String photo(int idx);
-
 
 
 }

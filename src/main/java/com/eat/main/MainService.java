@@ -20,14 +20,10 @@ public class MainService {
 	public Map<String, Object> course_list(int page) {
 		Map<String, Object> resp = new HashMap<String, Object>();
 		this.page = page;
-		MainDTO courseTag = new MainDTO();
-		int idx = courseTag.getPost_idx();
 		resp.put("page", this.page);
 		int offset = (this.page - 1) * limit;
 		resp.put("list", dao.course_list(offset, limit));
-		resp.put("course_tag", dao.course_tag(idx));
 		resp.put("pages", dao.pages(limit));
-		resp.put("image", dao.photo(idx));
 		
 		return resp;
 	}
