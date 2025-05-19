@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eat.utils.JwtUtil;
-
 @CrossOrigin
 @RestController
 public class MainController {
@@ -28,12 +26,20 @@ public class MainController {
 	Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired MainService service;
 	
-	// 코스 리스트 불러오기 수정필요
+	// 코스 리스트 불러오기
 	@GetMapping(value="/course_list/{page}")
 	public Map<String, Object> course_list(@PathVariable String page){
 		log.info("page = "+page);
 		resp = new HashMap<String, Object>();
 		resp = service.course_list(Integer.parseInt(page));
+		return resp;
+	}
+	
+	// 코스 리스트 태그 불러오기
+	@PostMapping(value="/course_list_tag")
+	public Map<String, Object> course_list_tag(@RequestBody Map<String, String> param){
+		resp = new HashMap<String, Object>();
+		resp = service.course_list_tag(param.get("post_idx"));
 		return resp;
 	}
 	

@@ -16,6 +16,7 @@ public class CourseListDTO {
 	private int like_cnt;
 	private int comment_cnt;
 	private int star_avg;
+	
 	public String getNickname() {
 		return nickname;
 	}

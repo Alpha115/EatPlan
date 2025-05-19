@@ -3,7 +3,7 @@
 
 <mapper namespace="com.eat.main.MainDAO">
 	
-	<!-- 코스 불러오기 몸통 수정필요-->
+	<!-- 코스 불러오기 몸통 -->
 	<select id="course_list" resultType="com.eat.main.CourseListDTO">
 	SELECT p.post_idx
 	    ,p.user_id
@@ -30,6 +30,32 @@
 	    ) s ON p.post_idx = s.post_idx
 	ORDER BY p.post_idx DESC
 	LIMIT #{param2} OFFSET #{param1}
+	</select>
+	
+	<!-- 코스 리스트 태그 불러오기 -->
+	<select id="course_list_tag" resultType="map">
+		SELECT
+		    tc.post_idx,
+		    GROUP_CONCAT(
+		        CASE 
+		            WHEN tc.class = 'tag' AND t.class = 'course' THEN t.tag_name
+		            WHEN tc.class = 'area_tag' THEN ta.tag_name
+		        END
+		        ORDER BY tc.idx SEPARATOR ', '
+		    ) AS tag_names
+		FROM tag_course tc
+		LEFT JOIN tag t 
+		    ON tc.class = 'tag' AND tc.idx = t.tag_idx AND t.class = 'course'
+		LEFT JOIN tag_area ta 
+		    ON tc.class = 'area_tag' AND tc.idx = ta.area_tag_idx
+		WHERE 
+		    tc.post_idx = #{param1}
+		    AND (
+		        (tc.class = 'tag' AND t.class = 'course') OR
+		        tc.class = 'area_tag'
+		    )
+		GROUP BY tc.post_idx
+		ORDER BY tc.post_idx DESC
 	</select>
 	
 	<!-- 페이지 -->
