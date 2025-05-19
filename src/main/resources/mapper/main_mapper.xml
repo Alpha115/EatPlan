@@ -5,31 +5,33 @@
 	
 	<!-- 코스 불러오기 몸통 -->
 	<select id="course_list" resultType="com.eat.main.CourseListDTO">
-	SELECT p.post_idx
-	    ,p.user_id
-	    ,m.nickname
-	    ,p.subject
-	    ,p.b_hit
-	    ,p.reg_date
-	    ,p.public
-	    ,p.blind
-	    ,p.tmp
-	    ,IFNULL(c.comment_cnt, 0) AS comment_cnt
-	    ,IFNULL(l.like_cnt, 0) AS like_cnt
-	    ,IFNULL(s.star_avg, 0) AS star_avg
-	FROM post p 
-		JOIN member m ON p.user_id = m.user_id
-	    LEFT JOIN (
-	       SELECT post_idx, COUNT(comment_idx) AS comment_cnt FROM comment GROUP BY post_idx
-	    ) c ON p.post_idx = c.post_idx
-	    LEFT JOIN (
-	       SELECT post_idx, COUNT(like_idx) AS like_cnt FROM liked GROUP BY post_idx
-	    ) l ON p.post_idx = l.post_idx
-	    LEFT JOIN (
-	       SELECT post_idx, FLOOR(AVG(star)) AS star_avg FROM star GROUP BY post_idx
-	    ) s ON p.post_idx = s.post_idx
-	ORDER BY p.post_idx DESC
-	LIMIT #{param2} OFFSET #{param1}
+		SELECT p.post_idx
+		    ,p.user_id
+		    ,m.nickname
+		    ,dr.detail_idx
+		    ,p.subject
+		    ,p.b_hit
+		    ,p.reg_date
+		    ,p.public
+		    ,p.blind
+		    ,p.tmp
+		    ,IFNULL(c.comment_cnt, 0) AS comment_cnt
+		    ,IFNULL(l.like_cnt, 0) AS like_cnt
+		    ,IFNULL(s.star_avg, 0) AS star_avg
+		FROM post p 
+			JOIN member m ON p.user_id = m.user_id
+			LEFT JOIN detail_restaurant dr ON p.post_idx = dr.post_idx
+		    LEFT JOIN (
+		       SELECT post_idx, COUNT(comment_idx) AS comment_cnt FROM comment GROUP BY post_idx
+		    ) c ON p.post_idx = c.post_idx
+		    LEFT JOIN (
+		       SELECT post_idx, COUNT(like_idx) AS like_cnt FROM liked GROUP BY post_idx
+		    ) l ON p.post_idx = l.post_idx
+		    LEFT JOIN (
+		       SELECT post_idx, FLOOR(AVG(star)) AS star_avg FROM star GROUP BY post_idx
+		    ) s ON p.post_idx = s.post_idx
+		ORDER BY p.post_idx DESC
+		LIMIT #{param2} OFFSET #{param1}
 	</select>
 	
 	<!-- 코스 리스트 태그 불러오기 -->
@@ -56,6 +58,23 @@
 		    )
 		GROUP BY tc.post_idx
 		ORDER BY tc.post_idx DESC
+	</select>
+	
+	<!-- 코스 리스트 이미지 불러오기 -->
+	<select id="course_list_img" resultType="map">
+		SELECT 
+		    COALESCE(
+		        (
+		            SELECT p.new_filename
+		            FROM detail_restaurant dr
+		            JOIN restaurant r ON dr.resta_idx = r.resta_idx
+		            LEFT JOIN photo p ON r.img_idx = p.img_idx AND p.class = 'restaurant'
+		            WHERE dr.detail_idx = #{param1}
+		            ORDER BY dr.detail_idx, r.resta_idx
+		            LIMIT 1
+		        ), 
+		        'no_image'
+		    ) AS new_filename
 	</select>
 	
 	<!-- 페이지 -->

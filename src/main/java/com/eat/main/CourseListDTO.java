@@ -16,7 +16,14 @@ public class CourseListDTO {
 	private int like_cnt;
 	private int comment_cnt;
 	private int star_avg;
+	private int detail_idx;
 	
+	public int getDetail_idx() {
+		return detail_idx;
+	}
+	public void setDetail_idx(int detail_idx) {
+		this.detail_idx = detail_idx;
+	}
 	public String getNickname() {
 		return nickname;
 	}

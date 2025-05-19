@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class MainService {
 	
@@ -24,13 +23,17 @@ public class MainService {
 		int offset = (this.page - 1) * limit;
 		resp.put("list", dao.course_list(offset, limit));
 		resp.put("pages", dao.pages(limit));
-		
 		return resp;
 	}
 	
 	// 코스 리스트 태그 불러오기
 	public Map<String, Object> course_list_tag(String idx) {
 		return dao.course_list_tag(idx);
+	}
+	
+	// 코스 리스트 사진 불러오기
+	public Map<String, Object> course_list_img(String idx) {
+		return dao.course_list_img(idx);
 	}
 	
 	//댓글 작성
@@ -52,6 +55,8 @@ public class MainService {
 	    int row = dao.comment_del(commentIdx);
 	    return row > 0;
 	}
+
+
 
 
 

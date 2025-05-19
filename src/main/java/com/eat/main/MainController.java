@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 	
-	
-
 	Map<String, Object> resp = new HashMap<String, Object>();
 	Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired MainService service;
@@ -35,11 +33,19 @@ public class MainController {
 		return resp;
 	}
 	
-	// 코스 리스트 태그 불러오기
+	// 코스 리스트 태그 불러오기 !!!! 바디에 post_idx 한개씩 보내용
 	@PostMapping(value="/course_list_tag")
 	public Map<String, Object> course_list_tag(@RequestBody Map<String, String> param){
 		resp = new HashMap<String, Object>();
 		resp = service.course_list_tag(param.get("post_idx"));
+		return resp;
+	}
+	
+	// 코스 리스트 사진 불러오기 !!!! 바디에 detail_idx 한개씩 보내용
+	@PostMapping(value="/course_list_img")
+	public Map<String, Object> course_list_img(@RequestBody Map<String, String> param){
+		resp = new HashMap<String, Object>();
+		resp = service.course_list_img(param.get("detail_idx"));
 		return resp;
 	}
 	
