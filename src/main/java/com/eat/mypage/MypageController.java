@@ -27,6 +27,20 @@ public class MypageController {
 	public Map<String, Object> member_update(@RequestPart("dto") MypageDTO dto) {
 
 		resp = new HashMap<String, Object>();
+		
+		if(service.nickNameOverlay(dto.getNickname(), dto.getUser_id())) {
+			resp.put("success", false);
+			resp.put("message", "해당 닉네임은 이미 사용 중입니다.");
+			return resp;
+		}
+		
+		if(service.emailOverlay(dto.getEmail(), dto.getUser_id())) {
+			resp.put("success", false);
+			resp.put("message", "해당 이메일은 이미 사용 중입니다.");
+			return resp;
+		}
+		
+		
 		boolean login = false;
 		boolean success = service.member_update(dto);
 		resp.put("success", success);
