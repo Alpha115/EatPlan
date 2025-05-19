@@ -4,7 +4,6 @@ import java.sql.Date;
 
 public class MainDTO {
 	
-	
 		//member
 		private String nickname;
 		private String user_id;

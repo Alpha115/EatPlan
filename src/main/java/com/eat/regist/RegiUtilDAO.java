@@ -9,6 +9,7 @@ import com.eat.tags.TagDTO;
 
 @Mapper
 public interface RegiUtilDAO {
+	
 	ArrayList<TagCateDTO> listTagCate();
 
 	ArrayList<TagDTO> listTag(String tagcate_idx);
