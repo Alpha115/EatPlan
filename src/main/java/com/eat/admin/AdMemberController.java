@@ -14,6 +14,5 @@ public class AdMemberController {
 	
 	Map<String, Object> resp = new HashMap<String, Object>();
 	Logger log = LoggerFactory.getLogger(getClass());
-	
 
 }
