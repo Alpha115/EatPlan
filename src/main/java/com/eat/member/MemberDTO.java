@@ -2,20 +2,6 @@ package com.eat.member;
 
 import java.sql.Date;
 
-//CREATE TABLE member(
-//	    user_id VARCHAR(40) PRIMARY KEY
-//	    ,pass VARCHAR(40)
-//	    ,email VARCHAR(100)
-//	    ,nickname VARCHAR(40)
-//	    ,bio VARCHAR(1000)
-//	    ,location VARCHAR(20)
-//	    ,admin BOOLEAN
-//	    ,reg_date DATETIME DEFAULT NOW()
-//	    ,img_idx INT(7)
-//	    ,FOREIGN KEY(img_idx) REFERENCES photo(img_idx) ON DELETE CASCADE
-//	    ,withdraw BOOLEAN default false
-//	);
-
 public class MemberDTO {
 	
 	private String user_id;
