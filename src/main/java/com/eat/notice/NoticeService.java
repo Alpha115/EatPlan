@@ -1,6 +1,5 @@
 package com.eat.notice;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +19,9 @@ public class NoticeService {
 	public Map<String, Object> list(String page) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		log.info("Notice/Service에서 list를 호출하였습니다.");
+		
+		// 페이징 처리를 위한 코드입니다.
+		// result map에는 "page":페이지 / "list" / "pages" :total page가 들어갑니다.
 		this.page=Integer.parseInt(page);
 		result.put("page", this.page);
 		int offset = (this.page - 1) * limit;
