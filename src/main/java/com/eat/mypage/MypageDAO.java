@@ -19,6 +19,7 @@ public interface MypageDAO {
 	
 	//회원 정보 수정 - 태그삭제
 	void deletMemberTags(String user_id, List<Integer> removeTags);
+
 	//회원 정보 수정 - 태그추가
 	void addMemberTags(String user_id, List<Integer> addTags);
 

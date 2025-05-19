@@ -38,8 +38,8 @@
 
 	<!-- 회원 정보 수정 - 태그 추가 -->
 	<insert id="addMemberTags" parameterType="map">
-		insert into tag_prefer (user_id, idx, class)
-		values
+		INSERT INTO tag_prefer (user_id, idx, class)
+		VALUES
 		<foreach collection="tagList" item="tag" separator=",">
 			(#{user_id},#{tag.idx},#{tag.isClass})
 		</foreach>

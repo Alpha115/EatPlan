@@ -42,6 +42,7 @@ public class MypageService {
 			dao.deletMemberTags(user_id, removeTags);
 		}
 		
+		//2. 태그 추가
 		if(addTags != null && !addTags.isEmpty()) {
 			dao.addMemberTags(user_id, addTags);
 		}
