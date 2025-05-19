@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eat.main.MypageDAO">
+	
+	<!-- 회원정보 수정 -->
+	<update id="member_update" parameterType="com.eat.main.MypageDTO">
+	UPDATE member SET email = #{email},
+        nickname = #{nickname},
+        bio = #{bio},
+        location = #{location},
+        withdraw = #{withdraw}
+    WHERE user_id = #{user_id}
+	</update>
+	
+	<!-- 닉네임 중복체크 -->
+	<select id="nickNameOverlay" resultType="int" parameterType="map">
+	SELECT COUNT(*) FROM member
+	WHERE nickname = #{nickname} AND user_id != #{user_id}
+	</select>
+	
+	<!-- 이메일 중복체크 -->
+	<select id="emailOverlay" resultType="int" parameterType="map">
+	SELECT COUNT(*) FROM member
+	WHERE email = #{email} AND user_id != #{user_id}
+	</select>
+	
+</mapper>

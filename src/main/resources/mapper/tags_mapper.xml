@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eat.tags.TagDAO">
+
+<select id="listTagCate" resultType="com.eat.tags.TagCateDTO">
+	SELECT * FROM tag_cate
+</select>
+
+<select id="listTag" resultType="com.eat.tags.TagDTO">
+	SELECT
+		tag_idx,
+		class AS isCourse,
+		tag_name,
+		cate_idx
+	FROM tag WHERE cate_idx = #{param1}
+</select>
+
+<select id="fromTag" resultType="com.eat.tags.TagDTO">
+	SELECT * FROM tag WHERE tag_name=#{param1}
+</select>
+
+</mapper>
