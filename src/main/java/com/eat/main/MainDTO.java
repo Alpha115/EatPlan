@@ -5,8 +5,8 @@ import java.sql.Date;
 public class MainDTO {
 	
 	
-	//member
-		private String nick;
+		//member
+		private String nickname;
 		private String user_id;
 
 		//post
@@ -22,14 +22,14 @@ public class MainDTO {
 		//comment
 		private int comment_idx;
 		private String content;
+		
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 
-	
-	public String getNick() {
-		return nick;
-	}
-	public void setNick(String nick) {
-		this.nick = nick;
-	}
 	public String getUser_id() {
 		return user_id;
 	}
