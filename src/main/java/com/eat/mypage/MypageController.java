@@ -7,14 +7,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin
 @RestController
 public class MypageController {
-	
+
 	Map<String, Object> resp = new HashMap<String, Object>();
 	Logger log = LoggerFactory.getLogger(getClass());
-	
-	@Autowired MypageService service;
+
+	@Autowired
+	MypageService service;
+
+	// 회원정보 수정
+	@PutMapping(value = "/member_update")
+	public Map<String, Object> member_update(@RequestPart("dto") MypageDTO dto) {
+
+		resp = new HashMap<String, Object>();
+		boolean login = false;
+		boolean success = service.member_update(dto);
+		resp.put("success", success);
+		login = true;
+
+		return resp;
+	}
+
 }
