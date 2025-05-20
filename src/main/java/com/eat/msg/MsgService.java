@@ -54,5 +54,19 @@ public class MsgService {
 
 		return resp;
 	}
+
+	//받은 쪽지 삭제
+	public boolean recip_del(String user_id, int msg_idx) {
+		
+		int row = dao.recip_del(user_id,msg_idx);
+		return row > 0;
+	}
+	
+	//보낸 쪽지 삭제
+		public boolean send_del(String user_id, int msg_idx) {
+			
+			int row = dao.send_del(user_id,msg_idx);
+			return row > 0;
+		}
 	
 }
