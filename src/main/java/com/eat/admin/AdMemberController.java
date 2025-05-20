@@ -20,7 +20,8 @@ public class AdMemberController {
 	Map<String, Object> resp = new HashMap<String, Object>();
 	Logger log = LoggerFactory.getLogger(getClass());
 	
-	// 회원 리스트를 출력하는 기능
+	// 회원 리스트를 출력하는 기능입니다. 관리자 로그인 및 토큰이 필요합니다.
+	// 관리자 기준 회원 리스트 출력 기능을 여기서 작성해주세요.
 	
 	
 	// 회원에게 관리자 권한을 부여하는 기능입니다. 관리자 로그인 및 토큰이 필요합니다.
@@ -31,5 +32,8 @@ public class AdMemberController {
 		resp.put("success", success);
 		return resp;
 	}
+	
+	// 회원의 정지기능을 관리하는 기능입니다. 관리자 로그인 및 토큰이 필요합니다. 
+	// 정지기능 작성 시 이곳에 작성해주세요.
 
 }

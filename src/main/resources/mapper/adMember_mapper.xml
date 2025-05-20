@@ -4,6 +4,7 @@
 
 <mapper namespace="com.eat.admin.AdMemberDAO">
 
+<!-- 관리자: 유저에게 관리자 권한을 부여하거나, 삭제하는 기능 -->
 <update id="addAdmin">
 	UPDATE member SET admin=!admin WHERE user_id =#{param1};
 </update>
