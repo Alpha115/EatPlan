@@ -12,4 +12,19 @@
   )
 </insert>
 
+<-- 받은 쪽지 조회 -->
+  <select id="recip_msg" resultType="com.example.dto.MsgDTO" parameterType="map">
+  SELECT * 
+  FROM message
+  WHERE recip = #{user_id}
+  AND recip_del = 0
+  ORDER BY msg_date DESC
+  LIMIT #{msg_count} OFFSET #{offset}
+</select>
+
+
+
+
+
+  
 </mapper>
