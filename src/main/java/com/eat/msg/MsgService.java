@@ -68,5 +68,10 @@ public class MsgService {
 			int row = dao.send_del(user_id,msg_idx);
 			return row > 0;
 		}
-	
+
+	//쪽지 상세보기
+		public MsgDTO msg_detail(String user_id, int msg_idx) {
+			MsgDTO msg = dao.msg_detail(user_id, msg_idx);
+			return msg;
+		}
 }
