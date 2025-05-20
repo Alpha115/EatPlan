@@ -54,26 +54,26 @@ public class MypageService {
 	private String fileSave(MultipartFile file) {
 		boolean success = false;
 		
-		// 확장자 추출해서
+		// 1.확장자 추출해서
 		String ori_fileName = file.getOriginalFilename();
 		String ext = "";
 		if(ori_fileName != null && ori_fileName.contains(".")) {
 			ext = ori_fileName.substring(ori_fileName.lastIndexOf("."));
 		}
 		
-		// 새 파일명 만들고
+		// 2.새 파일명 만들고
 		String new_filename = UUID.randomUUID().toString() + ext;
 		
-		// 저장 경로 정하고
+		// 3.저장 경로 정하고
 		String imgDir =  "c:/upload";
 		File profPath = new File(imgDir);
 		
-		//저장 경로 없으면 만들라고 시키고
+		// 4.저장 경로 없으면 만들라고 시키고
 		if(!profPath.exists()) {
 			profPath.mkdirs();
 		}
 		
-		//파일 저장 되서
+		// 5.파일 저장 되서
 		try {
 			file.transferTo(new File(imgDir + new_filename));
 		} catch (IOException e) {
@@ -81,7 +81,7 @@ public class MypageService {
 			return null;
 		}
 		
-		//반환 되게 하기
+		// 6.반환 되게 하기
 		return new_filename;
 	}
 	
