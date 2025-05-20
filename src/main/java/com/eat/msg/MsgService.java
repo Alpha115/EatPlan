@@ -22,11 +22,19 @@ public class MsgService {
 	}
 
 	//받은 쪽지 보기
-	@GetMapping(value="/{user_id}/recip_msg")
-	public Map<String, Object>recip_msg(@PathVariable String user_id,
-			@RequestParam (defaultValue = "1")int page){
+	public Map<String, Object> recip_msg(String user_id, int page) {
 		
-		Map<String, Object> resp = service.recip_msg(user_id, page);
+		Map<String, Object> resp = new HashMap<String, Object>();
+		
+		int offset = (page - 1) * msg_count;
+		
+		
+		List<MsgDTO> recip_msg = dao.recip_msg(user_id, offset,msg_count); 
+		
+		resp.put("user_id", user_id);
+		resp.put("page",page);
+		resp.put("recip_msg", recip_msg);
+		resp.put("count", recip_msg.size());
 		
 		return resp;
 	}
