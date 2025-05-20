@@ -71,4 +71,19 @@
 	WHERE user_id = #{user_id}
 	</update>
 	
+	<!-- 이미지 정보 가져오기 -->
+	<select id="imgInfo" resultType="map">
+	SELECT s.ori_filename, s.new_filename
+	FROM photo p
+	JOIN sts s on p.img_idx = s.img_idx
+	WHERE p.img_idx = #{img_idx}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

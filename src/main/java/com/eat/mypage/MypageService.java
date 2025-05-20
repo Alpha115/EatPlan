@@ -1,5 +1,9 @@
 package com.eat.mypage;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,14 +14,19 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import ch.qos.logback.core.subst.Token.Type;
 
 @Service
 public class MypageService {
 
 	@Autowired MypageDAO dao;
-	Logger logger = LoggerFactory.getLogger(getClass());
+	Logger log = LoggerFactory.getLogger(getClass());
 	private final String root = "c:/upload";
 	
 	//회원정보 수정
@@ -133,7 +142,61 @@ public class MypageService {
 		
 		return true;
 	}
+	
+	//이미지 정보 가져오기
+	public ResponseEntity<Resource> getFile(int img_idx, String type) {
+		Resource res = null;
+		HttpHeaders headers = new HttpHeaders();
+		
+		Map<String, String> imgMap = dao.imgInfo(img_idx);
+		log.info("imgMap : " + imgMap);
+		
+		 if (imgMap == null || !imgMap.containsKey("new_filename")) {
+		        return ResponseEntity.notFound().build();
+		    }
+		
+		 Path filePath = Paths.get(root, imgMap.get("new_filename")).normalize();
+		    res = new FileSystemResource(filePath);
+		    
+		    if(!res.exists()) {
+		    	return ResponseEntity.notFound().build();
+		    }
+		    
+		try {
+			if(type.equals("photo")) {
+				String contentType = Files.probeContentType(filePath);
+				headers.add("content_type", contentType != null ? contentType : "application/octet-stream");
+			}else {
+				headers.add("content-type", "application/octet-stream");
+				String ori_filename = URLEncoder.encode(imgMap.get("ori_filename"),"UTF-8");
+				headers.add("content-Disposition", "attachment;filename=\""+ori_filename+"\"");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		
+		return new ResponseEntity<Resource>(res,headers,HttpStatus.OK);
+	}
+	
+	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	

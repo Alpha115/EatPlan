@@ -34,5 +34,8 @@ public interface MypageDAO {
 	
 	// 회원 테이블에 새 img_idx 저장
 	void updateMemberImgIdx(String user_id, int newImg_Idx);
+	
+	//이미지 정보 가져오기
+	Map<String, String> imgInfo(int img_idx);
 
 }
