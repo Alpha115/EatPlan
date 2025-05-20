@@ -3,16 +3,20 @@ package com.eat.member;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.eat.utils.JwtUtil;
+
+@CrossOrigin
+@RestController
 public class MemberController {
 
 	@Autowired
@@ -24,12 +28,16 @@ public class MemberController {
 	// 로그인
 	@PostMapping(value = "/login")
 	public Map<String, Object> login(
-			@RequestBody Map<String, String> params, 
-			HttpSession session) {
-		log.info("session ID: " + session.getId());
+			@RequestBody Map<String, String> params) {
 		resp = new HashMap<String, Object>();
 		boolean success = service.login(params);
 		resp.put("success", success);
+		
+		if (success == true) {
+			String token = JwtUtil.getToken("id", params.get("id"));
+			resp.put("token", token);
+		}
+		
 		return resp;
 	}
 
@@ -43,20 +51,20 @@ public class MemberController {
 	}
 
 	// 아이디 중복 체크
-	@GetMapping(value="/overlay/{user_id}")
+	@GetMapping(value="/overlay/id/{user_id}")
 	public Map<String, Object> overlayId(@PathVariable String user_id) {
 		resp = new HashMap<String, Object>();
 		boolean success = service.overlayId(user_id);
-		resp.put("success", success);
+		resp.put("use", success);
 		return resp;
 	}
 	
 	// 닉네임 중복 체크
-	@GetMapping(value="/overlay/{nickname}")
+	@GetMapping(value="/overlay/nickname/{nickname}")
 	public Map<String, Object> overlayNick(@PathVariable String nickname) {
 		resp = new HashMap<String, Object>();
 		boolean success = service.overlayNick(nickname);
-		resp.put("success", success);
+		resp.put("use", success);
 		return resp;
 	}
 
