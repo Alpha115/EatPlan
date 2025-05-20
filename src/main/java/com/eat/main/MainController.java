@@ -50,14 +50,17 @@ public class MainController {
 	}
 	
 	//댓글 작성
-	@PostMapping(value = "/comment_insert")
-	public Map<String, Object> comment_insert (@RequestBody Map<String, String> params
+	@PostMapping(value = "/{user_id}/comment_insert")
+	public Map<String, Object> comment_insert (@PathVariable String user_id,
+			@RequestBody Map<String, String> params
 			/*@RequestHeader Map<String, String> header*/){
 		
+		log.info("user_id: " + user_id);
 		log.info("params : " + params);
 		/* log.info("header : {} " , header); */
+		
 		resp = new HashMap<String, Object>();
-		boolean login = false;
+		/* boolean login = false; */
 		/* String token = header.get("authorization"); */
 		
 		/*
@@ -66,9 +69,10 @@ public class MainController {
 		 * 
 		 * if(loginId != null && loginId.equals(params.get("id"))) {
 		 */
+			params.put("user_id", user_id);
 			boolean success = service.comment_insert(params);
 			resp.put("success", success);
-			login = true;
+			/* login = true; */
 		//}
 		
 		// resp.put("loginYN", login);
@@ -77,14 +81,16 @@ public class MainController {
 	}
 	
 	//댓글 수정
-	@PutMapping(value="/comment_update")
-	public Map<String, Object> comment_update(@RequestBody Map<String, String> params,
+	@PutMapping(value="/{user_id}/comment_update")
+	public Map<String, Object> comment_update(@PathVariable String user_id,
+			@RequestBody Map<String, String> params,
 			@RequestHeader Map<String, String> header){
 		
+		log.info("user_id: " + user_id);
 		log.info("params : " + params);
 		/* log.info("header : {} " , header); */
 		resp = new HashMap<String, Object>();
-		boolean login = false;
+		/* boolean login = false; */
 		/*
 		 * String token = header.get("authorization");
 		 * 
@@ -93,9 +99,10 @@ public class MainController {
 		 * 
 		 * if(loginId != null && loginId.equals(params.get("user_id"))) {
 		 */
+			params.put("user_id", user_id);
 			boolean success = service.comment_update(params);
 			resp.put("success", success);
-			login = true;
+			/* login = true; */
 		//}
 		/* resp.put("loginYN", login); */
 		
@@ -103,23 +110,25 @@ public class MainController {
 	}
 	
 	//댓글 삭제
-	@DeleteMapping(value="/comment_del")
-	public Map<String, Object> comment_del(@RequestBody Map<String, String> params, 
+	@DeleteMapping(value="/{user_id}/comment_del")
+	public Map<String, Object> comment_del(@PathVariable String user_id,
+			@RequestBody Map<String, String> params, 
 			@RequestHeader Map<String, String> header){
 	
 		log.info("params : " + params);
 		/* log.info("header : {} " , header); */
 		resp = new HashMap<String, Object>();
-		boolean login = false;
+		/* boolean login = false; */
 	/*	String token = header.get("authorization");
 		
 		Map<String, Object> payload = JwtUtil.readToken(token);
 		String loginId = (String) payload.get("id");
 		
 		if(loginId != null && loginId.equals(params.get("user_id"))) {*/
+			params.put("user_id", user_id);
 			boolean success = service.comment_del(params);
 			resp.put("success", success);
-			login = true;
+			/* login = true; */
 			/*
 			 * } resp.put("loginYN", login);
 			 */
