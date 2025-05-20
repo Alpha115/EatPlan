@@ -27,10 +27,16 @@ public class MypageController {
 	MypageService service;
 
 	// 회원정보 수정
-	@PutMapping(value = "/member_update")
-	public Map<String, Object> member_update(@RequestPart("dto") MypageDTO dto) {
+	@PostMapping(value = "/member_update", consumes = {"multipart/form-data"})
+	public Map<String, Object> member_update(@RequestPart("dto") MypageDTO dto,
+			@RequestPart(value= "files", required = false) MultipartFile[] files) {
 
 		resp = new HashMap<String, Object>();
+		
+		for (MultipartFile file : files) {
+			log.info("file name : " + file.getOriginalFilename());
+		}
+		
 		
 		if(service.nickNameOverlay(dto.getNickname(), dto.getUser_id())) { //--> 닉네임 중복
 			resp.put("success", false);
@@ -44,10 +50,8 @@ public class MypageController {
 			return resp;
 		}
 		
-		boolean login = false;
-		boolean success = service.member_update(dto);
+		boolean success = service.member_update(dto,files);
 		resp.put("success", success);
-		login = true;
 
 		return resp;
 	}

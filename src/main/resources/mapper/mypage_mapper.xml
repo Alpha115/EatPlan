@@ -44,5 +44,31 @@
 			(#{user_id},#{tag.idx},#{tag.isClass})
 		</foreach>
 	</insert>
-
+	
+	<!-- 회원 정보 수정 - 기존 이미지 파일 덮어쓰기 -->
+	<update id="fileupdate">
+	UPDATE photo
+	SET ori_filename = #{ori_filename},
+	new_filename = #{filename}
+	WHERE img_idx = #{img_idx}
+	</update>
+	
+	<!-- 회원 정보 수정 - 새 이미지 추가 -->
+	<insert id="fileInsert" useGeneratedKeys="true" keyProperty="img_idx">
+	INSERT INTO photo (ori_filename, new_filename)
+	VALUES (#{ori_filename} #{new_filename})
+	</insert>
+	
+	<!-- 회원 정보 수정 - 넣은 이미지의 img_idx 가져오기 -->
+	<select id="getinsertImgidx" resultType="int">
+	SELECT LAST_INSERT_ID() 
+	</select>
+	
+	<!-- 회원 정보 수정 -회원 테이블에 새 img_idx 저장 -->
+	<update id="updateMemberImgIdx">
+	UPDATE member
+	SET img_idx = #{newImg_Idx}
+	WHERE user_id = #{user_id}
+	</update>
+	
 </mapper>
