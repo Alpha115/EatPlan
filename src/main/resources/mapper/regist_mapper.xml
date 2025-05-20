@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eat.regist.RegistDAO">
+
+<!-- 코스 작성 (제대로 안돌아감) -->
+<insert id="regist_write" parameterType="com.eat.main.CourseDTO"
+	useGeneratedKeys="true" keyColumn="post_idx" keyProperty="post_idx">
+	INSERT INTO post (user_id, subject, post_cmt, public, tmp)
+	VALUES (#{user_id}, #{subject}, #{post_cmt}, #{ispublic}, #{tmp})
+</insert>
+
+<insert id="regist_time" parameterType="com.eat.main.TimelineDTO">
+	INSERT INTO timeline (post_idx, start, end)
+	VALUES (#{param2},#{param1.start},#{param1.end})
+</insert>
+
+<insert id="regist_detailrest" parameterType="com.eat.main.DetailRestaDTO"
+	useGeneratedKeys="true" keyColumn="content_detail.detail_idx" keyProperty="content_detail.detail_idx">
+	INSERT INTO detail_restaurant (post_idx, resta_idx, comment, start)
+	VALUES (#{param2}, #{param1.resta_idx}, #{param1.comment}, #{param1.start})
+</insert>
+
+<insert id="regist_detailcmt" parameterType="com.eat.main.DetailCmtDTO"
+	useGeneratedKeys="true" keyColumn="content_detailcmt.detail_idx" keyProperty="content_detailcmt.detail_idx">
+	INSERT INTO detail_comment (post_idx, comment, start)
+	VALUES (#{param2}, #{param1.comment}, #{param1.start})
+</insert>
+
+<insert id="regist_tag" parameterType="com.eat.main.CourseTagDTO">
+	INSERT INTO tag_course (post_idx, idx, class)
+	VALUES (#{param2}, #{param1.idx}, #{param1.isclass})
+</insert>
+
+
+</mapper>

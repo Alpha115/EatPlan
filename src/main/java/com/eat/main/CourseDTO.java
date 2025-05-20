@@ -14,7 +14,6 @@ public class CourseDTO {
 	private boolean blind;
 	private boolean tmp;
 
-
 	public String getPost_cmt() {
 		return post_cmt;
 	}
