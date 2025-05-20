@@ -115,7 +115,8 @@ public class MypageService {
 		int count = dao.emailOverlay(email, user_id);
 		return count > 0;
 	}
-
+	
+	//선호 태그 수정
 	public boolean member_tag_prefer_update(Map<String, List<Integer>> params, String user_id) {
 		List<Integer> removeTags = params.get("remove");
 		List<Integer> addTags = params.get("add");
