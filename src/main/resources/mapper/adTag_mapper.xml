@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eat.admin.AdTagDAO">
+
+<select id="restaList" resultType="com.eat.regist.RestaurantDTO">
+	SELECT * FROM restaurant ORDER BY resta_idx DESC
+		LIMIT #{param2} OFFSET #{param1}
+</select>
+
+<select id="pages" resultType="int">
+	SELECT CEIL(COUNT(resta_idx)/#{param1}) AS pages FROM restaurant
+</select>
+
+<insert id="restaTag" parameterType="com.eat.tags.TagRestDTO">
+	INSERT INTO tag_rest (tag_idx, resta_idx)
+		VALUES (#{tag_idx}, #{resta_idx})
+</insert>
+
+</mapper>
