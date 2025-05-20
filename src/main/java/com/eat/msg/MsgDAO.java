@@ -16,4 +16,10 @@ public interface MsgDAO {
 	//보낸 쪽지 보기
 	List<MsgDTO> send_msg(String user_id, int offset, int msg_count);
 
+	//받은 쪽지 삭제
+	int recip_del(String user_id, int msg_idx);
+	
+	//보낸 쪽지 삭제
+	int send_del(String user_id, int msg_idx);
+	
 }
