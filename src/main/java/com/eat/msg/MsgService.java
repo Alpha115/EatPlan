@@ -1,5 +1,7 @@
 package com.eat.msg;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -13,7 +15,7 @@ public class MsgService {
 	@Autowired
 	MsgDAO dao;
 	Logger logger = LoggerFactory.getLogger(getClass());
-	
+	private int msg_count = 10;
 	
 	//쪽지 보내기
 	public boolean write_msg(Map<String, String> params) {
@@ -54,7 +56,7 @@ public class MsgService {
 
 		return resp;
 	}
-
+	
 	//받은 쪽지 삭제
 	public boolean recip_del(String user_id, int msg_idx) {
 		
@@ -68,7 +70,6 @@ public class MsgService {
 			int row = dao.send_del(user_id,msg_idx);
 			return row > 0;
 		}
-
 	//쪽지 상세보기
 		public MsgDTO msg_detail(String user_id, int msg_idx) {
 			MsgDTO msg = dao.msg_detail(user_id, msg_idx);
