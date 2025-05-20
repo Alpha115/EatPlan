@@ -56,5 +56,33 @@ public class MsgController {
 		
 		return resp;
 	}
+
+	//받은 쪽지 삭제
+	@DeleteMapping(value="/{user_id}/{msg_idx}/recip_del")
+	public Map<String, Object>recip_del(@PathVariable String user_id,
+			@PathVariable int msg_idx){
+		
+		Map<String, Object> resp = new HashMap<String, Object>();
+		
+		boolean success =  service.recip_del(user_id,msg_idx);
+		resp.put("success", success);
+		
+		return resp;
+	}
+	
+	//보낸 쪽지 삭제
+		@DeleteMapping(value="/{user_id}/{msg_idx}/send_del")
+		public Map<String, Object>send_del(@PathVariable String user_id,
+				@PathVariable int msg_idx){
+			
+			Map<String, Object> resp = new HashMap<String, Object>();
+			
+			boolean success =  service.send_del(user_id,msg_idx);
+			resp.put("success", success);
+			
+			return resp;
+		}
+
+
 	
 }
