@@ -22,7 +22,7 @@
   LIMIT #{msg_count} OFFSET #{offset}
 </select>
 
-  <-- 보낸 쪽지 조회-->
+  <-- 보낸 쪽지 조회 -->
 <select id="send_msg" resultType="com.example.dto.MsgDTO">
   SELECT *
   FROM message
@@ -32,5 +32,20 @@
   LIMIT #{msg_count} OFFSET #{offset}
 </select>
 
+    <-- 받은 쪽지 삭제 -->
+<update id="recip_del">
+  UPDATE message
+  SET recip_del = 1
+  WHERE msg_idx = #{msg_idx}
+    AND recip = #{user_id}
+</update>
+
+<-- 보낸 쪽지 삭제 -->
+<update id="send_del">
+  UPDATE message
+  SET sender_del = 1
+  WHERE msg_idx = #{msg_idx}
+    AND sender = #{user_id}
+</update>
   
 </mapper>
