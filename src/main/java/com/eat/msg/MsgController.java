@@ -7,9 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -36,7 +39,7 @@ public class MsgController {
         
 		return resp;
 	}
-
+	
 	//받은 쪽지 보기
 	@GetMapping(value="/{user_id}/recip_msg")
 	public Map<String, Object>recip_msg(@PathVariable String user_id,
@@ -46,7 +49,7 @@ public class MsgController {
 		
 		return resp;
 	}
-
+	
 	//보낸 쪽지 조회
 	@GetMapping(value="/{user_id}/send_msg")
 	public Map<String, Object>sned_msg(@PathVariable String user_id,
@@ -56,7 +59,7 @@ public class MsgController {
 		
 		return resp;
 	}
-
+	
 	//받은 쪽지 삭제
 	@DeleteMapping(value="/{user_id}/{msg_idx}/recip_del")
 	public Map<String, Object>recip_del(@PathVariable String user_id,
@@ -82,7 +85,7 @@ public class MsgController {
 			
 			return resp;
 		}
-
+	
 	//쪽지 상세보기
 	@GetMapping(value= "/{user_id}/{msg_idx}/msg_detail")
 	public Map<String, Object>msg_detail(@PathVariable String user_id,
@@ -101,5 +104,8 @@ public class MsgController {
 		}
 		return resp;
 	}
+	
+	
+	
 	
 }
