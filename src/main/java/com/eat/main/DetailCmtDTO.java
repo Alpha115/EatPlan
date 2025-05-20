@@ -1,5 +1,6 @@
 package com.eat.main;
 
+// 세부일정-코멘트 테이블 DTO
 public class DetailCmtDTO {
 
 	private int detail_idx;

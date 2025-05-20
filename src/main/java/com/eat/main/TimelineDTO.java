@@ -1,5 +1,6 @@
 package com.eat.main;
 
+// 타임라인 테이블 DTO
 public class TimelineDTO {
 	private int post_idx;
 	private String start;

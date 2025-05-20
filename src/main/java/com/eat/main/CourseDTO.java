@@ -2,6 +2,7 @@ package com.eat.main;
 
 import java.sql.Date;
 
+// post 테이블 DTO
 public class CourseDTO {
 
 	private int post_idx;

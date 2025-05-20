@@ -1,5 +1,6 @@
 package com.eat.main;
 
+// 코스 태그 테이블 DTO
 public class CourseTagDTO {
 
 	private int idx;

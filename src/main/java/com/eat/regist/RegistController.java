@@ -1,6 +1,5 @@
 package com.eat.regist;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,17 +26,19 @@ public class RegistController {
 	Map<String, Object> resp = new HashMap<String, Object>();
 	Logger log = LoggerFactory.getLogger(getClass());
 	
-	// 코스 작성 (제대로 안돌아감)
+	// 코스 작성
 	@PostMapping (value="/regist_write")
-	public Map<String, Object> regist_write(
-			@RequestBody RegistRequestDTO request){
+	public Map<String, Object> regist_write(@RequestBody RegistRequestDTO req){
+		
 		resp = new HashMap<String, Object>();
-		CourseDTO content = request.getContent();
-	    List<DetailRestaDTO> content_detail = new ArrayList<DetailRestaDTO>();
-	    DetailCmtDTO content_detailcmt = request.getContent_detailcmt();
-	    CourseTagDTO tag = request.getTag();
-	    TimelineDTO time = request.getTime();
-		boolean success = service.regist_write(content, content_detail, content_detailcmt, tag, time);
+		
+		CourseDTO content = req.getContent();
+	    List<DetailRestaDTO> content_detail_resta  = req.getContent_detail_resta();
+	    List<DetailCmtDTO> content_detail_cmt = req.getContent_detail_cmt();
+	    List<CourseTagDTO> tags = req.getTags();
+	    TimelineDTO time = req.getTime();
+	    
+		boolean success = service.regist_write(content, content_detail_resta, content_detail_cmt, tags, time);
 		resp.put("success", success);
 		return resp;
 	}
