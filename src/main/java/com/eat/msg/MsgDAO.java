@@ -21,5 +21,7 @@ public interface MsgDAO {
 	
 	//보낸 쪽지 삭제
 	int send_del(String user_id, int msg_idx);
-	
+
+	//쪽지 상세보기
+	MsgDTO msg_detail(String user_id, int msg_idx);
 }
