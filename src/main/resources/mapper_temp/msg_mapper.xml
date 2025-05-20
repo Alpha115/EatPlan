@@ -22,9 +22,15 @@
   LIMIT #{msg_count} OFFSET #{offset}
 </select>
 
-
-
-
+  <-- 보낸 쪽지 조회-->
+<select id="send_msg" resultType="com.example.dto.MsgDTO">
+  SELECT *
+  FROM message
+  WHERE sender = #{user_id}
+    AND sender_del = 0
+  ORDER BY msg_date DESC
+  LIMIT #{msg_count} OFFSET #{offset}
+</select>
 
   
 </mapper>
