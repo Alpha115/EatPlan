@@ -12,4 +12,9 @@
 	SELECT CEIL(COUNT(resta_idx)/#{param1}) AS pages FROM restaurant
 </select>
 
+<insert id="restaTag" parameterType="com.eat.tags.TagRestDTO">
+	INSERT INTO tag_rest (tag_idx, resta_idx)
+		VALUES (#{tag_idx}, #{resta_idx})
+</insert>
+
 </mapper>
