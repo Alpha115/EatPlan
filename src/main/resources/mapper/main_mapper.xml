@@ -3,69 +3,78 @@
 
 <mapper namespace="com.eat.main.MainDAO">
 	
-	<!-- 코스 불러오기 몸통 수정필요-->
-	<select id="course_list" resultType="com.eat.main.MainDTO">
-	SELECT p.post_idx
-	    ,p.user_id
-	    ,p.subject
-	    ,p.b_hit
-	    ,p.reg_date
-	    ,p.public
-	    ,p.blind
-	    ,p.tmp
-	    ,IFNULL(c.comment_cnt, 0) AS comment_cnt
-	    ,IFNULL(l.like_cnt, 0) AS like_cnt
-	    ,IFNULL(s.star_avg, 0) AS star_avg
-	FROM post p 
-	   LEFT JOIN (
-	      SELECT post_idx, COUNT(comment_idx) AS comment_cnt FROM comment GROUP BY post_idx
-	   ) c ON p.post_idx = c.post_idx
-	    LEFT JOIN (
-	       SELECT post_idx, COUNT(like_idx) AS like_cnt FROM liked GROUP BY post_idx
-	    ) l ON p.post_idx = l.post_idx
-	    LEFT JOIN (
-	       SELECT post_idx, FLOOR(AVG(star)) AS star_avg FROM star GROUP BY post_idx
-	    ) s ON p.post_idx = s.post_idx
-	ORDER BY p.post_idx DESC
-	LIMIT #{param2} OFFSET #{param1}
+	<!-- 코스 불러오기 몸통 -->
+	<select id="course_list" resultType="com.eat.main.CourseListDTO">
+		SELECT p.post_idx
+		    ,p.user_id
+		    ,m.nickname
+		    ,dr.detail_idx
+		    ,p.subject
+		    ,p.b_hit
+		    ,p.reg_date
+		    ,p.public
+		    ,p.blind
+		    ,p.tmp
+		    ,IFNULL(c.comment_cnt, 0) AS comment_cnt
+		    ,IFNULL(l.like_cnt, 0) AS like_cnt
+		    ,IFNULL(s.star_avg, 0) AS star_avg
+		FROM post p 
+			JOIN member m ON p.user_id = m.user_id
+			LEFT JOIN detail_restaurant dr ON p.post_idx = dr.post_idx
+		    LEFT JOIN (
+		       SELECT post_idx, COUNT(comment_idx) AS comment_cnt FROM comment GROUP BY post_idx
+		    ) c ON p.post_idx = c.post_idx
+		    LEFT JOIN (
+		       SELECT post_idx, COUNT(like_idx) AS like_cnt FROM liked GROUP BY post_idx
+		    ) l ON p.post_idx = l.post_idx
+		    LEFT JOIN (
+		       SELECT post_idx, FLOOR(AVG(star)) AS star_avg FROM star GROUP BY post_idx
+		    ) s ON p.post_idx = s.post_idx
+		ORDER BY p.post_idx DESC
+		LIMIT #{param2} OFFSET #{param1}
 	</select>
 	
-	<!-- 코스태그 불러오기 수정필요-->
-	<select id="course_tag" resultType="String">
-	SELECT 
-	    CASE 
-	        WHEN tc.class = 'tag' AND t.class = 'course' THEN t.tag_name
-	        WHEN tc.class = 'area_tag' THEN ta.tag_name
-	    END AS tag_name
-	FROM 
-	    tag_course tc
-	LEFT JOIN tag t 
-	    ON tc.class = 'tag' AND tc.idx = t.tag_idx AND t.class = 'course'
-	LEFT JOIN tag_area ta 
-	    ON tc.class = 'area_tag' AND tc.idx = ta.area_tag_idx
-	WHERE 
-	    tc.post_idx = #{param1}
-	    AND (
-	        (tc.class = 'tag' AND t.class = 'course')
-	        OR tc.class = 'area_tag'
-    )
+	<!-- 코스 리스트 태그 불러오기 -->
+	<select id="course_list_tag" resultType="map">
+		SELECT
+		    tc.post_idx,
+		    GROUP_CONCAT(
+		        CASE 
+		            WHEN tc.class = 'tag' AND t.class = 'course' THEN t.tag_name
+		            WHEN tc.class = 'area_tag' THEN ta.tag_name
+		        END
+		        ORDER BY tc.idx SEPARATOR ', '
+		    ) AS tag_names
+		FROM tag_course tc
+		LEFT JOIN tag t 
+		    ON tc.class = 'tag' AND tc.idx = t.tag_idx AND t.class = 'course'
+		LEFT JOIN tag_area ta 
+		    ON tc.class = 'area_tag' AND tc.idx = ta.area_tag_idx
+		WHERE 
+		    tc.post_idx = #{param1}
+		    AND (
+		        (tc.class = 'tag' AND t.class = 'course') OR
+		        tc.class = 'area_tag'
+		    )
+		GROUP BY tc.post_idx
+		ORDER BY tc.post_idx DESC
 	</select>
 	
-	<!-- 코스 사진 가져오기 수정필요-->
-	<select id="photo" resultType="String">
+	<!-- 코스 리스트 이미지 불러오기 -->
+	<select id="course_list_img" resultType="map">
 		SELECT 
-    COALESCE(
-        (
-            SELECT p.new_filename
-            FROM detail_restaurant dr
-            JOIN restaurant r ON dr.resta_idx = r.resta_idx
-            LEFT JOIN photo p ON r.img_idx = p.img_idx AND p.class = 'restaurant'
-            WHERE dr.detail_idx = #{param1}
-            ORDER BY dr.detail_idx, r.resta_idx
-            LIMIT 1
-        ), 
-        'no_image'
-    ) AS new_filename
+		    COALESCE(
+		        (
+		            SELECT p.new_filename
+		            FROM detail_restaurant dr
+		            JOIN restaurant r ON dr.resta_idx = r.resta_idx
+		            LEFT JOIN photo p ON r.img_idx = p.img_idx AND p.class = 'restaurant'
+		            WHERE dr.detail_idx = #{param1}
+		            ORDER BY dr.detail_idx, r.resta_idx
+		            LIMIT 1
+		        ), 
+		        'no_image'
+		    ) AS new_filename
 	</select>
 	
 	<!-- 페이지 -->
