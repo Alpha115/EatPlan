@@ -28,6 +28,7 @@ public class RegiUtilService {
 		return arr;
 	}
 
+	// 지역+식당 태그를 통합해서 식당을 검색하는 기능입니다. (미완성)
 	public ArrayList<RestaurantDTO> searchResta(Map<String, String> param) {
 		
 		return null;
