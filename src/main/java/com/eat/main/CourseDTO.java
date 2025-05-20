@@ -2,33 +2,24 @@ package com.eat.main;
 
 import java.sql.Date;
 
-public class CourseListDTO {
+public class CourseDTO {
 
-	private String nickname;
 	private int post_idx;
 	private String user_id;
 	private String subject;
 	private int b_hit;
 	private Date reg_date;
+	private String post_cmt;
 	private boolean ispublic;
 	private boolean blind;
 	private boolean tmp;
-	private int like_cnt;
-	private int comment_cnt;
-	private int star_avg;
-	private int detail_idx;
-	
-	public int getDetail_idx() {
-		return detail_idx;
+
+
+	public String getPost_cmt() {
+		return post_cmt;
 	}
-	public void setDetail_idx(int detail_idx) {
-		this.detail_idx = detail_idx;
-	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setPost_cmt(String post_cmt) {
+		this.post_cmt = post_cmt;
 	}
 	public int getPost_idx() {
 		return post_idx;
@@ -78,26 +69,5 @@ public class CourseListDTO {
 	public void setTmp(boolean tmp) {
 		this.tmp = tmp;
 	}
-	public int getLike_cnt() {
-		return like_cnt;
-	}
-	public void setLike_cnt(int like_cnt) {
-		this.like_cnt = like_cnt;
-	}
-	public int getComment_cnt() {
-		return comment_cnt;
-	}
-	public void setComment_cnt(int comment_cnt) {
-		this.comment_cnt = comment_cnt;
-	}
-	public int getStar_avg() {
-		return star_avg;
-	}
-	public void setStar_avg(int star_avg) {
-		this.star_avg = star_avg;
-	}
-
-	
-	
 	
 }

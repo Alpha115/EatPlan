@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MainDAO {
 
 	// 코스 리스트 불러오기
-	List<CourseListDTO> course_list(int offset, int limit);
+	List<CourseDTO> course_list(int offset, int limit);
 	
 	// 코스 리스트 태그 불러오기
 	Map<String, Object> course_list_tag(String idx);
