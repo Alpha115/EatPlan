@@ -39,8 +39,7 @@ public class RegiUtilController {
 		return resp;
 	}
 
-	// 식당 and 코스 태그를 검색하는 기능입니다.
-	// 아직 지역태그 검색기능 없음
+	// 식당/코스/지역 태를 검색하는 기능입니다.
 	@GetMapping("search_tag/{tag}")
 	public Map<String, Object> searchTag(@PathVariable String tag) {
 		resp = new HashMap<String, Object>();

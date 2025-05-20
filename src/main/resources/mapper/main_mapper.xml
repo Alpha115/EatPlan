@@ -4,7 +4,7 @@
 <mapper namespace="com.eat.main.MainDAO">
 	
 	<!-- 코스 불러오기 몸통 -->
-	<select id="course_list" resultType="com.eat.main.CourseListDTO">
+	<select id="course_list" resultType="com.eat.main.CourseDTO">
 		SELECT p.post_idx
 		    ,p.user_id
 		    ,m.nickname
