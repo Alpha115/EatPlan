@@ -29,4 +29,8 @@ public interface MainDAO {
 	//댓글 삭제
 	int comment_del(int comment_del);
 
+	
+	//댓글 리스트
+	Object comment_list(int offset, int limit);
+
 }
