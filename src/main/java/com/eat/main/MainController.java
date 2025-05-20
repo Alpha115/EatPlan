@@ -29,54 +29,70 @@ public class MainController {
 	@Autowired
 	MainService service;
 
-	
 	// 코스 리스트 불러오기 수정필요
-	@GetMapping(value="/course_list/{page}")
-	public Map<String, Object> course_list(@PathVariable String page){
-		log.info("page = "+page);
+	@GetMapping(value = "/course_list/{page}")
+	public Map<String, Object> course_list(@PathVariable String page) {
+		log.info("page = " + page);
 		resp = new HashMap<String, Object>();
 		resp = service.course_list(Integer.parseInt(page));
 		return resp;
 	}
-	
-	
+
 	// 코스 리스트 사진 불러오기 !!!! 바디에 detail_idx 한개씩 보내용
-	@PostMapping(value="/course_list_img")
-	public Map<String, Object> course_list_img(@RequestBody Map<String, String> param){
+	@PostMapping(value = "/course_list_img")
+	public Map<String, Object> course_list_img(@RequestBody Map<String, String> param) {
 		resp = new HashMap<String, Object>();
 		resp = service.course_list_img(param.get("detail_idx"));
 		return resp;
 	}
-	
-	//댓글 리스트
-	@GetMapping(value="/{post_idx}/comment_list")
-	public Map<String, Object> comment_list(@PathVariable String post_idx,
-			@RequestParam Map<String, String> params){
-		
+
+	// 댓글 리스트
+	@GetMapping(value = "/{post_idx}/comment_list")
+	public Map<String, Object> comment_list(@PathVariable String post_idx, @RequestParam Map<String, String> params) {
+
 		log.info("post_idx : " + post_idx);
 		log.info("params : " + params);
-		
+
 		params.put("post_idx", post_idx);
-		Map<String, Object> resp =service.comment_list(params);
-		
+		Map<String, Object> resp = service.comment_list(params);
+
 		return resp;
 	}
-	
-	//댓글 작성
-	@PostMapping(value = "/{user_id}/comment_insert")
-	public Map<String, Object> comment_insert (@PathVariable String user_id,
-			@RequestBody Map<String, String> params
-=======
-//	
-//	// 댓글 작성
-//	@PostMapping(value = "/comment_insert")
-//	public Map<String, Object> insert(@RequestBody Map<String, String> params) {
-//
-//=======
-	public Map<String, Object> comment_insert (@RequestBody Map<String, String> params
 
-			/*@RequestHeader Map<String, String> header*/){
-		
+	//댓글 작성
+	   @PostMapping(value = "/{user_id}/comment_insert")
+	   public Map<String, Object> comment_insert (@PathVariable String user_id,
+	         @RequestBody Map<String, String> params
+	         /*@RequestHeader Map<String, String> header*/){
+	      
+	      log.info("user_id: " + user_id);
+	      log.info("params : " + params);
+	      /* log.info("header : {} " , header); */
+	      
+	      resp = new HashMap<String, Object>();
+	      /* boolean login = false; */
+	      /* String token = header.get("authorization"); */
+	      
+	      /*
+	       * Map<String, Object> payload = JwtUtil.readToken(token); String loginId =
+	       * (String) payload.get("id");
+	       * 
+	       * if(loginId != null && loginId.equals(params.get("id"))) {
+	       */
+	         params.put("user_id", user_id);
+	         boolean success = service.comment_insert(params);
+	         resp.put("success", success);
+	         /* login = true; */
+	      //}
+	      
+	      // resp.put("loginYN", login);
+	      
+	      return resp;
+	   }
+
+	public Map<String, Object> comment_insert(@RequestBody Map<String, String> params
+	/* @RequestHeader Map<String, String> header */) {
+
 		log.info("params : " + params);
 
 		resp = new HashMap<String, Object>();
@@ -110,7 +126,7 @@ public class MainController {
 		log.info("params : " + params);
 		resp = new HashMap<String, Object>();
 		boolean login = false;
-		
+
 		boolean success = service.comment_del(params);
 		resp.put("success", success);
 		login = true;
