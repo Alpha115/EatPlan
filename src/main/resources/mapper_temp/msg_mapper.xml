@@ -47,5 +47,17 @@
   WHERE msg_idx = #{msg_idx}
     AND sender = #{user_id}
 </update>
+
+<select id="msg_detail" resultType="MsgDTO">
+  SELECT *
+  FROM message
+  WHERE msg_idx = #{msg_idx}
+    AND (
+      (sender = #{user_id} AND sender_del = 0)
+      OR
+      (recip = #{user_id} AND recip_del = 0)
+    )
+</select>
+
   
 </mapper>
