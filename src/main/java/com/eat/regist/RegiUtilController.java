@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.tags.TagCateDTO;
@@ -40,10 +42,10 @@ public class RegiUtilController {
 	}
 
 	// 식당/코스/지역 태를 검색하는 기능입니다.
-	@GetMapping("search_tag/{tag}")
-	public Map<String, Object> searchTag(@PathVariable String tag) {
+	@PostMapping("search_tag")
+	public Map<String, Object> searchTag(@RequestBody Map<String, String> param) {
 		resp = new HashMap<String, Object>();
-		ArrayList<TagDTO> list = service.searchTag(tag);
+		ArrayList<TagDTO> list = service.searchTag(param.get("tag"));
 		resp.put("result", list);
 		return resp;
 	}
