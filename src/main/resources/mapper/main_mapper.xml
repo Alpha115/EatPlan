@@ -82,25 +82,6 @@
 		SELECT CEIL(COUNT(post_idx)/#{param1}) AS pages FROM post
 	</select>
 	
-	<!-- 댓글 리스트 -->
-	
-	
-	<!-- 댓글 작성 -->
-	<insert id="comment_insert" parameterType="map">
-	INSERT INTO
-	comment(user_id,post_idx,content)
-	VALUES (#{user_id}, #{post_idx},#{content})
-	</insert>
 
-	<!-- 댓글 수정 -->
-	<update id="comment_update" parameterType="map">
-	UPDATE comment SET content =#{content}
-	WHERE comment_idx = #{comment_idx}
-	</update>
-	
-	<!-- 댓글 삭제 -->
-	<delete id="comment_del">
-	DELETE FROM comment WHERE comment_idx = #{param1}
-	</delete>
 	
 </mapper>
