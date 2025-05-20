@@ -46,5 +46,15 @@ public class MsgController {
 		
 		return resp;
 	}
+
+	//보낸 쪽지 조회
+	@GetMapping(value="/{user_id}/send_msg")
+	public Map<String, Object>sned_msg(@PathVariable String user_id,
+			@RequestParam (defaultValue = "1")int page){
+		
+		Map<String, Object> resp = service.send_msg(user_id, page);
+		
+		return resp;
+	}
 	
 }
