@@ -7,15 +7,14 @@
 	<update id="member_update"
 		parameterType="com.eat.mypage.MypageDTO">
 		UPDATE member SET email = #{email},
-		nickname =
-		#{nickname},
+		nickname = #{nickname},
 		bio = #{bio},
 		location = #{location},
 		withdraw = #{withdraw}
 		WHERE user_id = #{user_id}
 	</update>
 
-	<!--회원 정보 수정 - 닉네임 중복체크 -->
+	<!-- 회원 정보 수정 - 닉네임 중복체크 
 	<select id="nickNameOverlay" resultType="int"
 		parameterType="map">
 		SELECT COUNT(*) FROM member
@@ -23,17 +22,17 @@
 		AND user_id != #{user_id}
 	</select>
 
-	<!-- 회원 정보 수정 - 이메일 중복체크 -->
+	회원 정보 수정 - 이메일 중복체크
 	<select id="emailOverlay" resultType="int" parameterType="map">
 		SELECT
 		COUNT(*) FROM member
 		WHERE email = #{email} AND user_id != #{user_id}
-	</select>
+	</select> -->
 
 	<!-- 회원 정보 수정 - 태그 삭제 -->
-	<delete id="deletMemberTags" parameterType="String">
+	<delete id="deletMemberTags">
 		delete from
-		tag_prefer where user_id = #{user_id}
+		tag_prefer where user_id = #{param1}
 	</delete>
 
 	<!-- 회원 정보 수정 - 태그 추가 -->

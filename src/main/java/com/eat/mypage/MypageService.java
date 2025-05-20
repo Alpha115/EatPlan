@@ -31,20 +31,9 @@ public class MypageService {
 	private final String root = "c:/upload";
 
 	// 회원정보 수정
-	public boolean member_update(MypageDTO dto, MultipartFile[] files) {
-		dao.member_update(dto);
-
-		if (files == null || files.length == 0) {
-			return true;
-		}
-
-		if (dto.getImg_idx() == 1) {
-			return newImgUpdate(dto.getUser_id(), files);
-		} else {
-
-			return fileSave(dto.getImg_idx(), files);
-
-		}
+	public boolean member_update(MypageDTO dto) {
+		
+		return dao.member_update(dto);
 	}
 
 	// 새로운 파일 넣고 img_idx 함수 추가
@@ -112,22 +101,18 @@ public class MypageService {
 		return success;
 	}
 
-	// 닉네임 중복체크
-	public boolean nickNameOverlay(String nickname, String user_id) {
-		int count = dao.nickNameOverlay(nickname, user_id);
-		return count > 0;
-	}
-
-	// 이메일 중복체크
-	public boolean emailOverlay(String email, String user_id) {
-		int count = dao.emailOverlay(email, user_id);
-		return count > 0;
-	}
+	/*
+	 * // 닉네임 중복체크 public boolean nickNameOverlay(String nickname, String user_id) {
+	 * int count = dao.nickNameOverlay(nickname, user_id); return count > 0; }
+	 * 
+	 * // 이메일 중복체크 public boolean emailOverlay(String email, String user_id) { int
+	 * count = dao.emailOverlay(email, user_id); return count > 0; }
+	 */
 
 	// 선호 태그 수정
-	public boolean member_tag_prefer_update(Map<String, List<Integer>> params, String user_id) {
-		List<Integer> removeTags = params.get("remove");
-		List<Integer> addTags = params.get("add");
+	public boolean member_tag_prefer_update(Map<String, List<String>> params, String user_id) {
+		List<String> removeTags = params.get("remove");
+		List<String> addTags = params.get("add");
 
 		// 1. 태그 삭제
 		if (removeTags != null && !removeTags.isEmpty()) {

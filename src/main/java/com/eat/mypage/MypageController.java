@@ -31,29 +31,20 @@ public class MypageController {
 	MypageService service;
 
 	// 회원정보 수정
-	@PostMapping(value = "/member_update", consumes = { "multipart/form-data" })
-	public Map<String, Object> member_update(@RequestPart("dto") MypageDTO dto,
-			@RequestPart(value = "files", required = false) MultipartFile[] files) {
+	@PutMapping(value = "/member_update")
+	public Map<String, Object> member_update(MypageDTO dto) {
+		
+		/*
+		 * if (service.nickNameOverlay(dto.getNickname(), dto.getUser_id())) { // -->
+		 * 닉네임 중복 resp.put("success", false); resp.put("message",
+		 * "해당 닉네임은 이미 사용 중입니다."); return resp; }
+		 * 
+		 * if (service.emailOverlay(dto.getEmail(), dto.getUser_id())) { // --> 이메일 중복
+		 * resp.put("success", false); resp.put("message", "해당 이메일은 이미 사용 중입니다.");
+		 * return resp; }
+		 */
 
-		resp = new HashMap<String, Object>();
-
-		for (MultipartFile file : files) {
-			log.info("file name : " + file.getOriginalFilename());
-		}
-
-		if (service.nickNameOverlay(dto.getNickname(), dto.getUser_id())) { // --> 닉네임 중복
-			resp.put("success", false);
-			resp.put("message", "해당 닉네임은 이미 사용 중입니다.");
-			return resp;
-		}
-
-		if (service.emailOverlay(dto.getEmail(), dto.getUser_id())) { // --> 이메일 중복
-			resp.put("success", false);
-			resp.put("message", "해당 이메일은 이미 사용 중입니다.");
-			return resp;
-		}
-
-		boolean success = service.member_update(dto, files);
+		boolean success = service.member_update(dto);
 		resp.put("success", success);
 
 		return resp;
@@ -61,15 +52,14 @@ public class MypageController {
 
 	// 태그 수정
 	@PostMapping(value = "/member_tag_prefer_update")
-	public Map<String, Object> member_tag_prefer_update(@RequestBody Map<String, List<Integer>> params,
+	public Map<String, Object> member_tag_prefer_update(@RequestBody Map<String, List<String>> params,
 			@RequestParam String user_id) {
 
-		Map<String, Object> resp = new HashMap<String, Object>();
-		boolean login = false;
+		resp = new HashMap<String, Object>();
+		
 		boolean success = service.member_tag_prefer_update(params, user_id);
 		resp.put("success", success);
-		login = true;
-
+		
 		return resp;
 	}
 
@@ -84,7 +74,7 @@ public class MypageController {
 	// 바꾼 프로필 이미지 → 기본 이미지로 변경
 	@PostMapping(value = "/reset_profile")
 	public Map<String, Object> reset_profile(@RequestParam String user_id) {
-		Map<String, Object> resp = new HashMap<>();
+		resp = new HashMap<>();
 
 		boolean success = service.resetProfile(user_id);
 		resp.put("success", success);

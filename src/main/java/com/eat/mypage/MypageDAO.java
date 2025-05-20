@@ -9,19 +9,19 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MypageDAO {
 
 	// 회원정보 수정
-	int member_update(MypageDTO dto);
+	boolean member_update(MypageDTO dto);
 
-	// 회원 정보 수정 - 닉네임 중복체크
-	int nickNameOverlay(String nickname, String user_id);
-
-	// 회원 정보 수정 - 이메일 중복체크
-	int emailOverlay(String email, String user_id);
+	/*
+	 * // 회원 정보 수정 - 닉네임 중복체크 int nickNameOverlay(String nickname, String user_id);
+	 * 
+	 * // 회원 정보 수정 - 이메일 중복체크 int emailOverlay(String email, String user_id);
+	 */
 
 	// 회원 정보 수정 - 태그삭제
-	void deletMemberTags(String user_id, List<Integer> removeTags);
+	void deletMemberTags(String user_id, List<String> removeTags);
 
 	// 회원 정보 수정 - 태그추가
-	void addMemberTags(String user_id, List<Integer> addTags);
+	void addMemberTags(String user_id, List<String> addTags);
 
 	// 프로필 사진 수정
 	void fileUpdate(int img_idx, String ori_filename, String new_filename);
