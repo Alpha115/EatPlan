@@ -21,4 +21,13 @@ public class MsgService {
 		return row > 0;
 	}
 
+	//받은 쪽지 보기
+	@GetMapping(value="/{user_id}/recip_msg")
+	public Map<String, Object>recip_msg(@PathVariable String user_id,
+			@RequestParam (defaultValue = "1")int page){
+		
+		Map<String, Object> resp = service.recip_msg(user_id, page);
+		
+		return resp;
+	}
 }
