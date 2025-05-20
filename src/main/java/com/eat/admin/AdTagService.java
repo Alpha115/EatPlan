@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.eat.tags.TagRestDTO;
-
 @Service
 public class AdTagService {
 
@@ -32,7 +30,7 @@ public class AdTagService {
 		return result;
 	}
 
-	public boolean restaTag(ArrayList<TagRestDTO> tags) {
+	public boolean restaTag(ArrayList<Map<String, Integer>> tags) {
 		// 받은 태그의 개수만큼 insert 쿼리문을 실행합니다.
 		int row = 0;
 		for (int i = 0; i < tags.size(); i++) {

@@ -1,11 +1,11 @@
 package com.eat.admin;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.eat.regist.RestaurantDTO;
-import com.eat.tags.TagRestDTO;
 
 @Mapper
 public interface AdTagDAO {
@@ -14,6 +14,6 @@ public interface AdTagDAO {
 
 	int pages(int limit);
 
-	int restaTag(TagRestDTO tag);
+	int restaTag(Map<String, Integer> map);
 
 }

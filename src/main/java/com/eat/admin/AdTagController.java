@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eat.tags.TagRestDTO;
-
 // 식당과 코스 태그를 관리하는 컨트롤러입니다. 모든 기능에는 관리자 권한 토큰이 필요합니다.
 @CrossOrigin
 @RestController
@@ -34,9 +32,9 @@ public class AdTagController {
 	// (관리자 페이지)식당에 태그를 추가하는 함수입니다. 지역 태그는 포함되지 않습니다. 
 	// 식당에 포함될 수 있는 식당 태그에 제한은 없습니다. 
 	// 특정 식당을 식별하는 resta_idx는 요청에 따라 고정적으로 들어옵니다.
-	// 그런데 키값을 int로 못받네?
+	// 그런데 tag_idx를 못받네? 걍 Map<tag_name, resta_idx> 로 받습니다
 	@PostMapping("/adtag_restaTag")
-	public Map<String, Object> restaTag(@RequestBody ArrayList<TagRestDTO> tags){
+	public Map<String, Object> restaTag(@RequestBody ArrayList<Map<String, Integer>> tags){
 		resp=new HashMap<String, Object>();
 		boolean success=service.restaTag(tags);
 		resp.put("success", success);
