@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,24 +31,41 @@ public class MypageController {
 
 	// 회원정보 수정
 	@PutMapping(value = "/member_update")
-	public Map<String, Object> member_update(MypageDTO dto) {
+	public Map<String, Object> member_update(@RequestBody MypageDTO dto) {
 		
-		/*
-		 * if (service.nickNameOverlay(dto.getNickname(), dto.getUser_id())) { // -->
-		 * 닉네임 중복 resp.put("success", false); resp.put("message",
-		 * "해당 닉네임은 이미 사용 중입니다."); return resp; }
-		 * 
-		 * if (service.emailOverlay(dto.getEmail(), dto.getUser_id())) { // --> 이메일 중복
-		 * resp.put("success", false); resp.put("message", "해당 이메일은 이미 사용 중입니다.");
-		 * return resp; }
-		 */
-
 		boolean success = service.member_update(dto);
 		resp.put("success", success);
 
 		return resp;
 	}
-
+	
+	//프로필 변경
+	@PutMapping(value="/profile_update")
+	public Map<String, Object> profile_update(@RequestParam(required = false) MultipartFile[] files,
+			MypageDTO dto){
+		
+		for(MultipartFile file : files) {
+			log.info("file name : " + file.getOriginalFilename());
+		}
+		
+		resp = new HashMap<String, Object>();
+		
+		if(files != null) {
+			for (MultipartFile file : files) {
+				log.info("file name : " + file.getOriginalFilename());
+			}
+		}
+		// ↑ 프로필 설정x 기본 회원 정보만 수정 했을 때 완료시키기 위해
+		
+		boolean success =service.profile_update(files, dto);
+		resp.put("success", success);
+		resp.put("img_idx", dto.getImg_idx());
+		
+		return resp;
+	}
+	
+	
+	
 	// 태그 수정
 	@PostMapping(value = "/member_tag_prefer_update")
 	public Map<String, Object> member_tag_prefer_update(@RequestBody Map<String, List<String>> params,
@@ -62,29 +78,5 @@ public class MypageController {
 		
 		return resp;
 	}
-
-	// 프로필 사진 정보
-	@GetMapping(value = "/profile_photo/{img_idx}")
-	public ResponseEntity<Resource> profile_photo(@PathVariable int img_idx) {
-		log.info("img_idx : " + img_idx);
-
-		return service.getFile(img_idx, "photo");
-	}
-
-	// 바꾼 프로필 이미지 → 기본 이미지로 변경
-	@PostMapping(value = "/reset_profile")
-	public Map<String, Object> reset_profile(@RequestParam String user_id) {
-		resp = new HashMap<>();
-
-		boolean success = service.resetProfile(user_id);
-		resp.put("success", success);
-		if (success) {
-			resp.put("message", "기본 프로필 사진으로 변경 되었습니다.");
-		} else {
-			resp.put("message", "프로필 사진 변경에 실패 했습니다.");
-		}
-
-		return resp;
-	}
-
 }
+	
