@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.eat.main.MainDTO;
 
@@ -20,14 +21,10 @@ public interface CommentDAO {
 	int comment_del(int comment_del);
 	
 	//댓글 리스트
-	List<MainDTO> comment_list(int post_idx, int offset, int comment_count);
-	
-	
-
-	
-	
-
-	
+	List<MainDTO> comment_list(
+			@Param("post_idx") int post_idx, 
+			@Param("offset") int offset, 
+			@Param("comment_count") int comment_count);
 	
 
 }

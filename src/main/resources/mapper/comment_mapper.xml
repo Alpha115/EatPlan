@@ -3,12 +3,12 @@
 
 <mapper namespace="com.eat.comment.CommentDAO">
 	<!-- 댓글 리스트 -->
-	<select id="comment" resultType="com.eat.main.MainDTO">
+	<select id="comment_list" resultType="com.eat.main.MainDTO">
 	SELECT comment_idx, post_idx, content, reg_date
 	FROM comment
 	WHERE post_idx = #{post_idx}
 	ORDER BY reg_date DESC
-	LIMIT #{limit} OFFSET #{offset};
+	LIMIT #{comment_count} OFFSET #{offset};
 	</select>
 	
 	<!-- 댓글 작성 -->
