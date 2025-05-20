@@ -83,6 +83,23 @@ public class MsgController {
 			return resp;
 		}
 
-
+	//쪽지 상세보기
+	@GetMapping(value= "/{user_id}/{msg_idx}/msg_detail")
+	public Map<String, Object>msg_detail(@PathVariable String user_id,
+			@PathVariable int msg_idx){
+		
+		Map<String, Object> resp = new HashMap<String, Object>();
+		
+		MsgDTO dto = service.msg_detail(user_id,msg_idx);
+		
+		if(dto != null) {
+			 resp.put("success", true);
+		     resp.put("message", dto);	
+		}else {
+			 resp.put("success", false);
+		     resp.put("error", "존재하지 않거나 권한이 없는 쪽지입니다.");
+		}
+		return resp;
+	}
 	
 }
