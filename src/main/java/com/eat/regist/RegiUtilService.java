@@ -19,13 +19,12 @@ public class RegiUtilService {
 	public ArrayList<TagDTO> listTag(String tagcate_idx) {
 		return dao.listTag(tagcate_idx);
 	}
-
+	// 지역+식당/코스 태그를 통합해서 검색하는 기능입니다.
 	public ArrayList<TagDTO> searchTag(String tag) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<TagDTO> arr = new ArrayList<TagDTO>();
+		arr.addAll(dao.fromTag(tag));
+		arr.addAll(dao.fromLocTag(tag));
+		return arr;
 	}
-	
-	ArrayList<TagDTO> searchFromTag(String tag){
-		return dao.fromTag(tag);
-	}
+
 }

@@ -16,8 +16,16 @@
 	FROM tag WHERE cate_idx = #{param1}
 </select>
 
+<!-- 식당/코스 태그로부터 특정 태그 검색값을 불러옵니다. -->
 <select id="fromTag" resultType="com.eat.tags.TagDTO">
-	SELECT * FROM tag WHERE tag_name=#{param1}
+	SELECT cate_idx, tag_idx , tag_name FROM tag WHERE tag_name LIKE '%#{param1}%';
 </select>
+
+<select id="fromLocTag" resultType="com.eat.tags.TagDTO">
+	SELECT cate_idx, area_tag_idx AS tag_idx , tag_name FROM tag_area
+	WHERE tag_name LIKE '%#{param1}%'
+</select>
+
+
 
 </mapper>

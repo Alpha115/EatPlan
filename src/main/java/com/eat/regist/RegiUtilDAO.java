@@ -15,4 +15,6 @@ public interface RegiUtilDAO {
 	ArrayList<TagDTO> listTag(String tagcate_idx);
 
 	ArrayList<TagDTO> fromTag(String tag);
+
+	ArrayList<TagDTO> fromLocTag(String tag);
 }
