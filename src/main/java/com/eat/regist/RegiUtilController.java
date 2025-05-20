@@ -23,6 +23,8 @@ public class RegiUtilController {
 	RegiUtilService service;
 	Map<String, Object> resp = null;
 
+	
+	// ------------------------------ 태그 불러오기 / 검색------------------------------
 	// 태그_카테고리 table 의 리스트 전체를 불러오는 기능입니다.
 	@GetMapping("/list_tagcate")
 	public Map<String, Object> listTagCate() {
@@ -41,7 +43,7 @@ public class RegiUtilController {
 		return resp;
 	}
 
-	// 식당/코스/지역 태를 검색하는 기능입니다.
+	// 식당/코스/지역 태그를 검색하는 기능입니다.
 	@PostMapping("search_tag")
 	public Map<String, Object> searchTag(@RequestBody Map<String, String> param) {
 		resp = new HashMap<String, Object>();
@@ -49,4 +51,9 @@ public class RegiUtilController {
 		resp.put("result", list);
 		return resp;
 	}
+
+	// ------------------------------ 식당 불러오기 / 검색------------------------------
+	
+	
+	
 }
