@@ -56,6 +56,17 @@ public class MainService {
 	    return row > 0;
 	}
 
+	public Map<String, Object> comment_list(Map<String, String> params) {
+		Map<String, Object> resp = new HashMap<String, Object>();
+		resp.put("page", page);
+		int offset = (page - 1) * limit;
+		/*
+		 * resp.put("comment_list", dao.comment_list(offset, limit));
+		 * resp.put(("pages :", dao.pages(limit));
+		 */
+		return null;
+	}
+
 
 
 

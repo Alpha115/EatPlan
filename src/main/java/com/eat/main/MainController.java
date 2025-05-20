@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -46,6 +47,20 @@ public class MainController {
 	public Map<String, Object> course_list_img(@RequestBody Map<String, String> param){
 		resp = new HashMap<String, Object>();
 		resp = service.course_list_img(param.get("detail_idx"));
+		return resp;
+	}
+	
+	//댓글 리스트
+	@GetMapping(value="/{post_idx}/comment_list")
+	public Map<String, Object> comment_list(@PathVariable String post_idx,
+			@RequestParam Map<String, String> params){
+		
+		log.info("post_idx : " + post_idx);
+		log.info("params : " + params);
+		
+		params.put("post_idx", post_idx);
+		Map<String, Object> resp =service.comment_list(params);
+		
 		return resp;
 	}
 	
