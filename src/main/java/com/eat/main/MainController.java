@@ -29,15 +29,25 @@ public class MainController {
 	MainService service;
 
 	
-	//댓글 리스트
+	// 코스 리스트 불러오기 수정필요
+	@GetMapping(value="/course_list/{page}")
+	public Map<String, Object> course_list(@PathVariable String page){
+		log.info("page = "+page);
+		resp = new HashMap<String, Object>();
+		resp = service.course_list(Integer.parseInt(page));
+		return resp;
+	}
 	
 	
-	
-	
-	// 댓글 작성
-	@PostMapping(value = "/comment_insert")
-	public Map<String, Object> insert(@RequestBody Map<String, String> params) {
-
+//	
+//	// 댓글 작성
+//	@PostMapping(value = "/comment_insert")
+//	public Map<String, Object> insert(@RequestBody Map<String, String> params) {
+//
+//=======
+	public Map<String, Object> comment_insert (@RequestBody Map<String, String> params
+			/*@RequestHeader Map<String, String> header*/){
+		
 		log.info("params : " + params);
 
 		resp = new HashMap<String, Object>();
