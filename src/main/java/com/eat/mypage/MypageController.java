@@ -82,7 +82,21 @@ public class MypageController {
 		return service.getFile(img_idx, "photo");
 	}
 	
-	
+	//바꾼 프로필 이미지 → 기본 이미지로 변경
+	@PostMapping(value = "/reset_profile")
+	public Map<String, Object>reset_profile(@RequestParam String user_id){
+		Map<String,Object> resp = new HashMap<>();
+		
+		boolean success = service.resetProfile(user_id);
+		resp.put("success", success);
+		if(success) {
+			resp.put("message", "기본 프로필 사진으로 변경 되었습니다.");
+		}else {
+			resp.put("message", "프로필 사진 변경에 실패 했습니다.");
+		}
+		
+		return resp;
+	}
 	
 	
 	

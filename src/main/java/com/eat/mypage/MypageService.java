@@ -180,6 +180,18 @@ public class MypageService {
 		return new ResponseEntity<Resource>(res,headers,HttpStatus.OK);
 	}
 	
+	//바꾼 프로필 이미지 → 기본 이미지로 변경
+	public boolean resetProfile(String user_id) {
+		try {
+			int defaultImgIdx =1; // 기본 이미지의 img_idx는 1로 설정
+			dao.updateMemberImgIdx(user_id, defaultImgIdx);
+			return true;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	
 
 	
