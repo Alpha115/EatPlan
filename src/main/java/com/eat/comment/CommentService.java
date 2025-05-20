@@ -1,20 +1,24 @@
 package com.eat.comment;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.eat.main.MainDTO;
 
 @Service
 public class CommentService {
 	@Autowired
 	CommentDAO dao;
 	Logger logger = LoggerFactory.getLogger(getClass());
-	private int limit = 10, page = 0; // 1페이지당 뜨는 코스 게시물의 갯수입니다.
-
+	private int comment_count = 10;
+	
 	// 댓글 작성
 	public boolean comment_insert(Map<String, String> params) {
 		int row = dao.comment_insert(params);
@@ -35,16 +39,29 @@ public class CommentService {
 		return row > 0;
 	}
 
-	// 댓글 리스트
-	public Map<String, Object> comment_list(Map<String, String> params) {
+	public Map<String, Object> comment_list(int post_idx, int page) {
 		Map<String, Object> resp = new HashMap<String, Object>();
+		
+		int offset = (post_idx - 1) * comment_count;
+		
+		List<MainDTO> comments = dao.comment_list(post_idx, offset,comment_count);
+		
+		resp.put("post_idx", post_idx);
 		resp.put("page", page);
-		int offset = (page - 1) * limit;
-
-		resp.put("comment_list", dao.comment_list(offset, limit));
-		resp.put("pages", dao.pages(limit));
-
+		resp.put("comments", comments);
+		resp.put("count", comments.size());
+		
 		return resp;
 	}
+	
+	// 댓글 리스트
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
