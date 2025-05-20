@@ -38,4 +38,21 @@ public class MsgService {
 		
 		return resp;
 	}
+	
+	//보낸 쪽지 보기
+	public Map<String, Object> send_msg(String user_id, int page) {
+		Map<String, Object> resp = new HashMap<String, Object>();
+
+		int offset = (page - 1) * msg_count;
+
+		List<MsgDTO> send_msg = dao.send_msg(user_id, offset, msg_count);
+
+		resp.put("user_id", user_id);
+		resp.put("page", page);
+		resp.put("send_msg", send_msg);
+		resp.put("count", send_msg.size());
+
+		return resp;
+	}
+	
 }
