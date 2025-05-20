@@ -23,7 +23,7 @@ public class MainController {
 	@Autowired
 	MainService service;
 
-	// 코스 리스트 불러오기 수정필요
+	// 코스 리스트 불러오기
 	@GetMapping(value = "/course_list/{page}")
 	public Map<String, Object> course_list(@PathVariable String page) {
 		log.info("page = " + page);
@@ -31,7 +31,55 @@ public class MainController {
 		resp = service.course_list(Integer.parseInt(page));
 		return resp;
 	}
-
+	
+	// 코스 리스트 닉네임 불러오기 !!!! 바디에 user_id 한개씩 보내용
+	@PostMapping(value="/course_list_nick")
+	public Map<String, Object> course_list_nick(@RequestBody Map<String, String> param){
+		resp = new HashMap<String, Object>();
+		resp = service.course_list_nick(param.get("user_id"));
+		return resp;
+	}
+	
+	// 코스 리스트 댓글 수 불러오기 !!!! 바디에 post_idx 한개씩 보내용
+	@PostMapping(value="/course_list_cmtcnt")
+	public Map<String, Object> course_list_cmtcnt(@RequestBody Map<String, String> param){
+		resp = new HashMap<String, Object>();
+		resp = service.course_list_cmtcnt(param.get("post_idx"));
+		return resp;
+	}
+	
+	// 코스 리스트 좋아요 수 불러오기 !!!! 바디에 post_idx 한개씩 보내용
+	@PostMapping(value="/course_list_likecnt")
+	public Map<String, Object> course_list_likecnt(@RequestBody Map<String, String> param){
+		resp = new HashMap<String, Object>();
+		resp = service.course_list_likecnt(param.get("post_idx"));
+		return resp;
+	}
+	
+	// 코스 리스트 별점 평균 불러오기 !!!! 바디에 post_idx 한개씩 보내용
+	@PostMapping(value="/course_list_staravg")
+	public Map<String, Object> course_list_staravg(@RequestBody Map<String, String> param){
+		resp = new HashMap<String, Object>();
+		resp = service.course_list_staravg(param.get("post_idx"));
+		return resp;
+	}
+	
+	// 코스 리스트 일반 태그 불러오기 !!!! 바디에 post_idx 한개씩 보내용
+	@PostMapping(value="/course_list_tag")
+	public Map<String, Object> course_list_tag(@RequestBody Map<String, String> param){
+		resp = new HashMap<String, Object>();
+		resp = service.course_list_tag(param.get("post_idx"));
+		return resp;
+	}
+	
+	// 코스 리스트 지역 태그 불러오기 !!!! 바디에 post_idx 한개씩 보내용
+	@PostMapping(value="/course_list_tagarea")
+	public Map<String, Object> course_list_tagarea(@RequestBody Map<String, String> param){
+		resp = new HashMap<String, Object>();
+		resp = service.course_list_tagarea(param.get("post_idx"));
+		return resp;
+	}
+	
 	// 코스 리스트 사진 불러오기 !!!! 바디에 detail_idx 한개씩 보내용
 	@PostMapping(value = "/course_list_img")
 	public Map<String, Object> course_list_img(@RequestBody Map<String, String> param) {
@@ -39,7 +87,5 @@ public class MainController {
 		resp = service.course_list_img(param.get("detail_idx"));
 		return resp;
 	}
-
-	// 댓글 리스트
 
 }

@@ -11,15 +11,28 @@ public interface MainDAO {
 	// 코스 리스트 불러오기
 	List<CourseDTO> course_list(int offset, int limit);
 	
-	// 코스 리스트 태그 불러오기
+	// 코스 리스트 페이지 처리 
+	int pages(int limit);
+
+	// 코스 리스트 닉네임 불러오기
+	Map<String, Object> course_list_nick(String id);
+
+	// 코스 리스트 댓글 수 불러오기
+	Map<String, Object> course_list_cmtcnt(String idx);
+
+	// 코스 리스트 좋아요 수 불러오기
+	Map<String, Object> course_list_likecnt(String idx);
+
+	// 코스 리스트 별점 평균 불러오기
+	Map<String, Object> course_list_staravg(String idx);
+
+	// 코스 리스트 일반 태그 불러오기
 	Map<String, Object> course_list_tag(String idx);
+
+	// 코스 리스트 지역 태그 불러오기
+	Map<String, Object> course_list_tagarea(String idx);
 	
 	// 코스 리스트 이미지 불러오기
 	Map<String, Object> course_list_img(String idx);
-	
-	// 코스 리스트 페이지 처리 
-	int pages(int limit);
-	
-
 
 }
