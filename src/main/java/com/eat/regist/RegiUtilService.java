@@ -1,6 +1,7 @@
 package com.eat.regist;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,11 @@ public class RegiUtilService {
 		arr.addAll(dao.fromTag(tag));
 		arr.addAll(dao.fromLocTag(tag));
 		return arr;
+	}
+
+	public ArrayList<RestaurantDTO> searchResta(Map<String, String> param) {
+		
+		return null;
 	}
 
 }
