@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -32,47 +33,47 @@ public class MypageService {
 
 	// 회원정보 수정
 	public boolean member_update(MypageDTO dto) {
-		
+
 		return dao.member_update(dto);
 	}
-	
-	//프로필 사진 변경
+
+	// 프로필 사진 변경
 	public boolean profile_update(MultipartFile[] files, MypageDTO dto) {
-		if(files != null && files.length>0) {
+		if (files != null && files.length > 0) {
 			for (MultipartFile file : files) {
 				String fileSaved = fileSave(file);
-			
+
 				int newImgIdx = dao.saveProfileImg(fileSaved); // 사진 DB에 저장
-			dto.setImg_idx(newImgIdx);
+				dto.setImg_idx(newImgIdx);
 			}
-			
+
 		}
 		return dao.profile_update(dto);
 	}
-	
-	//프로필 사진 저장
+
+	// 프로필 사진 저장
 	private String fileSave(MultipartFile file) {
 		boolean success = false;
-		
+
 		// 1.확장자 추출해서
 		String ori_fileName = file.getOriginalFilename();
 		String ext = "";
-		if(ori_fileName != null && ori_fileName.contains(".")) {
+		if (ori_fileName != null && ori_fileName.contains(".")) {
 			ext = ori_fileName.substring(ori_fileName.lastIndexOf("."));
 		}
-		
+
 		// 2.새 파일명 만들고
 		String new_filename = UUID.randomUUID().toString() + ext;
-		
+
 		// 3.저장 경로 정하고
-		String imgDir =  "c:/upload";
+		String imgDir = "c:/upload";
 		File profPath = new File(imgDir);
-		
+
 		// 4.저장 경로 없으면 만들라고 시키고
-		if(!profPath.exists()) {
+		if (!profPath.exists()) {
 			profPath.mkdirs();
 		}
-		
+
 		// 5.파일 저장 되서
 		try {
 			file.transferTo(new File(imgDir + new_filename));
@@ -80,11 +81,10 @@ public class MypageService {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 		// 6.반환 되게 하기
 		return new_filename;
 	}
-	
 
 	// 선호 태그 수정
 	public boolean member_tag_prefer_update(Map<String, List<String>> params, String user_id) {
@@ -103,42 +103,65 @@ public class MypageService {
 
 		return true;
 	}
-	
-	//프로필 삭제
+
+	// 프로필 삭제
 	public boolean profile_del(int img_idx) {
-		
+
 		// 1.삭제할 파일 목록 조회
 		List<Map<String, String>> list = dao.photo_del(Integer.valueOf(img_idx));
 		log.info("list : {} ", list);
-		
+
 		// 2. 파일 삭제
-		if(list != null && !list.isEmpty()) {
-			for(Map<String, String> map : list) {
+		if (list != null && !list.isEmpty()) {
+			for (Map<String, String> map : list) {
 				String filePath = root + "/" + map.get("new_filename");
 				File file = new File(filePath);
-				if(file.exists()) {
+				if (file.exists()) {
 					file.delete();
 				}
 			}
 		}
-		
+
 		// 3. db에서 삭제
 		int row = dao.profile_del(img_idx);
-		
-		return row > 0 ;
+
+		return row > 0;
 	}
 
+	// 프로필 정보 가져오기
+	public ResponseEntity<Resource> getPhoto(int img_idx, String string) {
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		Resource res = null;
+		HttpHeaders headers = new HttpHeaders();
+
+		// 1. img_idx로 new_filename, ori_filename 가져오기
+		Map<String, String> imgMap = dao.imgInfo(img_idx);
+		log.info("imgMap : " + imgMap);
+
+		// 2. new_filename으로 파일 가져오기
+		res = new FileSystemResource(root + "/" + imgMap.get("new_filename"));
+		
+		if (!res.exists()) { //파일 존재 여부 체크
+			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		}
+		
+		// 3. photo or download에 따라 header 설정 <- 근데 이거 다운로드 필요한지는 모르겠는데
+		// 이렇게 배워서 일단 코드 씀.
+		try {
+			if (string.equals("photo")) {
+				String content_type = Files.probeContentType(Paths.get(root + "/" + imgMap.get("new_filename")));
+				headers.add("content-Type", content_type);
+			} else {
+				headers.add("content-Type", "application/octet-stream");
+				String ori_filename = URLEncoder.encode(imgMap.get("ori_filename"), "UTF-8");
+				headers.add("content-Disposition", "attachment;filename=\"" + ori_filename + "\"");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//resource , header, status
+		return new ResponseEntity<Resource>(res,headers,HttpStatus.OK);
+	}
 
 }

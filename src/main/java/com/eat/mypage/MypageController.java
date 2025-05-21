@@ -76,6 +76,16 @@ public class MypageController {
 		return resp;
 	}
 	
+	//프로필 정보 가져오기
+	@GetMapping(value="/photo/{img_idx}")
+	public ResponseEntity<Resource> photo(@PathVariable int img_idx){
+		
+		log.info("img_idx : " + img_idx);
+		
+		return service.getPhoto(img_idx, "photo");
+	}
+	
+	
 	
 	// 태그 수정
 	@PostMapping(value = "/member_tag_prefer_update")

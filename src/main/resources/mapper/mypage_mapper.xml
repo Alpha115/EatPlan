@@ -42,5 +42,11 @@
 	Select * from photo where img_idx = #{param1}
 	</select>
 	
+	<!-- 프로필 정보 가져오기 -->
+	<select id="imgInfo" resultType="map">
+	select ori_filename, new_filename From photo
+		where img_idx = #{img_idx}
+	</select>
+	
 	
 </mapper>

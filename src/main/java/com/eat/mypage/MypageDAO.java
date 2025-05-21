@@ -31,4 +31,7 @@ public interface MypageDAO {
 	// 사진 정보 조회
 	List<Map<String, String>> photo_del(int img_idx);
 
+	// 프로필 정보 가져오기
+	Map<String, String> imgInfo(int img_idx);
+
 }
