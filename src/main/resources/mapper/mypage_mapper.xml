@@ -31,6 +31,13 @@
 		</foreach>
 	</insert>
 	
+	<!-- 프로필 변경  -->
+	<update id="profile_update" parameterType="map">
+	update member
+	SET img_idx = #{img_idx}
+	where user_id = #{user_id}
+	</update>
+	
 	<!-- 프로필 삭제 -->
 	<delete id="profile_del">
 	DELETE FROM photo
