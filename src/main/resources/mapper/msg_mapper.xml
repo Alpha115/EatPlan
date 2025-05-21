@@ -50,7 +50,7 @@
 	</update>
 
 	<!-- 쪽지 상세보기 -->
-	<select id="msg_detail" resultType="MsgDTO">
+	<select id="msg_detail" resultType="com.example.dto.MsgDTO">
 		SELECT *
 		FROM message
 		WHERE msg_idx = #{msg_idx}
