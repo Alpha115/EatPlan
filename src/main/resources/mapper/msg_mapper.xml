@@ -13,7 +13,7 @@
 	</insert>
 
 	<!-- 받은 쪽지 조회 -->
-	<select id="recip_msg" resultType="com.example.dto.MsgDTO"
+	<select id="recip_msg" resultType="com.eat.msg.MsgDTO"
 		parameterType="map">
 		SELECT *
 		FROM message
@@ -24,7 +24,7 @@
 	</select>
 
 	<!-- 보낸 쪽지 조회 -->
-	<select id="send_msg" resultType="com.example.dto.MsgDTO">
+	<select id="send_msg" resultType="com.eat.msg.MsgDTO">
 		SELECT *
 		FROM message
 		WHERE sender = #{user_id}
@@ -50,7 +50,7 @@
 	</update>
 
 	<!-- 쪽지 상세보기 -->
-	<select id="msg_detail" resultType="MsgDTO">
+	<select id="msg_detail" resultType="com.eat.msg.MsgDTO">
 		SELECT *
 		FROM message
 		WHERE msg_idx = #{msg_idx}

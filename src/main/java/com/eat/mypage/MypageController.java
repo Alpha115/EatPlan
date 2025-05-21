@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +63,26 @@ public class MypageController {
 		resp.put("img_idx", dto.getImg_idx());
 		
 		return resp;
+	}
+	//프로필 삭제
+	@DeleteMapping(value="/profile_del/{user_id}/{img_idx}")
+	public Map<String, Object> profile_del (@PathVariable String user_id
+			,@PathVariable int img_idx) {
+		
+		resp = new HashMap<String, Object>();
+		boolean success = service.profile_del(img_idx);
+		resp.put("success", success);
+		
+		return resp;
+	}
+	
+	//프로필 정보 가져오기
+	@GetMapping(value="/photo/{img_idx}")
+	public ResponseEntity<Resource> photo(@PathVariable int img_idx){
+		
+		log.info("img_idx : " + img_idx);
+		
+		return service.getPhoto(img_idx, "photo");
 	}
 	
 	
