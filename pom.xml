@@ -67,6 +67,15 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+
+
 		<!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 -->
 		<!-- sql Query log trace lib -->
 		<dependency>

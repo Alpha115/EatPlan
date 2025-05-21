@@ -1,11 +1,14 @@
 package com.eat.member;
 
+import java.io.File;
 import java.util.Map;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class MemberService {
@@ -35,6 +38,44 @@ public class MemberService {
 	public boolean overlayNick(String nickname) {
 		int cnt = dao.overlayNick(nickname);
 		return cnt == 0 ? true : false;
+	}
+
+	public boolean profileUpload(MultipartFile[] files, MemberDTO dto) {
+		if (files != null && files.length > 0) {
+			for (MultipartFile file : files) {
+				String fileSaved = fileSave(file);
+
+				int newImgIdx = dao.saveProfileImg(fileSaved); // 사진 DB에 저장
+				dto.setImg_idx(newImgIdx);
+			}
+		}
+		return dao.profileUpload(dto);
+	}
+
+	private String fileSave(MultipartFile file) {
+		String ori_fileName = file.getOriginalFilename();
+		String ext = "";
+		if (ori_fileName != null && ori_fileName.contains(".")) {
+			ext = ori_fileName.substring(ori_fileName.lastIndexOf("."));
+		}
+		
+		String new_fileName = UUID.randomUUID().toString()+ext;
+		
+		String imgDir = "c:/upload";
+		File profilePath = new File(imgDir);
+		
+		if (!profilePath.exists()) {
+			profilePath.exists();
+		}
+		
+		try {
+			file.transferTo(new File(imgDir+new_fileName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return new_fileName;
 	}
 
 }

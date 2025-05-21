@@ -10,6 +10,7 @@ import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -42,8 +43,12 @@ public class MypageService {
 		if (files != null && files.length > 0) {
 			for (MultipartFile file : files) {
 				String fileSaved = fileSave(file);
-
-				int newImgIdx = dao.saveProfileImg(fileSaved); // 사진 DB에 저장
+				
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("fileSaved", fileSaved);
+				param.put("img_idx", dto.getImg_idx());
+				
+				int newImgIdx = dao.saveProfileImg(param); // 사진 DB에 저장
 				dto.setImg_idx(newImgIdx);
 			}
 
@@ -140,11 +145,11 @@ public class MypageService {
 
 		// 2. new_filename으로 파일 가져오기
 		res = new FileSystemResource(root + "/" + imgMap.get("new_filename"));
-		
-		if (!res.exists()) { //파일 존재 여부 체크
+
+		if (!res.exists()) { // 파일 존재 여부 체크
 			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		// 3. photo or download에 따라 header 설정 <- 근데 이거 다운로드 필요한지는 모르겠는데
 		// 이렇게 배워서 일단 코드 씀.
 		try {
@@ -159,9 +164,9 @@ public class MypageService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		//resource , header, status
-		return new ResponseEntity<Resource>(res,headers,HttpStatus.OK);
+
+		// resource , header, status
+		return new ResponseEntity<Resource>(res, headers, HttpStatus.OK);
 	}
 
 }
