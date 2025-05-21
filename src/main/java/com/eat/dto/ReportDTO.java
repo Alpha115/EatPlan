@@ -1,4 +1,4 @@
-package com.eat.report;
+package com.eat.dto;
 
 import java.sql.Date;
 

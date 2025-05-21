@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eat.dto.RestaurantDTO;
 import com.eat.tags.TagCateDTO;
 import com.eat.tags.TagDTO;
 

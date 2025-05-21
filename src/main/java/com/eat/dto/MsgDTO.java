@@ -1,4 +1,4 @@
-package com.eat.msg;
+package com.eat.dto;
 
 import java.sql.Date;
 

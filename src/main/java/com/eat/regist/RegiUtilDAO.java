@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.eat.dto.RestaurantDTO;
 import com.eat.tags.TagCateDTO;
 import com.eat.tags.TagDTO;
 

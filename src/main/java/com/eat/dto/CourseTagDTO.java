@@ -1,4 +1,4 @@
-package com.eat.main;
+package com.eat.dto;
 
 // 코스 태그 테이블 DTO
 public class CourseTagDTO {

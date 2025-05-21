@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.eat.main.MainDTO;
+import com.eat.dto.MainDTO;
 
 @Service
 public class CommentService {

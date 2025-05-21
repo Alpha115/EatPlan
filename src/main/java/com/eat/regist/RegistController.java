@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eat.main.CourseDTO;
-import com.eat.main.CourseTagDTO;
-import com.eat.main.DetailCmtDTO;
-import com.eat.main.DetailRestaDTO;
-import com.eat.main.TimelineDTO;
+import com.eat.dto.CourseDTO;
+import com.eat.dto.CourseTagDTO;
+import com.eat.dto.DetailCmtDTO;
+import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.RegistRequestDTO;
+import com.eat.dto.TimelineDTO;
 
 @CrossOrigin
 @RestController

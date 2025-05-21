@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eat.dto.RestaurantDTO;
 import com.eat.tags.TagCateDTO;
 import com.eat.tags.TagDTO;
 

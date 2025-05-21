@@ -1,12 +1,14 @@
-package com.eat.main;
+package com.eat.dto;
 
-// 세부일정-코멘트 테이블 DTO
-public class DetailCmtDTO {
+// 식당 일정 정보를 담는 DTO
+public class DetailRestaDTO {
 
 	private int detail_idx;
 	private int post_idx;
+	private int resta_idx;
 	private String comment;
 	private String start;
+	
 	public int getDetail_idx() {
 		return detail_idx;
 	}
@@ -18,6 +20,12 @@ public class DetailCmtDTO {
 	}
 	public void setPost_idx(int post_idx) {
 		this.post_idx = post_idx;
+	}
+	public int getResta_idx() {
+		return resta_idx;
+	}
+	public void setResta_idx(int resta_idx) {
+		this.resta_idx = resta_idx;
 	}
 	public String getComment() {
 		return comment;
@@ -31,7 +39,5 @@ public class DetailCmtDTO {
 	public void setStart(String start) {
 		this.start = start;
 	}
-	
-	
 	
 }
