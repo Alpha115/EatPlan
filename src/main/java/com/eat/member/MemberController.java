@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eat.utils.JwtUtil;
 
@@ -32,12 +35,10 @@ public class MemberController {
 		resp = new HashMap<String, Object>();
 		boolean success = service.login(params);
 		resp.put("success", success);
-		
 		if (success == true) {
 			String token = JwtUtil.getToken("id", params.get("id"));
 			resp.put("token", token);
 		}
-		
 		return resp;
 	}
 
@@ -67,5 +68,21 @@ public class MemberController {
 		resp.put("use", success);
 		return resp;
 	}
+	
+	// 프로필 사진 변경
+	@PutMapping(value="/profileUpload")
+	public Map<String, Object> profileUpload(@RequestParam(required = false) MultipartFile[] files,
+			MemberDTO dto) {
+		for(MultipartFile file : files) {
+			log.info("file name : " + file.getOriginalFilename());
+		}
+		resp = new HashMap<String, Object>();
+		boolean success = service.profileUpload(files, dto);
+		resp.put("success", success);
+		resp.put("img_idx", dto.getImg_idx());
+		return resp;
+	}
+	
+	// 프로필 사진 삭제
 
 }
