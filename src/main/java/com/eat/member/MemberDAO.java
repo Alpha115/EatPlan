@@ -15,8 +15,8 @@ public interface MemberDAO {
 
 	int overlayNick(String nickname);
 
-	boolean profileUpload(MemberDTO dto);
-
-	int saveProfileImg(String fileSaved);
+//	boolean profileUpload(MemberDTO dto);
+//
+//	int saveProfileImg(String fileSaved);
 	
 }
