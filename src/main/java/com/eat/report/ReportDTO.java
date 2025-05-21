@@ -1,6 +1,6 @@
 package com.eat.report;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ReportDTO {
 
@@ -12,7 +12,7 @@ public class ReportDTO {
 	private String content;
 	private int reported_idx;
 	private String isClass;
-	private Date report_date;
+	private Timestamp report_date;
 	private boolean done;
 	private boolean isPublic;
 	
@@ -64,10 +64,10 @@ public class ReportDTO {
 	public void setIsClass(String isClass) {
 		this.isClass = isClass;
 	}
-	public Date getReport_date() {
+	public Timestamp getReport_date() {
 		return report_date;
 	}
-	public void setReport_date(Date report_date) {
+	public void setReport_date(Timestamp report_date) {
 		this.report_date = report_date;
 	}
 	public boolean isDone() {

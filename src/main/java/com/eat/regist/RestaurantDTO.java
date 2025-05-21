@@ -11,6 +11,7 @@ public class RestaurantDTO {
 	private double lat;
 	private double lng;
 	private String resta_bio;
+	
 	public int getResta_idx() {
 		return resta_idx;
 	}

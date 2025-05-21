@@ -1,13 +1,13 @@
 package com.eat.report;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ReportHistoryDTO {
 	private int his_idx;
 	private int report_idx;
 	private String user_id;
 	private String content;
-	private Date done_date;
+	private Timestamp done_date;
 	
 	public int getHis_idx() {
 		return his_idx;
@@ -33,10 +33,10 @@ public class ReportHistoryDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getDone_date() {
+	public Timestamp getDone_date() {
 		return done_date;
 	}
-	public void setDone_date(Date done_date) {
+	public void setDone_date(Timestamp done_date) {
 		this.done_date = done_date;
 	}
 	

@@ -1,13 +1,14 @@
 package com.eat.notice;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class NoticeDTO {
 	private int notice_idx;
 	private String user_id;
 	private String subject;
 	private String content;
-	private Date reg_date;
+	private Timestamp reg_date;
 	private int b_Hit;
 	private boolean highlight;
 	
@@ -36,10 +37,10 @@ public class NoticeDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getReg_date() {
+	public Timestamp getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(Timestamp reg_date) {
 		this.reg_date = reg_date;
 	}
 	public int getB_Hit() {

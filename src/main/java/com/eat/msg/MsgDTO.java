@@ -1,6 +1,7 @@
 package com.eat.msg;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MsgDTO {
 
@@ -17,10 +18,10 @@ public class MsgDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getMsg_date() {
+	public Timestamp getMsg_date() {
 		return msg_date;
 	}
-	public void setMsg_date(Date msg_date) {
+	public void setMsg_date(Timestamp msg_date) {
 		this.msg_date = msg_date;
 	}
 	public String getRecip() {
@@ -60,7 +61,7 @@ public class MsgDTO {
 		this.user_id = user_id;
 	}
 	private String content;
-	private Date msg_date;
+	private Timestamp msg_date;
 	private String recip;
 	private String sender;
 	private boolean recip_del;

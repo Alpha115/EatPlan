@@ -7,6 +7,7 @@ public class DetailCmtDTO {
 	private int post_idx;
 	private String comment;
 	private String start;
+	
 	public int getDetail_idx() {
 		return detail_idx;
 	}

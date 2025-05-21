@@ -4,20 +4,20 @@ package com.eat.main;
 public class CourseTagDTO {
 
 	private int idx;
-	private String isclass;
+	private String isClass;
 	private int post_idx;
 	
+	public String getIsClass() {
+		return isClass;
+	}
+	public void setIsClass(String isClass) {
+		this.isClass = isClass;
+	}
 	public int getIdx() {
 		return idx;
 	}
 	public void setIdx(int idx) {
 		this.idx = idx;
-	}
-	public String getIsclass() {
-		return isclass;
-	}
-	public void setIsclass(String isclass) {
-		this.isclass = isclass;
 	}
 	public int getPost_idx() {
 		return post_idx;

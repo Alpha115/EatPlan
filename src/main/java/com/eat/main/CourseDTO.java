@@ -1,6 +1,6 @@
 package com.eat.main;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 // post 테이블 DTO
 public class CourseDTO {
@@ -9,12 +9,18 @@ public class CourseDTO {
 	private String user_id;
 	private String subject;
 	private int b_hit;
-	private Date reg_date;
+	private Timestamp reg_date;
 	private String post_cmt;
-	private boolean ispublic;
+	private boolean isPublic;
 	private boolean blind;
 	private boolean tmp;
 
+	public boolean isPublic() {
+		return isPublic;
+	}
+	public void setPublic(boolean isPublic) {
+		this.isPublic = isPublic;
+	}
 	public String getPost_cmt() {
 		return post_cmt;
 	}
@@ -45,17 +51,11 @@ public class CourseDTO {
 	public void setB_hit(int b_hit) {
 		this.b_hit = b_hit;
 	}
-	public Date getReg_date() {
+	public Timestamp getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(Timestamp reg_date) {
 		this.reg_date = reg_date;
-	}
-	public boolean isIspublic() {
-		return ispublic;
-	}
-	public void setIspublic(boolean ispublic) {
-		this.ispublic = ispublic;
 	}
 	public boolean isBlind() {
 		return blind;

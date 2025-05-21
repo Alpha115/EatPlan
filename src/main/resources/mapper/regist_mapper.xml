@@ -7,7 +7,7 @@
 <insert id="regist_write" parameterType="com.eat.main.CourseDTO"
 	useGeneratedKeys="true" keyColumn="post_idx" keyProperty="post_idx">
 	INSERT INTO post (user_id, subject, post_cmt, public, tmp)
-	VALUES (#{user_id}, #{subject}, #{post_cmt}, #{ispublic}, #{tmp})
+	VALUES (#{user_id}, #{subject}, #{post_cmt}, #{isPublic}, #{tmp})
 </insert>
 
 <!-- 코스 작성 타임라인 -->
@@ -33,7 +33,7 @@
 <!-- 코스 작성 코스태그 -->
 <insert id="regist_tags" parameterType="com.eat.main.CourseTagDTO">
 	INSERT INTO tag_course (post_idx, idx, class)
-	VALUES (#{post_idx}, #{idx}, #{isclass})
+	VALUES (#{post_idx}, #{idx}, #{isClass})
 </insert>
 
 <!-- 코스 작성 임시저장 리스트 -->
@@ -61,7 +61,7 @@
 	SET 
 	    subject = #{content.subject},
 	    post_cmt = #{content.post_cmt},
-	    public = #{content.ispublic}
+	    public = #{content.isPublic}
 	WHERE post_idx = #{param2}
 </update>
 
@@ -101,13 +101,13 @@
 <!-- 코스 수정 코스태그 새로생성 -->
 <insert id="update_tags" parameterType="com.eat.main.CourseTagDTO">
 	INSERT INTO tag_course (post_idx, idx, class)
-	VALUES (#{param2}, #{t.idx}, #{t.isclass})
+	VALUES (#{param2}, #{t.idx}, #{t.isClass})
 </insert>
 
 <!-- 코스 수정 코스태그 삭제 -->
 <delete id="delete_tags">
 	DELETE FROM tag_course 
-	WHERE post_idx = #{param2} AND idx = #{t.idx} AND class = #{t.isclass}
+	WHERE post_idx = #{param2} AND idx = #{t.idx} AND class = #{t.isClass}
 </delete>
 
 <!-- 코스 삭제 -->
