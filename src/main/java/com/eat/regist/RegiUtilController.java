@@ -53,15 +53,25 @@ public class RegiUtilController {
 	}
 
 	// ------------------------------ 식당 불러오기 / 검색------------------------------
-	// 식당 table의 리스트를 검색하는 기능입니다. 아무것도 검색하지 않는다면 모두 불러와집니다.
-	@PostMapping("/list_resta")
-	public Map<String, Object> searchResta(@RequestBody Map<String, String> param){
-		// 예를 들어, param으로 #종로3가 #데이트 #한식 으로 입력받을 수 있습니다.
+	// 식당 table의 이름을 검색하는 기능입니다.
+//	@PostMapping("/list_resta")
+//	public Map<String, Object> searchResta(@RequestBody Map<String, String> param){
+//		// 예를 들어, param으로 #종로3가 #데이트 #한식 으로 입력받을 수 있습니다.
+//		resp=new HashMap<String, Object>();
+//		ArrayList<RestaurantDTO> list=service.searchResta(param);
+//		resp.put("list_resta", list);
+//		return resp;
+//	}
+	
+	//식당 이름을 검색합니다.
+	@GetMapping("search_resta/{resta_name}")
+	public Map<String, Object> searchRestaName(@PathVariable String resta_name){
 		resp=new HashMap<String, Object>();
-		ArrayList<RestaurantDTO> list=service.searchResta(param);
-		resp.put("list_resta", list);
+		ArrayList<RestaurantDTO> result=service.searchRestaName(resta_name);
+		resp.put("result", result);
 		return resp;
 	}
+	
 	
 	// 지도에 식당 좌표찍기 (위도,경도 가져오기)
 	@GetMapping(value="/resta_coor")

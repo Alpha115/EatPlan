@@ -40,4 +40,10 @@ public class RegiUtilService {
 		return dao.resta_coor(resta_idx);
 	}
 
+	
+	public ArrayList<RestaurantDTO> searchRestaName(String resta_name) {
+		
+		return dao.searchRestaName(resta_name);
+	}
+
 }
