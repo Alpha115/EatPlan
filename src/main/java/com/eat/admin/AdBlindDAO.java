@@ -1,6 +1,7 @@
 package com.eat.admin;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface AdBlindDAO {
@@ -9,6 +10,8 @@ public interface AdBlindDAO {
 	int course_blind(int post_idx);
 	
 	//게시글 댓글 블라인드
-	int comment_blind(int comment_idx, int post_idx, String user_id);
+	int comment_blind(@Param("comment_idx") int comment_idx, 
+			@Param("post_idx") int post_idx, 
+			@Param("user_id")String user_id);
 
 }
