@@ -40,5 +40,8 @@ public class AdTagController {
 		resp.put("success", success);
 		return resp;
 	}
+	// 위에꺼 만들어졌니...? 식당에 지역태그 추가해야하지 않겠니?
+	// 코스 태그 추가 해야되지 않겠니...?
+	
 	
 }
