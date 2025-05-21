@@ -18,16 +18,16 @@
 
 	<!-- 회원 정보 수정 - 태그 삭제 -->
 	<delete id="deletMemberTags">
-		delete from
+		DELETE FROM
 		tag_prefer where user_id = #{param1}
 	</delete>
 
 	<!-- 회원 정보 수정 - 태그 추가 -->
 	<insert id="addMemberTags" parameterType="map">
-		INSERT INTO tag_prefer (user_id, idx, class)
+		INSERT INTO tag_prefer (user_id, idx)
 		VALUES
 		<foreach collection="tagList" item="tag" separator=",">
-			(#{user_id},#{tag.idx},#{tag.isClass})
+			(#{user_id}, #{tag})
 		</foreach>
 	</insert>
 	
@@ -51,9 +51,15 @@
 	
 	<!-- 프로필 정보 가져오기 -->
 	<select id="imgInfo" resultType="map">
-	select ori_filename, new_filename From photo
-		where img_idx = #{img_idx}
+	SELECT new_filename FROM photo
+		WHERE img_idx = #{img_idx}
 	</select>
+	
+	<insert id="saveProfileImg" parameterType="map" 
+	useGeneratedKeys="true" keyProperty="img_idx">
+  INSERT INTO photo (new_filename, img_idx)
+  VALUES (#{new_filename}, #{img_idx})
+</insert>
 	
 	
 </mapper>

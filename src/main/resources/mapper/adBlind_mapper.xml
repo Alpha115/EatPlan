@@ -4,14 +4,14 @@
 <mapper namespace="com.eat.admin.AdBlindDAO">
 
 	<!-- 코스 블라인드 -->
-	<update id="course_blind">
+	<update id="course_blind" parameterType="int">
 		UPDATE post
 		SET blind = CASE WHEN blind = 0 THEN 1 ELSE 0 END
 		WHERE post_idx = #{param1}
 	</update>
 
 	<!-- 게시글 댓글 블라인드 -->
-	<update id="comment_blind">
+	<update id="comment_blind" parameterType="map">
 		UPDATE comment
 		SET blind = CASE WHEN blind = 0 THEN 1 ELSE 0 END
 		WHERE comment_idx = #{comment_idx}

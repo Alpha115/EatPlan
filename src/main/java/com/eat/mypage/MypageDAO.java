@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MypageDAO {
@@ -14,16 +15,16 @@ public interface MypageDAO {
 	
 
 	// 회원 정보 수정 - 태그삭제
-	void deletMemberTags(String user_id, List<String> removeTags);
+	void deletMemberTags(@Param("user_id")String user_id,@Param("tagList") List<String> removeTags);
 
 	// 회원 정보 수정 - 태그추가
-	void addMemberTags(String user_id, List<String> addTags);
+	void addMemberTags(@Param("user_id") String user_id,@Param("tagList") List<String> addTags);
 	
 	//프로필 정보 수정
 	boolean profile_update(MypageDTO dto);
 	
 	//사진 정보 DB에 저장
-	int saveProfileImg(String fileSaved);
+	int saveProfileImg(Map<String, Object>param);
 
 	// 프로필 삭제
 	int profile_del(int img_idx);

@@ -45,18 +45,20 @@ public class MypageController {
 	public Map<String, Object> profile_update(@RequestParam(required = false) MultipartFile[] files,
 			MypageDTO dto){
 		
+		resp = new HashMap<String, Object>();
+		
 		for(MultipartFile file : files) {
 			log.info("file name : " + file.getOriginalFilename());
 		}
 		
-		resp = new HashMap<String, Object>();
-		
 		if(files != null) {
 			for (MultipartFile file : files) {
 				log.info("file name : " + file.getOriginalFilename());
+				// ↑ 프로필 설정x 기본 회원 정보만 수정 했을 때 완료시키기 위해
 			}
+		}else {
+			log.info("파일 없음");
 		}
-		// ↑ 프로필 설정x 기본 회원 정보만 수정 했을 때 완료시키기 위해
 		
 		boolean success =service.profile_update(files, dto);
 		resp.put("success", success);
