@@ -73,9 +73,6 @@ public class MemberController {
 	@PutMapping(value="/profileUpload")
 	public Map<String, Object> profileUpload(@RequestParam(required = false) MultipartFile[] files,
 			MemberDTO dto) {
-		for(MultipartFile file : files) {
-			log.info("file name : " + file.getOriginalFilename());
-		}
 		resp = new HashMap<String, Object>();
 		boolean success = service.profileUpload(files, dto);
 		resp.put("success", success);

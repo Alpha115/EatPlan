@@ -11,11 +11,12 @@ resultType="int">
 
 <insert id="join" parameterType="com.eat.member.MemberDTO">
 	INSERT INTO member (
-		user_id, pass, nickname, bio, location, admin
+		user_id, pass, nickname, email, bio, location, admin
 	)VALUES(
 		#{user_id}
 		,#{pass}
 		,#{nickname}
+		,#{email}
 		,#{bio}
 		,#{location}
 		,${admin}
