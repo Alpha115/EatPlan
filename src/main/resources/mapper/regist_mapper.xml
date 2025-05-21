@@ -38,8 +38,9 @@
 
 <!-- 코스 작성 임시저장 리스트 -->
 <select id="regist_tmp_list" resultType="com.eat.main.CourseDTO">
-	SELECT 
-		subject
+	SELECT
+		post_idx 
+		,subject
 		,reg_date
 	FROM post
 	WHERE user_id = #{param1} AND tmp = true
@@ -54,9 +55,73 @@
 	WHERE user_id = #{param1} AND tmp = true
 </select>
 
+<!-- 코스 수정 몸통 -->
+<update id="update" parameterType="com.eat.main.CourseDTO">
+	UPDATE post
+	SET 
+	    subject = #{content.subject},
+	    post_cmt = #{content.post_cmt},
+	    public = #{content.ispublic}
+	WHERE post_idx = #{param2}
+</update>
+
+<!-- 코스 수정 타임라인 -->
+<update id="update_time" parameterType="com.eat.main.TimelineDTO">
+	UPDATE timeline
+	SET 
+	    start = #{time.start},
+	    end = #{time.end}
+	WHERE post_idx = #{param2}
+</update>
+
+<!-- 코스 수정 세부일정-식당 새로생성 -->
+<insert id="update_detail_resta" parameterType="com.eat.main.DetailRestaDTO"
+	useGeneratedKeys="true" keyColumn="detail_idx" keyProperty="d_resta.detail_idx">
+	INSERT INTO detail_restaurant (post_idx, resta_idx, comment, start)
+	VALUES (#{param2}, #{d_resta.resta_idx}, #{d_resta.comment}, #{d_resta.start})
+</insert>
+
+<!-- 코스 수정 세부일정-식당 삭제 -->
+<delete id="delete_detail_resta">
+	DELETE FROM detail_restaurant WHERE detail_idx = #{param1}
+</delete>
+
+<!-- 코스 수정 세부일정-코멘트 새로생성 -->
+<insert id="update_detail_cmt" parameterType="com.eat.main.DetailCmtDTO"
+	useGeneratedKeys="true" keyColumn="detail_idx" keyProperty="d_cmt.detail_idx">
+	INSERT INTO detail_comment (post_idx, comment, start)
+	VALUES (#{param2}, #{d_cmt.comment}, #{d_cmt.start})
+</insert>
+
+<!-- 코스 수정 세부일정-코멘트 삭제 -->
+<delete id="delete_detail_cmt">
+	DELETE FROM detail_cmt WHERE detail_idx = #{param1}
+</delete>
+
+<!-- 코스 수정 코스태그 새로생성 -->
+<insert id="update_tags" parameterType="com.eat.main.CourseTagDTO">
+	INSERT INTO tag_course (post_idx, idx, class)
+	VALUES (#{param2}, #{t.idx}, #{t.isclass})
+</insert>
+
+<!-- 코스 수정 코스태그 삭제 -->
+<delete id="delete_tags">
+	DELETE FROM tag_course 
+	WHERE post_idx = #{param2} AND idx = #{t.idx} AND class = #{t.isclass}
+</delete>
+
+<!-- 코스 삭제 -->
+<delete id="delete">
+    DELETE FROM post
+    WHERE post_idx IN
+    <foreach item="del_idx" collection="list" open="(" separator="," close=")">
+        #{del_idx.post_idx}
+    </foreach>
+</delete>
+
 <!-- 페이지 -->
 <select id="pages" resultType="int">
-	SELECT CEIL(COUNT(post_idx)/#{param1}) AS pages FROM post
+	SELECT CEIL(COUNT(post_idx)/#{param1}) AS pages FROM post WHERE tmp = true
 </select>
 
 </mapper>

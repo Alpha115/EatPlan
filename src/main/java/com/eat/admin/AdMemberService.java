@@ -34,8 +34,15 @@ public class AdMemberService {
 			return false;
 		}
 		
-		
-		
 	}
+	
+	// 정지 회원 로그인 막기
+	public boolean blockchk(String user_id) {
+		int count = dao.blockchk(user_id);
+				return count >0;
+	}
+	
+	
+	
 
 }

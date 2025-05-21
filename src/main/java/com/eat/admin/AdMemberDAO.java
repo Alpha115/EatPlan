@@ -14,6 +14,9 @@ public interface AdMemberDAO {
 	
 	//회원 조회
 	UserDTO findUser(String user_id);
+	
+	// 정지 회원 로그인 막기
+	int blockchk(String user_id);
 
 	
 	
