@@ -63,6 +63,16 @@ public class RegiUtilController {
 		return resp;
 	}
 	
-	
+	// 지도에 식당 좌표찍기 (위도,경도 가져오기)
+	@GetMapping(value="/resta_coor")
+	public Map<String, Object> resta_coor(
+			@RequestBody Map<String, String> param){
+		
+		resp = new HashMap<String, Object>();
+		ArrayList<RestaurantDTO> resta_coor = service.resta_coor(param.get("resta_idx"));
+		resp.put("coordinates", resta_coor);
+		
+		return resp;
+	}
 	
 }

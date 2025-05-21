@@ -34,4 +34,10 @@ public class RegiUtilService {
 		return null;
 	}
 
+	// 지도에 식당 좌표찍기 (위도,경도 가져오기)
+	public ArrayList<RestaurantDTO> resta_coor(String resta_idx) {
+		
+		return dao.resta_coor(resta_idx);
+	}
+
 }
