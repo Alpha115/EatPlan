@@ -4,10 +4,24 @@
 
 <mapper namespace="com.eat.admin.AdMemberDAO">
 
-<!-- 관리자: 유저에게 관리자 권한을 부여하거나, 삭제하는 기능 -->
-<update id="addAdmin">
-	UPDATE member SET admin=!admin WHERE user_id =#{param1}
-</update>
+	<!-- 관리자: 유저에게 관리자 권한을 부여하거나, 삭제하는 기능 -->
+	<update id="addAdmin">
+		UPDATE member SET admin=!admin WHERE user_id
+		=#{param1}
+	</update>
 
+	<!-- 회원 조회 -->
+	<select id="findUser" parameterType="string" resultType="User">
+		SELECT *
+		FROM users WHERE id = #{id}
+	</select>
+
+	<!-- 회원 정지 -->
+	<update id="suspendUser" parameterType="map">
+		UPDATE users
+		SET is_suspended = TRUE,
+		suspension_until = #{suspensionUntil}
+		WHERE id = #{id}
+	</update>
 
 </mapper>
