@@ -37,6 +37,36 @@ public interface RegistDAO {
 	// 코스 작성 임시저장 불러오기 페이지
 	int pages(int limit);
 
+	// 코스 수정 몸통
+	int update(CourseDTO content, int post_idx);
+
+	// 코스 수정 타임라인
+	int update_time(TimelineDTO time, int post_idx);
+
+	// 코스 수정 세부일정-식당 새로 작성
+	int update_detail_resta(DetailRestaDTO d_resta, int post_idx);
+
+	// 코스 세부일정 - 식당 삭제
+	int delete_detail_resta(int detail_idx);
+	
+	// 코스 수정 세부일정-코멘트 새로 작성
+	int update_detail_cmt(DetailCmtDTO d_cmt, int post_idx);
+	
+	// 코스 세부일정 - 코멘트 삭제
+	int delete_detail_cmt(int detail_idx);
+
+	// 코스 수정 코스태그 새로 생성
+	int update_tags(CourseTagDTO t, int post_idx);
+
+	// 코스 태그 삭제
+	void delete_tags(CourseTagDTO t, int post_idx);
+
+	// 코스 삭제
+	int delete(List<CourseDTO> del_idx);
+
+
+
+
 
 
 

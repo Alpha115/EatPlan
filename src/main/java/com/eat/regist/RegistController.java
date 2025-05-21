@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,18 +54,67 @@ public class RegistController {
 			@PathVariable String user_id){
 		
 		resp = new HashMap<String, Object>();
+		
 		resp = service.regist_tmp_list(user_id, Integer.parseInt(page));
 		
 		return resp;
 	}
 	
+	/*
+	 * // 코스 수정 할 게시글 불러오기
+	 * 
+	 * @GetMapping(value="/regist_update_content/{post_idx}") public Map<String,
+	 * Object> regist_update_content(
+	 * 
+	 * @PathVariable String post_idx){
+	 * 
+	 * resp = new HashMap<String, Object>();
+	 * 
+	 * resp = service.regist_update_content(Integer.parseInt(post_idx));
+	 * 
+	 * return resp; }
+	 */
+	
 	// 코스 수정
-	@PutMapping(value="/regist_update")
-	public Map<String, Object> regist_update(){
+	@PutMapping(value="/update/{post_idx}")
+	public Map<String, Object> course_update(
+			@PathVariable String post_idx,
+			@RequestBody RegistRequestDTO req){
 		
 		resp = new HashMap<String, Object>();
 		
+		CourseDTO content = req.getContent();
+	    List<DetailRestaDTO> content_detail_resta  = req.getContent_detail_resta();
+	    List<DetailRestaDTO> content_detail_resta_del  = req.getContent_detail_resta();
+	    List<DetailCmtDTO> content_detail_cmt = req.getContent_detail_cmt();
+	    List<DetailCmtDTO> content_detail_cmt_del = req.getContent_detail_cmt();
+	    List<CourseTagDTO> tags = req.getTags();
+	    List<CourseTagDTO> tags_del = req.getTags();
+	    TimelineDTO time = req.getTime();
+		
+		boolean success = service.update(
+				content,
+				content_detail_resta,
+				content_detail_resta_del,
+				content_detail_cmt,
+				content_detail_cmt_del,
+				tags, tags_del, time,
+				Integer.parseInt(post_idx));
+		resp.put("success", success);
+		
 		return resp;
 	}
+	
+	// 코스 삭제
+	@DeleteMapping (value="/delete")
+	public Map<String, Object> delete(
+			@RequestBody List<CourseDTO> del_idx){
+		
+		resp = new HashMap<String, Object>();
+		boolean success = service.delete(del_idx);
+		resp.put("success", success);
+		return resp;
+	}
+	
 	
 }
