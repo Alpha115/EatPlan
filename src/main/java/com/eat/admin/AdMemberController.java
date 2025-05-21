@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -36,12 +37,14 @@ public class AdMemberController {
 	
 	// 회원의 정지기능을 관리하는 기능입니다. 관리자 로그인 및 토큰이 필요합니다. 
 	// 정지기능 작성 시 이곳에 작성해주세요.
-	@PostMapping(value="/{user_id}/{days}/suspend")
+	@PostMapping(value="/{user_id}/suspend")
 	public Map<String, Object>suspend(@PathVariable String user_id,
-			@PathVariable int days){
+			@RequestBody BanPeriDTO dto){
 		
 		resp = new HashMap<String, Object>();
-		boolean success = service.suspend(user_id, days);
+				dto.setUser_id(user_id);
+		
+		boolean success = service.suspend(dto);
 		resp.put("success",success);
 		
 		return resp;
