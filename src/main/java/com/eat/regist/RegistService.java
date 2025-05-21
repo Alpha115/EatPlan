@@ -1,6 +1,8 @@
 package com.eat.regist;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +53,21 @@ public class RegistService {
 		}
 
 		return success;
+	}
+
+	private int limit = 10, page = 0; // 1페이지당 뜨는 코스 게시물의 갯수입니다.
+	
+	// 코스 작성 임시저장 불러오기
+	public Map<String, Object> regist_tmp_list(String user_id, int page) {
+		Map<String, Object> resp = new HashMap<String, Object>();
+		this.page = page;
+		resp.put("page", this.page);
+		int offset = (this.page - 1) * limit;
+		
+		resp.put("cnt", dao.regist_tmp_cnt(user_id));
+		resp.put("list", dao.regist_tmp_list(user_id, offset, limit));
+		resp.put("pages", dao.pages(limit));
+		return resp;
 	}
 
 }

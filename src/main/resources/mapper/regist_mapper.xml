@@ -36,4 +36,27 @@
 	VALUES (#{post_idx}, #{idx}, #{isclass})
 </insert>
 
+<!-- 코스 작성 임시저장 리스트 -->
+<select id="regist_tmp_list" resultType="com.eat.main.CourseDTO">
+	SELECT 
+		subject
+		,reg_date
+	FROM post
+	WHERE user_id = #{param1} AND tmp = true
+	ORDER BY reg_date DESC
+	LIMIT #{param3} OFFSET #{param2}
+</select>
+
+<!-- 코스 작성 임시저장 리스트 수-->
+<select id="regist_tmp_cnt" resultType="int">
+	SELECT count(post_idx) AS cnt
+	FROM post
+	WHERE user_id = #{param1} AND tmp = true
+</select>
+
+<!-- 페이지 -->
+<select id="pages" resultType="int">
+	SELECT CEIL(COUNT(post_idx)/#{param1}) AS pages FROM post
+</select>
+
 </mapper>

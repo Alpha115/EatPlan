@@ -1,5 +1,7 @@
 package com.eat.regist;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.eat.main.CourseDTO;
@@ -25,6 +27,17 @@ public interface RegistDAO {
 
 	// 코스 작성 코스태그
 	int regist_tags(CourseTagDTO t);
+
+	// 코스 작성 임시저장 불러오기
+	List<CourseDTO> regist_tmp_list(String user_id, int offset, int limit);
+
+	// 코스 작성 임시저장 게시물 수
+	int regist_tmp_cnt(String user_id);
+	
+	// 코스 작성 임시저장 불러오기 페이지
+	int pages(int limit);
+
+
 
 
 
