@@ -21,4 +21,6 @@ public interface RegiUtilDAO {
 
 	// 지도에 식당 좌표찍기 (위도,경도 가져오기)
 	ArrayList<RestaurantDTO> resta_coor(String resta_idx);
+
+	ArrayList<RestaurantDTO> searchRestaName(String resta_name);
 }

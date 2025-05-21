@@ -11,7 +11,7 @@ resultType="int">
 
 <insert id="join" parameterType="com.eat.member.MemberDTO">
 	INSERT INTO member (
-		user_id, pass, nickname, email, bio, location, admin
+		user_id, pass, nickname, email, bio, location
 	)VALUES(
 		#{user_id}
 		,#{pass}
@@ -19,7 +19,6 @@ resultType="int">
 		,#{email}
 		,#{bio}
 		,#{location}
-		,${admin}
 	)
 </insert>
 
@@ -33,7 +32,7 @@ resultType="int">
 	 WHERE nickname = #{param1}
 </select>
 
-<update id="profileUpload" parameterType="com.eat.member.MemberDTO">
+<!-- <update id="profileUpload" parameterType="com.eat.member.MemberDTO">
 	UPDATE member SET img_idx = #{img_idx}
 	WHERE user_id = #{user_id}
 </update>
@@ -44,6 +43,6 @@ resultType="int">
 	)VALUES(
 		#{img_idx}, #{class}, #{new_filename}
 	)
-</insert>
+</insert> -->
 
 </mapper>
