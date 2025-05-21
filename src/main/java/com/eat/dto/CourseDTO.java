@@ -1,4 +1,4 @@
-package com.eat.main;
+package com.eat.dto;
 
 import java.sql.Timestamp;
 

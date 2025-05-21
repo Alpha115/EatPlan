@@ -1,12 +1,6 @@
-package com.eat.regist;
+package com.eat.dto;
 
 import java.util.List;
-
-import com.eat.main.CourseDTO;
-import com.eat.main.CourseTagDTO;
-import com.eat.main.DetailCmtDTO;
-import com.eat.main.DetailRestaDTO;
-import com.eat.main.TimelineDTO;
 
 // 코스 작성을 위한 DTO 5단합체
 public class RegistRequestDTO {

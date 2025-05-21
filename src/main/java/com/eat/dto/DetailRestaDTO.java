@@ -1,4 +1,4 @@
-package com.eat.main;
+package com.eat.dto;
 
 // 식당 일정 정보를 담는 DTO
 public class DetailRestaDTO {

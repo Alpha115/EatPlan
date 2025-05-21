@@ -1,4 +1,4 @@
-package com.eat.main;
+package com.eat.dto;
 
 // 타임라인 테이블 DTO
 public class TimelineDTO {

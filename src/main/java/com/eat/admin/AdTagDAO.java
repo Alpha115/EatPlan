@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.eat.regist.RestaurantDTO;
+import com.eat.dto.RestaurantDTO;
 
 @Mapper
 public interface AdTagDAO {

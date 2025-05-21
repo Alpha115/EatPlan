@@ -1,4 +1,4 @@
-package com.eat.regist;
+package com.eat.dto;
 
 // 식당 정보를 담는 데이터 타입
 public class RestaurantDTO {
