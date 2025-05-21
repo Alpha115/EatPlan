@@ -103,8 +103,42 @@ public class MypageService {
 
 		return true;
 	}
+	
+	//프로필 삭제
+	public boolean profile_del(int img_idx) {
+		
+		// 1.삭제할 파일 목록 조회
+		List<Map<String, String>> list = dao.photo_del(Integer.valueOf(img_idx));
+		log.info("list : {} ", list);
+		
+		// 2. 파일 삭제
+		if(list != null && !list.isEmpty()) {
+			for(Map<String, String> map : list) {
+				String filePath = root + "/" + map.get("new_filename");
+				File file = new File(filePath);
+				if(file.exists()) {
+					file.delete();
+				}
+			}
+		}
+		
+		// 3. db에서 삭제
+		int row = dao.profile_del(img_idx);
+		
+		return row > 0 ;
+	}
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

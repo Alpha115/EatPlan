@@ -25,4 +25,10 @@ public interface MypageDAO {
 	//사진 정보 DB에 저장
 	int saveProfileImg(String fileSaved);
 
+	// 프로필 삭제
+	int profile_del(int img_idx);
+	
+	// 사진 정보 조회
+	List<Map<String, String>> photo_del(int img_idx);
+
 }

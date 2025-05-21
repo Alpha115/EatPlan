@@ -30,6 +30,17 @@
 			(#{user_id},#{tag.idx},#{tag.isClass})
 		</foreach>
 	</insert>
-
-
+	
+	<!-- 프로필 삭제 -->
+	<delete id="profile_del">
+	DELETE FROM photo
+	WHERE img_idx = #{param1}
+	</delete>
+	
+	<!-- 프로필 db조회 -->
+	<select id="photo_del" resultType="map">
+	Select * from photo where img_idx = #{param1}
+	</select>
+	
+	
 </mapper>
