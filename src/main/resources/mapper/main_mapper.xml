@@ -2,84 +2,119 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.eat.main.MainDAO">
-	
+
 	<!-- 코스 불러오기 몸통 -->
 	<select id="course_list" resultType="com.eat.dto.CourseDTO">
 		SELECT p.post_idx
-		    ,p.user_id
-		    ,p.subject
-		    ,p.b_hit
-		    ,p.reg_date
-		    ,p.public
-		    ,p.blind
-		    ,p.tmp
-		FROM post p 
-		ORDER BY p.post_idx DESC
+		,p.user_id
+		,p.subject
+		,p.b_hit
+		,p.reg_date
+		,p.public
+		,p.blind
+		,p.tmp
+		FROM post p
+		ORDER
+		BY p.post_idx DESC
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
-	
+
 	<!-- 코스 리스트 닉네임 -->
 	<select id="course_list_nick" resultType="map">
-		SELECT nickname FROM member WHERE user_id =#{param1}
+		SELECT nickname FROM
+		member WHERE user_id =#{param1}
 	</select>
-	
+
 	<!-- 코스 리스트 댓글 수 -->
 	<select id="course_list_cmtcnt" resultType="map">
-		SELECT IFNULL(COUNT(comment_idx), 0) AS comment_cnt
+		SELECT
+		IFNULL(COUNT(comment_idx), 0) AS comment_cnt
 		FROM comment
-		WHERE post_idx = #{param1}
+		WHERE post_idx
+		= #{param1}
 	</select>
-	
+
 	<!-- 코스 리스트 좋아요 수 -->
 	<select id="course_list_likecnt" resultType="map">
-		SELECT IFNULL(COUNT(like_idx), 0) AS like_cnt
+		SELECT
+		IFNULL(COUNT(like_idx), 0) AS like_cnt
 		FROM liked
-		WHERE post_idx = #{param1}
+		WHERE post_idx =
+		#{param1}
 	</select>
-	
+
 	<!-- 코스 리스트 별점 평균 -->
 	<select id="course_list_staravg" resultType="map">
-		SELECT IFNULL(FLOOR(AVG(star)), 0) AS star_avg
+		SELECT
+		IFNULL(FLOOR(AVG(star)), 0) AS star_avg
 		FROM star
-		WHERE post_idx = #{param1}
+		WHERE post_idx =
+		#{param1}
 	</select>
-	
+
 	<!-- 코스 리스트 일반 태그 -->
 	<select id="course_list_tag" resultType="map">
 		SELECT tag_name
 		FROM tag
-		WHERE tag_idx IN (SELECT idx FROM tag_course WHERE post_idx = #{param1}) AND class='course'
+		WHERE tag_idx IN (SELECT idx FROM tag_course WHERE post_idx =
+		#{param1}) AND class='course'
 	</select>
-	
+
 	<!-- 코스 리스트 지역 태그 -->
 	<select id="course_list_tagarea" resultType="map">
 		SELECT tag_name
-		FROM tag_area
-		WHERE area_tag_idx in (SELECT idx FROM tag_course WHERE post_idx = #{param1} AND class='area_tag')
+		FROM
+		tag_area
+		WHERE area_tag_idx in (SELECT idx FROM tag_course WHERE
+		post_idx = #{param1} AND class='area_tag')
 	</select>
 
 	<!-- 코스 리스트 이미지 불러오기 -->
 	<select id="course_list_img" resultType="map">
-		SELECT 
-		    COALESCE(
-		        (
-		            SELECT p.new_filename
-		            FROM detail_restaurant dr
-		            JOIN restaurant r ON dr.resta_idx = r.resta_idx
-		            LEFT JOIN photo p ON r.img_idx = p.img_idx AND p.class = 'restaurant'
-		            WHERE dr.detail_idx = #{param1}
-		            ORDER BY dr.detail_idx, r.resta_idx
-		            LIMIT 1
-		        ), 
-		        'no_image'
-		    ) AS new_filename
+		SELECT
+		COALESCE(
+		(
+		SELECT
+		p.new_filename
+		FROM detail_restaurant dr
+		JOIN restaurant r ON
+		dr.resta_idx = r.resta_idx
+		LEFT JOIN photo p ON r.img_idx = p.img_idx
+		AND p.class = 'restaurant'
+		WHERE dr.detail_idx = #{param1}
+		ORDER BY
+		dr.detail_idx, r.resta_idx
+		LIMIT 1
+		),
+		'no_image'
+		) AS new_filename
 	</select>
-	
+
 	<!-- 페이지 -->
 	<select id="pages" resultType="int">
-		SELECT CEIL(COUNT(post_idx)/#{param1}) AS pages FROM post
+		SELECT
+		CEIL(COUNT(post_idx)/#{param1}) AS pages FROM post
 	</select>
-	
 
-	
+	<!-- 코스 검색 --><!-- % : 0개 이상의 임의 문자 %abd% -> abc를 포함하는 모든 문자열 검색 가능 -->
+	<select id="search_course" resultType="com.eat.dto.CourseDTO">
+		SELECT * FROM post
+		WHERE
+		(#{subject} IS NULL OR subject LIKE CONCAT('%', #{subject}, '%')) 
+		AND
+		(#{user_id} IS NULL OR user_id = #{user_id})
+		AND (#{tag} IS NULL OR
+		post_idx IN(
+		SELECT post_idx FROM tag_course WHERE `class` LIKE CONCAT('%',#{tag},'%')))
+	</select>
+
+	<!-- 태그 검색 -->
+<select id="getTags" resultType="com.eat.dto.CourseTagDTO">
+	SELECT * FROM tag_course WHERE post_idx = #{post_idx}
+</select>
+
+
+
+
+
 </mapper>

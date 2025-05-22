@@ -1,12 +1,16 @@
 package com.eat.main;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.eat.dto.CourseDTO;
+import com.eat.dto.CourseTagDTO;
 
 @Service
 public class MainService {
@@ -60,6 +64,17 @@ public class MainService {
 	// 코스 리스트 사진 불러오기
 	public Map<String, Object> course_list_img(String idx) {
 		return dao.course_list_img(idx);
+	}
+	
+	//코스검색
+	public List<CourseDTO> search_course(String subject, String user_id, String tag) {
+		List<CourseDTO> resp = dao.search_course(subject, user_id, tag);
+		
+		for (CourseDTO course : resp) {
+			List<CourseTagDTO> tags = dao.getTags(course.getPost_idx());
+			course.setTags(tags);
+		}
+		return resp;
 	}
 
 }

@@ -13,7 +13,6 @@
 			,bio
 			,location
 			,withdraw
-			,(SELECT idx FROM tag_prefer tp WHERE tp.user_id = m.user_id) AS tagList
 		FROM member m WHERE user_id = #{user_id} and withdraw = true
 	</select>
 
