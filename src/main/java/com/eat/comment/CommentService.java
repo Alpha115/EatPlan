@@ -38,7 +38,8 @@ public class CommentService {
 		int row = dao.comment_del(commentIdx);
 		return row > 0;
 	}
-
+	
+	//댓글 리스트
 	public Map<String, Object> comment_list(int post_idx, int page) {
 		Map<String, Object> resp = new HashMap<String, Object>();
 		
