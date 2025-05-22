@@ -28,7 +28,7 @@ import com.eat.dto.TimelineDTO;
 public class RegistController {
 
 	@Autowired RegistService service;
-	Map<String, Object> resp = new HashMap<String, Object>();
+	Map<String, Object> resp = null;
 	Logger log = LoggerFactory.getLogger(getClass());
 	
 	// 코스 작성

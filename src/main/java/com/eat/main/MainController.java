@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 
-	Map<String, Object> resp = new HashMap<String, Object>();
+	Map<String, Object> resp = null;
 	Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
@@ -25,10 +25,10 @@ public class MainController {
 
 	// 코스 리스트 불러오기
 	@GetMapping(value = "/course_list/{page}")
-	public Map<String, Object> course_list(@PathVariable String page) {
+	public Map<String, Object> course_list(@PathVariable int page) {
 		log.info("page = " + page);
 		resp = new HashMap<String, Object>();
-		resp = service.course_list(Integer.parseInt(page));
+		resp = service.course_list(page);
 		return resp;
 	}
 	
