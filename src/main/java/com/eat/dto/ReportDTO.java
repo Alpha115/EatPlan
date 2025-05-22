@@ -2,6 +2,8 @@ package com.eat.dto;
 
 import java.sql.Timestamp;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ReportDTO {
 
 	private int report_idx;
@@ -15,7 +17,14 @@ public class ReportDTO {
 	private Timestamp report_date;
 	private boolean done;
 	private boolean isPublic;
+	private MultipartFile[] files;
 	
+	public MultipartFile[] getFiles() {
+		return files;
+	}
+	public void setFiles(MultipartFile[] files) {
+		this.files = files;
+	}
 	public int getReport_idx() {
 		return report_idx;
 	}

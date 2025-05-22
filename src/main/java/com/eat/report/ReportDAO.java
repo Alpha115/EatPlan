@@ -1,6 +1,7 @@
 package com.eat.report;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -39,6 +40,10 @@ public interface ReportDAO {
 	
 	// 히스토리 총 페이지
 	int his_pages(int content_cnt, int report_idx);
+
+	int report_write(ReportDTO content);
+
+	int saveReportImg(Map<String, Object> param);
 
 
 
