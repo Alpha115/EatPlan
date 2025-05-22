@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.dto.CourseDTO;
@@ -47,6 +48,18 @@ public class RegistController {
 		resp.put("success", success);
 		return resp;
 	}
+	
+	//코스 상세보기
+	@GetMapping(value="/courseDetail")
+	public Map<String, Object>courseDetail(@RequestParam int post_idx){
+		
+		Map<String, Object> resp = new HashMap<String, Object>();
+		RegistRequestDTO dto = service.courseDetail(post_idx);
+		resp.put("dto", dto);
+		
+		return resp;
+	}
+	
 	
 	// 코스 작성 임시저장 불러오기
 	@GetMapping(value="/regist_tmp_list/{user_id}/{page}")

@@ -1,6 +1,7 @@
 package com.eat.regist;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -63,10 +64,13 @@ public interface RegistDAO {
 
 	// 코스 삭제
 	int delete(List<CourseDTO> del_idx);
-
-
-
-
+	
+	//코스 상세보기
+	public CourseDTO getCourseDTO(int post_idx);
+	public TimelineDTO getTimelineDTO(int post_idx);
+	public List<DetailRestaDTO> getDetailRestaList(int post_idx);
+	public List<DetailCmtDTO> getCmtDTOList(int post_idx);
+	public List<CourseTagDTO> getCourseList(int post_idx);
 
 
 
