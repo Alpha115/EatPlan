@@ -3,7 +3,7 @@
 
 <mapper namespace="com.eat.admin.AdTagDAO">
 
-<select id="restaList" resultType="com.eat.regist.RestaurantDTO">
+<select id="restaList" resultType="com.eat.dto.RestaurantDTO">
 	SELECT * FROM restaurant ORDER BY resta_idx DESC
 		LIMIT #{param2} OFFSET #{param1}
 </select>

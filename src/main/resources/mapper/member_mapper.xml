@@ -9,7 +9,7 @@ resultType="int">
 	WHERE user_id = #{user_id} AND pass = #{pass}
 </select>
 
-<insert id="join" parameterType="com.eat.member.MemberDTO">
+<insert id="join" parameterType="com.eat.dto.MemberDTO">
 	INSERT INTO member (
 		user_id, pass, nickname, email, bio, location
 	)VALUES(
