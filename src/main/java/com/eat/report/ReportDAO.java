@@ -21,16 +21,12 @@ public interface ReportDAO {
 	// 신고 목록 불러오기
 	List<ReportDTO> report_list(int offset, int content_cnt);
 	
-	// 신고 상세보기 몸통
-	ReportDTO report_detail(int report_idx);
-	// 신고 상세보기 - 신고된 코스 정보
-	CourseDTO report_course(int reported_idx);
-	// 신고 상세보기 - 신고된 쪽지 정보
-	MsgDTO report_msg(int reported_idx);
-	// 신고 상세보기 - 신고된 댓글 정보
-	MainDTO report_cmt(int reported_idx);
-	// 신고 상세보기 - 이미지
-	PhotoDTO photo(int img_idx);
+	// 신고 상세보기
+	ReportDTO report_detail(int report_idx); // 신고 상세보기 몸통
+	CourseDTO report_course(int reported_idx); // 신고 상세보기 - 신고된 코스 정보
+	MsgDTO report_msg(int reported_idx); // 신고 상세보기 - 신고된 쪽지 정보
+	MainDTO report_cmt(int reported_idx); // 신고 상세보기 - 신고된 댓글 정보
+	PhotoDTO photo(int img_idx); // 신고 상세보기 - 이미지
 	
 	// 히스토리 작성
 	int history_write(ReportHistoryDTO content);

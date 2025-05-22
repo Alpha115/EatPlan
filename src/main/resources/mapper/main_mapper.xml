@@ -95,6 +95,39 @@
 		SELECT
 		CEIL(COUNT(post_idx)/#{param1}) AS pages FROM post
 	</select>
+	
+	<!-- 코스 상세보기 -->
+	<!-- 코스 상세 - 메인 -->
+	<select id="getCourseDTO" resultType="com.eat.dto.CourseDTO">
+		SELECT * FROM post WHERE
+		post_idx = #{post_idx}
+	</select>
+
+	<!-- 코스 상세 - 타임라인 -->
+	<select id="getTimelineDTO" resultType="com.eat.dto.TimelineDTO">
+		SELECT * FROM timeline
+		WHERE post_idx = #{post_idx}
+	</select>
+
+	<!-- 코스 상세 - 상세 일정 (식당) -->
+	<select id="getDetailRestaList"
+		resultType="com.eat.dto.DetailRestaDTO">
+		SELECT * FROM detail_restaurant WHERE post_idx =
+		#{post_idx} ORDER BY start
+		ASC
+	</select>
+
+	<!-- 코스 상세 - 상세 일정 (코멘트) -->
+	<select id="getCmtDTOList" resultType="com.eat.dto.DetailCmtDTO">
+		SELECT * FROM
+		detail_comment WHERE post_idx = #{post_idx} ORDER BY start ASC
+	</select>
+
+	<!-- 코스 상세 - 태그 -->
+	<select id="getCourseList" resultType="com.eat.dto.CourseTagDTO">
+		SELECT * FROM tag_course
+		WHERE post_idx = #{post_idx}
+	</select>
 
 	<!-- 코스 검색 --><!-- % : 0개 이상의 임의 문자 %abd% -> abc를 포함하는 모든 문자열 검색 가능 -->
 	<select id="search_course" resultType="com.eat.dto.CourseDTO">
@@ -112,9 +145,5 @@
 <select id="getTags" resultType="com.eat.dto.CourseTagDTO">
 	SELECT * FROM tag_course WHERE post_idx = #{post_idx}
 </select>
-
-
-
-
 
 </mapper>
