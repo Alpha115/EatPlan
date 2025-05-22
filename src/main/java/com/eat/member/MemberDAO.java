@@ -3,6 +3,7 @@ package com.eat.member;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.eat.dto.MemberDTO;
 
@@ -21,8 +22,11 @@ public interface MemberDAO {
 	// 닉네임 중복체크
 	int overlayNick(String nickname);
 	
-	// 비밀번호 찾기 - 아이디 / 이메일 확인
-	int findPassowrd(String user_id, String email);
+	// 비밀번호 찾기 요청- 아이디 / 이메일 확인
+	int findPassword(@Param("user_id") String user_id, @Param("email")String email);
+	
+	// 비밀번호 찾기 요청- 아이디 / 이메일 확인
+	int updatePassword(@Param("pass")String pass, @Param("user_id") String user_id);
 
 //	boolean profileUpload(MemberDTO dto);
 //

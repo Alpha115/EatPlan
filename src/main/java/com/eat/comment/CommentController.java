@@ -31,22 +31,22 @@ public class CommentController {
 	Logger log = LoggerFactory.getLogger(getClass());
 
 	 // 댓글 리스트
-	   @GetMapping(value = "/{post_idx}/comment_list")
-	   public Map<String, Object> comment_list(@PathVariable int post_idx,
+	   @GetMapping(value = "/comment_list")
+	   public Map<String, Object> comment_list(@RequestBody MainDTO dto,
 			   @RequestParam (defaultValue = "1") int page){
 		   
-		   Map<String, Object> resp = service.comment_list(post_idx, page);
+		   Map<String, Object> resp = service.comment_list(dto.getPost_idx(), page);
 		   
 		   return resp;
 	   }
 
 	   //댓글 작성
-	      @PostMapping(value = "/{user_id}/comment_insert")
-	      public Map<String, Object> comment_insert (@PathVariable String user_id,
+	      @PostMapping(value = "/comment_insert")
+	      public Map<String, Object> comment_insert (@RequestBody MainDTO dto,
 	            @RequestBody Map<String, String> params
 	            /*@RequestHeader Map<String, String> header*/){
 	         
-	         log.info("user_id: " + user_id);
+	         log.info("user_id: " + dto.getUser_id());
 	         log.info("params : " + params);
 	         /* log.info("header : {} " , header); */
 	         
@@ -60,7 +60,7 @@ public class CommentController {
 	          * 
 	          * if(loginId != null && loginId.equals(params.get("id"))) {
 	          */
-	            params.put("user_id", user_id);
+	            params.put("user_id", dto.getUser_id());
 	            boolean success = service.comment_insert(params);
 	            resp.put("success", success);
 	            /* login = true; */
@@ -77,10 +77,9 @@ public class CommentController {
 
 	      log.info("params : " + params);
 	      resp = new HashMap<String, Object>();
-	      boolean login = false;
+	     
 	      boolean success = service.comment_update(params);
 	      resp.put("success", success);
-	      login = true;
 
 	      return resp;
 	   }
@@ -91,11 +90,9 @@ public class CommentController {
 
 	      log.info("params : " + params);
 	      resp = new HashMap<String, Object>();
-	      boolean login = false;
-
+	    
 	      boolean success = service.comment_del(params);
 	      resp.put("success", success);
-	      login = true;
 
 	      return resp;
 	   }

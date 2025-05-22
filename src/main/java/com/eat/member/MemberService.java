@@ -41,9 +41,15 @@ public class MemberService {
 		int cnt = dao.overlayNick(nickname);
 		return cnt == 0 ? true : false;
 	}
-	// 비밀번호 찾기 - 아이디 / 이메일 확인
+	// 비밀번호 찾기 요청 - 아이디 / 이메일 확인
 	public boolean findPassword(String user_id, String email) {
-		return dao.findPassowrd(user_id,email) > 0;
+		return dao.findPassword(user_id,email) > 0;
+	}
+	
+	//비밀번호 찾기 요청 - 비밀번호 바꾸기
+	public boolean updatePassword(String pass, String user_id) {
+		int row = dao.updatePassword(user_id,pass);
+		return row > 0;
 	}
 
 //	public boolean profileUpload(MultipartFile[] files, MemberDTO dto) {
