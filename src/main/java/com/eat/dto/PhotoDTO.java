@@ -6,6 +6,7 @@ public class PhotoDTO {
 	private int img_idx;
 	private String photo_class; //class => photo_class 로 DTO한정 이름 변경했습니다
 	private String new_filename;
+	
 	public int getImg_idx() {
 		return img_idx;
 	}
