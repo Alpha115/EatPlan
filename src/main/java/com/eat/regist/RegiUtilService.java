@@ -47,7 +47,7 @@ public class RegiUtilService {
 
 		// 일단 for문 돌려봄
 		for (String data : resta_tags) {
-				arr.add(dao.searchRestaTag(data));
+			arr.addAll(dao.searchRestaTag(data));
 		}
 		
 		return arr;

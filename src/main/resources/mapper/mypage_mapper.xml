@@ -4,7 +4,7 @@
 <mapper namespace="com.eat.mypage.MypageDAO">
 
 	<!-- 회원정보 불러오기 -->
-	<select id="member_list" resultType="com.eat.mypage.MypageDTO">
+	<select id="member_list" resultType="com.eat.dto.MypageDTO">
 		SELECT
 			user_id
 			,pass
