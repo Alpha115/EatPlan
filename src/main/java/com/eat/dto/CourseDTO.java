@@ -1,6 +1,7 @@
 package com.eat.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 // post 테이블 DTO
 public class CourseDTO {
@@ -15,6 +16,15 @@ public class CourseDTO {
 	private boolean blind;
 	private boolean tmp;
 
+	private List<CourseTagDTO> tags; // 태그 정보
+	
+	
+	public List<CourseTagDTO> getTags() {
+		return tags;
+	}
+	public void setTags(List<CourseTagDTO> tags) {
+		this.tags = tags;
+	}
 	public boolean isPublic() {
 		return isPublic;
 	}
@@ -69,5 +79,7 @@ public class CourseDTO {
 	public void setTmp(boolean tmp) {
 		this.tmp = tmp;
 	}
+	
+	
 	
 }

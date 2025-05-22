@@ -1,17 +1,22 @@
 package com.eat.main;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.eat.dto.CourseDTO;
 
 @CrossOrigin
 @RestController
@@ -87,5 +92,20 @@ public class MainController {
 		resp = service.course_list_img(param.get("detail_idx"));
 		return resp;
 	}
-
+	
+	//코스검색
+	@GetMapping(value= "/search_course")
+	public ResponseEntity<List<CourseDTO>>search_course(@RequestParam (required = false)String subject , 
+			@RequestParam (required = false)String user_id,
+			@RequestParam (required = false)String tag){
+		
+		List<CourseDTO> resp = service.search_course(subject, user_id, tag);
+		
+		return ResponseEntity.ok(resp);
+		
+	}
+	
+	
+	
+	
 }

@@ -12,15 +12,17 @@ import com.eat.tags.TagDTO;
 
 @Service
 public class RegiUtilService {
-	@Autowired RegiUtilDAO dao;
-	
+	@Autowired
+	RegiUtilDAO dao;
+
 	public ArrayList<TagCateDTO> listTagCate() {
 		return dao.listTagCate();
 	}
-	
+
 	public ArrayList<TagDTO> listTag(String tagcate_idx) {
 		return dao.listTag(tagcate_idx);
 	}
+
 	// 지역+식당/코스 태그를 통합해서 검색하는 기능입니다.
 	public ArrayList<TagDTO> searchTag(String tag) {
 		ArrayList<TagDTO> arr = new ArrayList<TagDTO>();
@@ -39,11 +41,11 @@ public class RegiUtilService {
 		return dao.searchRestaName(resta_name);
 	}
 
-	// 식당을 지역+식당 태그별로 검색하는 함수입니다.
-	public ArrayList<RestaurantDTO> searchRestaTag(String[] resta_name) {
-		ArrayList<RestaurantDTO> arr=new ArrayList<RestaurantDTO>();
+	// 식당을 지역+식당 태그별로 검색하는 함수입니다. 
+	// 지역태그안했는데 걍 하지말자 제발
+	public ArrayList<RestaurantDTO> searchRestaTag(String[] resta_tags) {
 		
-		return null;
+		return dao.searchRestaTag(resta_tags, resta_tags.length);
 	}
 
 }
