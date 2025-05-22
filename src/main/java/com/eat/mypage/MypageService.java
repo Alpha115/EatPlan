@@ -24,6 +24,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eat.dto.MypageDTO;
+
 @Service
 public class MypageService {
 

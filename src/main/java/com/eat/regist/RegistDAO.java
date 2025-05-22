@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.eat.main.CourseDTO;
-import com.eat.main.CourseTagDTO;
-import com.eat.main.DetailCmtDTO;
-import com.eat.main.DetailRestaDTO;
-import com.eat.main.TimelineDTO;
+import com.eat.dto.CourseDTO;
+import com.eat.dto.CourseTagDTO;
+import com.eat.dto.DetailCmtDTO;
+import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.TimelineDTO;
 
 @Mapper
 public interface RegistDAO {

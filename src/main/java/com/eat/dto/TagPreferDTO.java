@@ -1,4 +1,4 @@
-package com.eat.mypage;
+package com.eat.dto;
 
 public class TagPreferDTO {
 

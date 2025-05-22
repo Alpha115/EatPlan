@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.eat.dto.CourseDTO;
+
 @Mapper
 public interface MainDAO {
 

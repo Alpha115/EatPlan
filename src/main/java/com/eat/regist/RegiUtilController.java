@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eat.dto.RestaurantDTO;
 import com.eat.tags.TagCateDTO;
 import com.eat.tags.TagDTO;
 
@@ -53,26 +54,29 @@ public class RegiUtilController {
 	}
 
 	// ------------------------------ 식당 불러오기 / 검색------------------------------
-	// 식당 table의 이름을 검색하는 기능입니다.
-//	@PostMapping("/list_resta")
-//	public Map<String, Object> searchResta(@RequestBody Map<String, String> param){
-//		// 예를 들어, param으로 #종로3가 #데이트 #한식 으로 입력받을 수 있습니다.
-//		resp=new HashMap<String, Object>();
-//		ArrayList<RestaurantDTO> list=service.searchResta(param);
-//		resp.put("list_resta", list);
-//		return resp;
-//	}
 	
-	//식당 이름을 검색합니다.
-	@GetMapping("search_resta/{resta_name}")
-	public Map<String, Object> searchRestaName(@PathVariable String resta_name){
+	//식당 이름(String)을 검색합니다.
+	@PostMapping("search_resta")
+	public Map<String, Object> searchRestaName(@RequestBody String resta_name){
 		resp=new HashMap<String, Object>();
 		ArrayList<RestaurantDTO> result=service.searchRestaName(resta_name);
 		resp.put("result", result);
 		return resp;
 	}
 	
+	//식당을 태그별로 검색하여 불러옵니다.
+	@PostMapping("list_resta")
+	public Map<String, Object> searchRestaTag(@RequestBody String[] resta_name){
+		resp=new HashMap<String, Object>();
+		ArrayList<RestaurantDTO> result=service.searchRestaTag(resta_name);
+		resp.put("result", result);
+		return resp;
+	}
 	
+	
+	
+	
+	// ------------------------------ 식당 좌표------------------------------
 	// 지도에 식당 좌표찍기 (위도,경도 가져오기)
 	@GetMapping(value="/resta_coor")
 	public Map<String, Object> resta_coor(

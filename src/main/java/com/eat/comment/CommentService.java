@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.eat.main.MainDTO;
+import com.eat.dto.MainDTO;
 
 @Service
 public class CommentService {
@@ -38,11 +38,12 @@ public class CommentService {
 		int row = dao.comment_del(commentIdx);
 		return row > 0;
 	}
-
+	
+	//댓글 리스트
 	public Map<String, Object> comment_list(int post_idx, int page) {
 		Map<String, Object> resp = new HashMap<String, Object>();
 		
-		int offset = (post_idx - 1) * comment_count;
+		int offset = (page - 1) * comment_count;
 		
 		List<MainDTO> comments = dao.comment_list(post_idx, offset,comment_count);
 		

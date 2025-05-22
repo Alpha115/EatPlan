@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eat.dto.RestaurantDTO;
 import com.eat.tags.TagCateDTO;
 import com.eat.tags.TagDTO;
 
@@ -28,22 +29,21 @@ public class RegiUtilService {
 		return arr;
 	}
 
-	// 지역+식당 태그를 통합해서 식당을 검색하는 기능입니다. (미완성)
-	public ArrayList<RestaurantDTO> searchResta(Map<String, String> param) {
-		
-		return null;
-	}
-
 	// 지도에 식당 좌표찍기 (위도,경도 가져오기)
 	public ArrayList<RestaurantDTO> resta_coor(String resta_idx) {
-		
 		return dao.resta_coor(resta_idx);
 	}
 
-	
+	// 식당의 이름으로 검색하는 함수입니다,
 	public ArrayList<RestaurantDTO> searchRestaName(String resta_name) {
-		
 		return dao.searchRestaName(resta_name);
+	}
+
+	// 식당을 지역+식당 태그별로 검색하는 함수입니다.
+	public ArrayList<RestaurantDTO> searchRestaTag(String[] resta_name) {
+		ArrayList<RestaurantDTO> arr=new ArrayList<RestaurantDTO>();
+		
+		return null;
 	}
 
 }

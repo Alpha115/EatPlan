@@ -1,6 +1,7 @@
-package com.eat.main;
+package com.eat.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MainDTO {
 	
@@ -12,7 +13,7 @@ public class MainDTO {
 		private int post_idx;
 		private String subject;
 		private int b_hit;
-		private Date reg_date;
+		private Timestamp reg_date;
 		private String post_cmt;
 		private boolean isPublic;
 		private boolean blind;
@@ -53,10 +54,10 @@ public class MainDTO {
 	public void setB_hit(int b_hit) {
 		this.b_hit = b_hit;
 	}
-	public Date getReg_date() {
+	public Timestamp getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(Timestamp reg_date) {
 		this.reg_date = reg_date;
 	}
 	public String getPost_cmt() {

@@ -1,4 +1,4 @@
-package com.eat.regist;
+package com.eat.dto;
 
 // 식당 정보를 담는 데이터 타입
 public class RestaurantDTO {
@@ -11,6 +11,7 @@ public class RestaurantDTO {
 	private double lat;
 	private double lng;
 	private String resta_bio;
+	
 	public int getResta_idx() {
 		return resta_idx;
 	}

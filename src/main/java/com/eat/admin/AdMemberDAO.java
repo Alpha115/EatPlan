@@ -2,6 +2,9 @@ package com.eat.admin;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.eat.dto.BanPeriDTO;
+import com.eat.dto.UserDTO;
+
 
 @Mapper
 public interface AdMemberDAO {

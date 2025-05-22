@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.eat.main.MainDTO;
+import com.eat.dto.MainDTO;
 
 @Mapper
 public interface CommentDAO {

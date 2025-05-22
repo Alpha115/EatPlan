@@ -12,14 +12,14 @@
 
 	<!-- 회원 조회 / 정지 -->
 	<insert id="suspendUser"
-		parameterType="com.eat.admin.BanPeriDTO">
+		parameterType="com.eat.dto.BanPeriDTO">
 		INSERT INTO ban_peri (user_id, start, end)
 		VALUES
 		(#{user_id}, #{start}, #{end})
 	</insert>
 
 	<select id="findUser" parameterType="String"
-		resultType="com.eat.admin.UserDTO">
+		resultType="com.eat.dto.UserDTO">
 		SELECT user_id, nickname, email FROM member WHERE user_id = #{user_id}
 	</select>
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eat.report.ReportDAO">
+
+<!-- 히스토리 작성 -->
+<insert id="history_write" parameterType="com.eat.dto.ReportHistoryDTO"
+	useGeneratedKeys="true" keyColumn="his_idx" keyProperty="his_idx">
+	INSERT INTO report_history (report_idx, user_id, content)
+	VALUES (#{report_idx},#{user_id},#{content})
+</insert>
+
+<!-- 히스토리 불러오기 -->
+<select id="history_list" resultType="com.eat.dto.ReportHistoryDTO">
+	SELECT user_id, content, done_date
+	FROM report_history
+	WHERE report_idx = #{param1}
+	LIMIT #{param3} OFFSET #{param2}
+</select>
+
+<!-- 총 페이지 -->
+<select id="pages" resultType="int">
+	SELECT CEIL(COUNT(his_idx)/#{param1}) AS pages FROM report_history WHERE report_idx = #{param2}
+</select>
+
+</mapper>

@@ -19,7 +19,7 @@
 
 	<!-- 회원정보 수정 -->
 	<update id="member_update"
-		parameterType="com.eat.mypage.MypageDTO">
+		parameterType="com.eat.dto.MypageDTO">
 		UPDATE member SET email = #{email},
 		nickname = #{nickname},
 		bio = #{bio},
