@@ -28,13 +28,13 @@
 </select>
 
 <!-- 식당의 이름을 like절로 검색합니다. -->
-<select id="searchRestaName" resultType="com.eat.regist.RestaurantDTO">
+<select id="searchRestaName" resultType="com.eat.dto.RestaurantDTO">
 	SELECT * FROM restaurant
 	WHERE resta_name LIKE CONCAT ('%', #{param1}, '%')
 </select>
 
 <!-- 지도에 식당 좌표찍기 (위도,경도 가져오기) -->
-<select id="resta_coor" resultType="com.eat.regist.RestaurantDTO">
+<select id="resta_coor" resultType="com.eat.dto.RestaurantDTO">
 	SELECT lat, lng FROM restaurant WHERE resta_idx = #{param1}
 </select>
 

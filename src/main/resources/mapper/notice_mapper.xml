@@ -3,7 +3,7 @@
 
 <mapper namespace="com.eat.notice.NoticeDAO">
 
-<select id="list" resultType="com.eat.notice.NoticeDTO">
+<select id="list" resultType="com.eat.dto.NoticeDTO">
 	SELECT * FROM notice ORDER BY notice_idx DESC
 	LIMIT #{param2} OFFSET #{param1}
 </select>
@@ -18,7 +18,7 @@
 		VALUES (#{user_id}, #{subject}, #{content}, #{highlight})
 </insert>
 
-<select id="detail" resultType="com.eat.notice.NoticeDTO">
+<select id="detail" resultType="com.eat.dto.NoticeDTO">
 	SELECT * FROM notice WHERE notice_idx = #{param1}
 </select>
 
@@ -26,7 +26,7 @@
 	UPDATE notice SET b_Hit = b_Hit +1 WHERE notice_idx =#{param1}
 </update>
 
-<update id="update" parameterType="com.eat.notice.NoticeDTO">
+<update id="update" parameterType="com.eat.dto.NoticeDTO">
 	UPDATE notice SET subject=#{subject} , content=#{content}, highlight=#{highlight}
 	WHERE notice_idx = #{notice_idx}
 </update>
