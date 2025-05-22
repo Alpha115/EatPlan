@@ -5,11 +5,17 @@
 
 	<!-- 로그인 -->
 	<select id="login" parameterType="map" resultType="int">
-		SELECT COUNT(user_id) FROM member
-		WHERE user_id = #{user_id} AND pass = #{pass}
+		SELECT
+		COUNT(user_id) FROM member
+		WHERE user_id = #{user_id} AND pass =
+		#{pass}
 	</select>
 
+<<<<<<< HEAD
 	<!-- 회원가입 -->
+=======
+
+>>>>>>> origin/master
 	<insert id="join" parameterType="com.eat.dto.MemberDTO">
 		INSERT INTO member (
 		user_id, pass, nickname, email, bio, location
@@ -25,21 +31,23 @@
 
 	<!-- 아이디 중복 체크 -->
 	<select id="overlayId" resultType="int">
-		SELECT COUNT(user_id) FROM member
+		SELECT COUNT(user_id) FROM
+		member
 		WHERE user_id = #{param1}
 	</select>
 	<!-- 닉네임 중복 체크 -->
 	<select id="overlayNick" resultType="int">
-		SELECT COUNT(nickname) FROM member
+		SELECT COUNT(nickname) FROM
+		member
 		WHERE nickname = #{param1}
 	</select>
 
-	<!-- 비밀번호 찾기 - 아이디 / 이메일 확인-->
+	<!-- 비밀번호 찾기 - 아이디 / 이메일 확인 -->
 	<select id="findPass" resultType="int">
 		SELECT COUNT(*) FROM users
 		WHERE user_id = #{user_id} AND email = #{email}
 	</select>
-	
+
 
 	<!-- <update id="profileUpload" parameterType="com.eat.member.MemberDTO"> 
 		UPDATE member SET img_idx = #{img_idx} WHERE user_id = #{user_id} </update> 
