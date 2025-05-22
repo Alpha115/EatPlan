@@ -11,11 +11,8 @@
 		#{pass}
 	</select>
 
-<<<<<<< HEAD
-	<!-- 회원가입 -->
-=======
 
->>>>>>> origin/master
+	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.eat.dto.MemberDTO">
 		INSERT INTO member (
 		user_id, pass, nickname, email, bio, location
