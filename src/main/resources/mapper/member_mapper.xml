@@ -9,14 +9,9 @@
 		WHERE user_id = #{user_id} AND pass = #{pass}
 	</select>
 
-<<<<<<< HEAD
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.eat.dto.MemberDTO">
 		INSERT INTO member (
-=======
-<insert id="join" parameterType="com.eat.dto.MemberDTO">
-	INSERT INTO member (
->>>>>>> origin/master
 		user_id, pass, nickname, email, bio, location
 		)VALUES(
 		#{user_id}

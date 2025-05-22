@@ -42,7 +42,7 @@ public class CommentService {
 	public Map<String, Object> comment_list(int post_idx, int page) {
 		Map<String, Object> resp = new HashMap<String, Object>();
 		
-		int offset = (post_idx - 1) * comment_count;
+		int offset = (page - 1) * comment_count;
 		
 		List<MainDTO> comments = dao.comment_list(post_idx, offset,comment_count);
 		
