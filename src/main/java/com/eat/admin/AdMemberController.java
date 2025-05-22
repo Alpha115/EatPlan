@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.dto.BanPeriDTO;
 
+
 @CrossOrigin
 @RestController
 public class AdMemberController {
@@ -51,5 +52,6 @@ public class AdMemberController {
 		
 		return resp;
 	}
-
+	
+	
 }

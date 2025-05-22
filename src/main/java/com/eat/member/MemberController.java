@@ -83,7 +83,16 @@ public class MemberController {
 //		return resp;
 //	}
 
-	
+	//비밀번호 찾기 요청 - 아이디 / 이메일 확인
+		@PostMapping(value ="/finedPassword")
+		public Map<String, Object>finedPassword(@RequestBody MemberDTO dto){
+			
+			resp = new HashMap<String, Object>();
+			boolean success = service.findPassword(dto.getUser_id(), dto.getEmail());
+			resp.put("success", success);
+			return resp;
+		}
+		
 	
 	
 }

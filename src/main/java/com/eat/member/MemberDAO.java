@@ -8,14 +8,21 @@ import com.eat.dto.MemberDTO;
 
 @Mapper
 public interface MemberDAO {
-
+	
+	// 로그인
 	int login(Map<String, String> params);
 
+	// 회원가입
 	int join(MemberDTO dto);
 
+	// 아이디 중복 체크
 	int overlayId(String user_id);
 
+	// 닉네임 중복체크
 	int overlayNick(String nickname);
+	
+	// 비밀번호 찾기 - 아이디 / 이메일 확인
+	int findPassowrd(String user_id, String email);
 
 //	boolean profileUpload(MemberDTO dto);
 //

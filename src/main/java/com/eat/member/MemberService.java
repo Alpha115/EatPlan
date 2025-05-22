@@ -31,15 +31,19 @@ public class MemberService {
 		int row = dao.join(dto);
 		return row > 0 ? true : false;
 	}
-
+	// 아이디 중복 체크
 	public boolean overlayId(String user_id) {
 		int cnt = dao.overlayId(user_id);
 		return cnt == 0 ? true : false;
 	}
-
+	// 닉네임 중복 체크
 	public boolean overlayNick(String nickname) {
 		int cnt = dao.overlayNick(nickname);
 		return cnt == 0 ? true : false;
+	}
+	// 비밀번호 찾기 - 아이디 / 이메일 확인
+	public boolean findPassword(String user_id, String email) {
+		return dao.findPassowrd(user_id,email) > 0;
 	}
 
 //	public boolean profileUpload(MultipartFile[] files, MemberDTO dto) {
