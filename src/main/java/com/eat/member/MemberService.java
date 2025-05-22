@@ -51,43 +51,45 @@ public class MemberService {
 		int row = dao.updatePassword(user_id,pass);
 		return row > 0;
 	}
+	
+	//프로필 업로드
+	public boolean profileUpload(MultipartFile files[], MemberDTO dto) {
+		if (files != null && files.length > 0) {
+			for (MultipartFile file : files) {
+				String fileSaved = fileSave(file);
+				if(fileSaved == null) return false;
+				
+				int newImgIdx = dao.saveProfileImg(fileSaved); // 사진 DB에 저장
+				dto.setImg_idx(newImgIdx);
+			}
+		}
+		return dao.profileUpload(dto);
+	}
 
-//	public boolean profileUpload(MultipartFile[] files, MemberDTO dto) {
-//		if (files != null && files.length > 0) {
-//			for (MultipartFile file : files) {
-//				String fileSaved = fileSave(file);
-//
-//				int newImgIdx = dao.saveProfileImg(fileSaved); // 사진 DB에 저장
-//				dto.setImg_idx(newImgIdx);
-//			}
-//		}
-//		return dao.profileUpload(dto);
-//	}
-//
-//	private String fileSave(MultipartFile file) {
-//		String ori_fileName = file.getOriginalFilename();
-//		String ext = "";
-//		if (ori_fileName != null && ori_fileName.contains(".")) {
-//			ext = ori_fileName.substring(ori_fileName.lastIndexOf("."));
-//		}
-//		
-//		String new_fileName = UUID.randomUUID().toString()+ext;
-//		
-//		String imgDir = "c:/upload";
-//		File profilePath = new File(imgDir);
-//		
-//		if (!profilePath.exists()) {
-//			profilePath.exists();
-//		}
-//		
-//		try {
-//			file.transferTo(new File(imgDir+new_fileName));
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//		
-//		return new_fileName;
-//	}
+	private String fileSave(MultipartFile file) {
+		String ori_fileName = file.getOriginalFilename();
+		String ext = "";
+		if (ori_fileName != null && ori_fileName.contains(".")) {
+			ext = ori_fileName.substring(ori_fileName.lastIndexOf("."));
+		}
+		
+		String new_fileName = UUID.randomUUID().toString()+ext;
+		
+		String imgDir = "c:/upload";
+		File profilePath = new File(imgDir);
+		
+		if (!profilePath.exists()) {
+			profilePath.mkdirs(); //파일 경로 없다면~ 만들라
+		}
+		
+		try {
+			new File(profilePath, new_fileName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return null;
+	}
 
 }
