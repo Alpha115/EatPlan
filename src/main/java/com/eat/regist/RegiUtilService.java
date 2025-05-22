@@ -43,14 +43,8 @@ public class RegiUtilService {
 
 	// 식당을 지역+식당 태그별로 검색하는 함수입니다. 지역은 1개만 선택할 수 있습니다.
 	public ArrayList<RestaurantDTO> searchRestaTag(String[] resta_tags) {
-		ArrayList<RestaurantDTO> arr = new ArrayList<RestaurantDTO>();
-
-		// 일단 for문 돌려봄
-		for (String data : resta_tags) {
-			arr.addAll(dao.searchRestaTag(data));
-		}
 		
-		return arr;
+		return dao.searchRestaTag(resta_tags, resta_tags.length);
 	}
 
 }
