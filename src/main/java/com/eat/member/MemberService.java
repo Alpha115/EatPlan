@@ -75,7 +75,7 @@ public class MemberService {
 		
 		String new_fileName = UUID.randomUUID().toString()+ext;
 		
-		String imgDir = "c:/upload";
+		String imgDir = "c:/upload/";
 		File profilePath = new File(imgDir);
 		
 		if (!profilePath.exists()) {
