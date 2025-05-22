@@ -51,12 +51,14 @@ public class MemberService {
 		int row = dao.updatePassword(user_id,pass);
 		return row > 0;
 	}
-
+	
+	//프로필 업로드
 	public boolean profileUpload(MultipartFile files[], MemberDTO dto) {
 		if (files != null && files.length > 0) {
 			for (MultipartFile file : files) {
 				String fileSaved = fileSave(file);
-
+				if(fileSaved == null) return false;
+				
 				int newImgIdx = dao.saveProfileImg(fileSaved); // 사진 DB에 저장
 				dto.setImg_idx(newImgIdx);
 			}
@@ -77,17 +79,17 @@ public class MemberService {
 		File profilePath = new File(imgDir);
 		
 		if (!profilePath.exists()) {
-			profilePath.exists();
+			profilePath.mkdirs(); //파일 경로 없다면~ 만들라
 		}
 		
 		try {
-			file.transferTo(new File(imgDir+new_fileName));
+			new File(profilePath, new_fileName);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 		
-		return new_fileName;
+		return null;
 	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -72,14 +73,15 @@ public class MemberController {
 		return resp;
 	}
 	
-	// 프로필 사진 변경
-	@PutMapping(value="/profileUpload")
+	//회원가입 프로필 사진 추가
+	@PostMapping(value="/profileUpload")
 	public Map<String, Object> profileUpload(@RequestParam(required = false) MultipartFile[] files,
-			MemberDTO dto) {
+			@ModelAttribute MemberDTO dto) { //form데이터  -> 자바 객체에 자동 매핑 되도록 , setter 호출
 		resp = new HashMap<String, Object>();
 		boolean success = service.profileUpload(files, dto);
 		resp.put("success", success);
 		resp.put("img_idx", dto.getImg_idx());
+		resp.put("message", success ? "업로드 성공" : "업로드 실패");
 		return resp;
 	}
 

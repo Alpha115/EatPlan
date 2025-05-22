@@ -28,8 +28,10 @@ public interface MemberDAO {
 	// 비밀번호 찾기 요청- 아이디 / 이메일 확인
 	int updatePassword(@Param("pass")String pass, @Param("user_id") String user_id);
 
+	//프로필 설정
 	boolean profileUpload(MemberDTO dto);
-
+	
+	//프로필 db저장
 	int saveProfileImg(String fileSaved);
 	
 }

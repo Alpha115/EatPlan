@@ -45,17 +45,18 @@
 		WHERE user_id = #{user_id} AND email = #{email}
 	</select>
 
-
-	<update id="profileUpload" parameterType="com.eat.dto.MemberDTO"> 
-			UPDATE member SET img_idx = #{img_idx} WHERE user_id = #{user_id}
-	</update>
-		
-	<insert id="saveProfileImg">
-		INSERT INTO photo (
-			img_idx, class, new_filename 
-		)VALUES(
-			#{img_idx}, #{class}, #{new_filename}
-		)
+	<!-- 프로필 변경 -->
+	<insert id="fileSave" parameterType="String"
+	useGeneratedKeys="true" keyProperty="img_idx"> 
+			INSERT INTO profile_img(file_name, upload_date)
+			VALUES (#{fileSaved}, NOW())
 	</insert>
+	
+	<!-- 프로필 db저장 -->
+	<update id="profileUpload" parameterType="com.eat.dto.MemberDTO">
+    UPDATE member
+    SET img_idx = #{img_idx}
+    WHERE member_id = #{member_id}
+</update>
 
 </mapper>
