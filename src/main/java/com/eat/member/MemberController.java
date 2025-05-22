@@ -72,16 +72,16 @@ public class MemberController {
 		return resp;
 	}
 	
-//	// 프로필 사진 변경
-//	@PutMapping(value="/profileUpload")
-//	public Map<String, Object> profileUpload(@RequestParam(required = false) MultipartFile[] files,
-//			MemberDTO dto) {
-//		resp = new HashMap<String, Object>();
-//		boolean success = service.profileUpload(files, dto);
-//		resp.put("success", success);
-//		resp.put("img_idx", dto.getImg_idx());
-//		return resp;
-//	}
+	// 프로필 사진 변경
+	@PutMapping(value="/profileUpload")
+	public Map<String, Object> profileUpload(@RequestParam(required = false) MultipartFile[] files,
+			MemberDTO dto) {
+		resp = new HashMap<String, Object>();
+		boolean success = service.profileUpload(files, dto);
+		resp.put("success", success);
+		resp.put("img_idx", dto.getImg_idx());
+		return resp;
+	}
 
 	//비밀번호 찾기 요청 - 아이디 / 이메일 확인
 		@PostMapping(value ="/findPassword")
