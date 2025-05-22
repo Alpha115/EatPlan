@@ -84,7 +84,7 @@ public class MemberController {
 //	}
 
 	//비밀번호 찾기 요청 - 아이디 / 이메일 확인
-		@PostMapping(value ="/finedPassword")
+		@PostMapping(value ="/findPassword")
 		public Map<String, Object>finedPassword(@RequestBody MemberDTO dto){
 			
 			resp = new HashMap<String, Object>();
@@ -93,6 +93,22 @@ public class MemberController {
 			return resp;
 		}
 		
-	
-	
+		//비밀번호 찾기 요청 - 비밀번호 바꾸기
+		@PutMapping(value="/updatePassword")
+		public Map<String, Object>updatePassword(@RequestBody MemberDTO dto){
+			
+			resp = new HashMap<String, Object>();
+			boolean success = service.updatePassword(dto.getUser_id(),dto.getPass());
+			resp.put("success", success);
+			
+			return resp;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 }

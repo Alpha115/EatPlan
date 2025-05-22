@@ -77,10 +77,9 @@ public class CommentController {
 
 	      log.info("params : " + params);
 	      resp = new HashMap<String, Object>();
-	      boolean login = false;
+	     
 	      boolean success = service.comment_update(params);
 	      resp.put("success", success);
-	      login = true;
 
 	      return resp;
 	   }
@@ -91,11 +90,9 @@ public class CommentController {
 
 	      log.info("params : " + params);
 	      resp = new HashMap<String, Object>();
-	      boolean login = false;
-
+	    
 	      boolean success = service.comment_del(params);
 	      resp.put("success", success);
-	      login = true;
 
 	      return resp;
 	   }
