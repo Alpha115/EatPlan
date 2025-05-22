@@ -36,13 +36,20 @@
 	</select>
 
 
-	<!-- 식당의 이름을 tag_name 1개로 검색합니다. -->
-	<!-- 어캐하지여러개를 -->
+	<!-- 식당의 이름을 tag_name으로 검색합니다. -->
 	<select id="searchRestaTag" resultType="com.eat.dto.RestaurantDTO">
-		SELECT * FROM restaurant r
-		WHERE r.resta_idx
-		IN (SELECT resta_idx FROM tag_rest WHERE tag_idx
-			IN (SELECT tag_idx FROM tag WHERE class='식당' AND tag_name=#{param1}))
+		SELECT 
+			r.*
+		FROM tag_rest tr JOIN tag t JOIN restaurant r
+		ON tr.tag_idx = t.tag_idx AND tr.resta_idx =r.resta_idx
+		WHERE tr.tag_idx IN 
+			(SELECT tag_idx FROM tag WHERE tag_name IN 
+				<foreach collection="tags" item="tag" separator="," open="(" close=")">
+					#{tag}
+				</foreach>
+			)
+		GROUP BY tr.resta_idx HAVING COUNT(tr.tag_idx) = #{count}
+		ORDER BY tr.resta_idx
 	</select>
 
 

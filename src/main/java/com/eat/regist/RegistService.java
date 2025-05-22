@@ -37,20 +37,26 @@ public class RegistService {
         boolean success = false;
         
 		// 1) 세부일정-식당
-        for (DetailRestaDTO d_resta : content_detail_resta) {
-            d_resta.setPost_idx(idx);
-            d_row += dao.regist_detail_resta(d_resta);
-        }
+        if (content_detail_resta != null) {
+        	for (DetailRestaDTO d_resta : content_detail_resta) {
+        		d_resta.setPost_idx(idx);
+        		d_row += dao.regist_detail_resta(d_resta);
+        	}
+		}
         // 2) 세부일정-코멘트
-        for (DetailCmtDTO d_cmt : content_detail_cmt) {
-            d_cmt.setPost_idx(idx);
-            d_row += dao.regist_detail_cmt(d_cmt);
-        }
+        if (content_detail_cmt != null) {
+        	for (DetailCmtDTO d_cmt : content_detail_cmt) {
+        		d_cmt.setPost_idx(idx);
+        		d_row += dao.regist_detail_cmt(d_cmt);
+        	}
+		}
         // 3) 코스태그
-        for (CourseTagDTO t : tags) {
-            t.setPost_idx(idx);
-            t_row += dao.regist_tags(t);
-        }
+        if (tags != null) {
+        	for (CourseTagDTO t : tags) {
+        		t.setPost_idx(idx);
+        		t_row += dao.regist_tags(t);
+        	}
+		}
 
         if (row > 1 && d_row > 0 && t_row >0) {
 			success = true;

@@ -3,6 +3,74 @@
 
 <mapper namespace="com.eat.report.ReportDAO">
 
+<!-- 신고목록 불러오기 -->
+<select id="report_list" resultType="com.eat.dto.ReportDTO">
+	SELECT 
+		report_idx
+		,reporter_id
+		,suspect_id
+		,subject
+		,class
+		,report_date
+		,done
+		,public
+		,img_idx
+	FROM report
+	LIMIT #{param2} OFFSET #{param1}
+</select>
+
+<!-- 신고 상세보기 몸통-->
+<select id="report_detail" resultType="com.eat.dto.ReportDTO" resultMap="reportMap">
+	SELECT
+		suspect_id
+		,subject
+		,content
+		,reported_idx
+		,class
+		,done
+	FROM report
+	WHERE report_idx = #{param1}
+</select>
+<!-- 신고 상세보기 - 신고된 코스 정보 -->
+<select id="report_course" resultType="com.eat.dto.CourseDTO">
+	SELECT
+		post_idx
+		,user_id
+		,subject
+		,reg_date
+		,post_cmt
+	FROM post
+	WHERE post_idx = #{param1}
+</select>
+<!-- 신고 상세보기 - 신고된 쪽지 정보 -->
+<select id="report_msg" resultType="com.eat.dto.MsgDTO">
+	SELECT
+		msg_idx
+		,user_id
+		,content
+		,msg_date
+		,subject
+	FROM message
+	WHERE msg_idx = #{param1}
+</select>
+<!-- 신고 상세보기 - 신고된 댓글 정보 -->
+<select id="report_cmt" resultType="com.eat.dto.MainDTO">
+	SELECT
+		comment_idx
+		,user_id
+		,reg_date
+		,content
+	FROM comment
+	WHERE comment_idx = #{param1}
+</select>
+<!-- 신고 상세보기 -이미지 -->
+<select id="photo" resultType="com.eat.dto.PhotoDTO">
+	SELECT
+		new_filename
+	FROM photo
+	WHERE img_idx = #{param1} AND class = 'report'
+</select>
+
 <!-- 히스토리 작성 -->
 <insert id="history_write" parameterType="com.eat.dto.ReportHistoryDTO"
 	useGeneratedKeys="true" keyColumn="his_idx" keyProperty="his_idx">
@@ -18,9 +86,18 @@
 	LIMIT #{param3} OFFSET #{param2}
 </select>
 
-<!-- 총 페이지 -->
-<select id="pages" resultType="int">
+<!-- 히스토리 총 페이지 -->
+<select id="his_pages" resultType="int">
 	SELECT CEIL(COUNT(his_idx)/#{param1}) AS pages FROM report_history WHERE report_idx = #{param2}
 </select>
+
+<!-- 신고 목록 총 페이지 -->
+<select id="report_pages" resultType="int">
+	SELECT CEIL(COUNT(report_idx)/#{param1}) AS pages FROM report_history
+</select>
+
+<resultMap id="reportMap" type="com.eat.dto.ReportDTO">
+    <result property="isClass" column="class"/>
+</resultMap>
 
 </mapper>
