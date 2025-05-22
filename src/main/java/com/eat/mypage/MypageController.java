@@ -29,14 +29,30 @@ public class MypageController {
 
 	@Autowired
 	MypageService service;
+	
+	// 회원정보 불러오기
+	@PostMapping(value="/member_list")
+	public Map<String, Object> member_list(@RequestBody MypageDTO dto) {
+		resp = new HashMap<String, Object>();
+		List<MypageDTO> list = service.member_list(dto.getUser_id());
+		resp.put("list", list);
+		return resp;
+	}
 
 	// 회원정보 수정
 	@PutMapping(value = "/member_update")
 	public Map<String, Object> member_update(@RequestBody MypageDTO dto) {
-		
 		boolean success = service.member_update(dto);
 		resp.put("success", success);
-
+		return resp;
+	}
+	
+	// 회원 탈퇴 (soft delete)
+	@PutMapping(value="/member_secession")
+	public Map<String, Object> member_secession(@RequestBody Map<String, String> params) {
+		resp = new HashMap<String, Object>();
+		boolean success = service.member_secession(params);
+		resp.put("success", success);
 		return resp;
 	}
 	

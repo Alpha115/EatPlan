@@ -8,11 +8,15 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MypageDAO {
+	
+	// 회원정보 불러오기
+	List<MypageDTO> member_list(String user_id);
 
 	// 회원정보 수정
 	boolean member_update(MypageDTO dto);
 
-	
+	// 회원 탈퇴
+	int member_secession(Map<String, String> params);
 
 	// 회원 정보 수정 - 태그삭제
 	void deletMemberTags(@Param("user_id")String user_id,@Param("tagList") List<String> removeTags);

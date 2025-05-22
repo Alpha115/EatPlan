@@ -31,11 +31,22 @@ public class MypageService {
 	MypageDAO dao;
 	Logger log = LoggerFactory.getLogger(getClass());
 	private final String root = "c:/upload";
+	
+	// 회원정보 불러오기
+	public List<MypageDTO> member_list(String user_id) {
+		return dao.member_list(user_id);
+	}
 
 	// 회원정보 수정
 	public boolean member_update(MypageDTO dto) {
 
 		return dao.member_update(dto);
+	}
+	
+	// 회원 탈퇴 (soft delete)
+	public boolean member_secession(Map<String, String> params) {
+		int row = dao.member_secession(params);
+		return row > 0 ? true : false;
 	}
 
 	// 프로필 사진 변경

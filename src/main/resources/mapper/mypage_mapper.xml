@@ -3,6 +3,20 @@
 
 <mapper namespace="com.eat.mypage.MypageDAO">
 
+	<!-- 회원정보 불러오기 -->
+	<select id="member_list" resultType="com.eat.mypage.MypageDTO">
+		SELECT
+			user_id
+			,pass
+			,nickname
+			,email
+			,bio
+			,location
+			,withdraw
+			,(SELECT idx FROM tag_prefer tp WHERE tp.user_id = m.user_id) AS tagList
+		FROM member m WHERE user_id = #{user_id} and withdraw = true
+	</select>
+
 	<!-- 회원정보 수정 -->
 	<update id="member_update"
 		parameterType="com.eat.mypage.MypageDTO">
@@ -14,7 +28,11 @@
 		WHERE user_id = #{user_id}
 	</update>
 
-	
+	<!-- 회원 탈퇴 -->
+	<update id="member_secession">
+		update member set withdraw = true
+			where user_id = #{user_id}
+	</update>
 
 	<!-- 회원 정보 수정 - 태그 삭제 -->
 	<delete id="deletMemberTags">
