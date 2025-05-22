@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eat.dto.MemberDTO;
 import com.eat.utils.JwtUtil;
 
 @CrossOrigin
@@ -82,6 +83,25 @@ public class MemberController {
 //		return resp;
 //	}
 
-	
-	
+	//비밀번호 찾기 요청 - 아이디 / 이메일 확인
+		@PostMapping(value ="/findPassword")
+		public Map<String, Object>finedPassword(@RequestBody MemberDTO dto){
+			
+			resp = new HashMap<String, Object>();
+			boolean success = service.findPassword(dto.getUser_id(), dto.getEmail());
+			resp.put("success", success);
+			return resp;
+		}
+		
+		//비밀번호 찾기 요청 - 비밀번호 바꾸기
+		@PutMapping(value="/updatePassword")
+		public Map<String, Object>updatePassword(@RequestBody MemberDTO dto){
+			
+			resp = new HashMap<String, Object>();
+			boolean success = service.updatePassword(dto.getUser_id(),dto.getPass());
+			resp.put("success", success);
+			
+			return resp;
+		}
+		
 }
