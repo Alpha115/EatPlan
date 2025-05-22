@@ -15,6 +15,9 @@ import com.eat.dto.ReportHistoryDTO;
 @Mapper
 public interface ReportDAO {
 
+	// 신고 글 작성
+	int report_write(ReportDTO content);
+	
 	// 신고 목록 불러오기
 	List<ReportDTO> report_list(int offset, int content_cnt);
 	
@@ -41,12 +44,7 @@ public interface ReportDAO {
 	// 히스토리 총 페이지
 	int his_pages(int content_cnt, int report_idx);
 
-	int report_write(ReportDTO content);
-
+	// 신고 이미지 저장
 	int saveReportImg(Map<String, Object> param);
-
-
-
-
 
 }

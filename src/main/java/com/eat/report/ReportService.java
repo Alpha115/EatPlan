@@ -26,6 +26,28 @@ public class ReportService {
 	Map<String, Object> resp = null;
 	private int content_cnt = 10;
 
+	// 신고 글 쓰기
+	public boolean report_write(ReportDTO content) {
+
+		MultipartFile[] files = content.getFiles();
+		
+		if (files != null && files.length > 0) {
+			for (MultipartFile file : files) {
+				String fileSaved = fileSave(file);
+				
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("new_filename", fileSaved);
+				
+				int imgIdx = dao.saveReportImg(param); // 사진 DB에 저장
+				content.setImg_idx(imgIdx);
+			}
+		}
+		
+		int row = dao.report_write(content);
+		
+		return row>0;
+	}
+	
 	// 신고 목록 불러오기
 	public List<ReportDTO> report_list(int page) {
 		int offset = (page - 1)*content_cnt;
@@ -75,28 +97,7 @@ public class ReportService {
 		return dao.his_pages(content_cnt, report_idx);
 	}
 
-	// 신고 글 쓰기
-	public boolean report_write(ReportDTO content, MultipartFile[] files) {
-
-		if (files != null && files.length > 0) {
-			for (MultipartFile file : files) {
-				String fileSaved = fileSave(file);
-				
-				Map<String, Object> param = new HashMap<String, Object>();
-				param.put("new_filename", fileSaved);
-				//param.put("img_idx", content.getImg_idx());
-				
-				int imgIdx = dao.saveReportImg(param); // 사진 DB에 저장
-				content.setImg_idx(imgIdx);
-			}
-		}
-		
-		int row = dao.report_write(content);
-		
-		return row>0;
-	}
-
-	// 프로필 사진 저장
+	// 신고 사진 저장
 	private String fileSave(MultipartFile file) {
 
 		// 1.확장자 추출해서
@@ -129,9 +130,4 @@ public class ReportService {
 		// 6.반환 되게 하기
 		return new_filename;
 	}
-
-
-
-
-
 }

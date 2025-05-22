@@ -36,12 +36,11 @@ public class ReportController {
 	// 신고글 작성
 	@PostMapping(value="/report_write")
 	public Map<String, Object> report_write(
-			@ModelAttribute ReportDTO content,
-	        @RequestParam(required = false) MultipartFile[] files){
+			@ModelAttribute ReportDTO content){
 		
 		resp = new HashMap<String, Object>();
 		
-		boolean success = service.report_write(content, files);
+		boolean success = service.report_write(content);
 		resp.put("success", success);
 		
 		return resp;
