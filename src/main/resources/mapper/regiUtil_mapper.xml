@@ -33,6 +33,10 @@
 	WHERE resta_name LIKE CONCAT ('%', #{param1}, '%')
 </select>
 
+
+
+
+
 <!-- 지도에 식당 좌표찍기 (위도,경도 가져오기) -->
 <select id="resta_coor" resultType="com.eat.dto.RestaurantDTO">
 	SELECT lat, lng FROM restaurant WHERE resta_idx = #{param1}
