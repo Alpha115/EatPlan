@@ -3,43 +3,52 @@
 
 <mapper namespace="com.eat.regist.RegiUtilDAO">
 
-<select id="listTagCate" resultType="com.eat.tags.TagCateDTO">
-	SELECT * FROM tag_cate
-</select>
+	<select id="listTagCate" resultType="com.eat.tags.TagCateDTO">
+		SELECT * FROM tag_cate
+	</select>
 
-<select id="listTag" resultType="com.eat.tags.TagDTO">
-	SELECT
+	<select id="listTag" resultType="com.eat.tags.TagDTO">
+		SELECT
 		tag_idx,
 		class AS isCourse,
 		tag_name,
 		cate_idx
-	FROM tag WHERE cate_idx = #{param1}
-</select>
+		FROM tag WHERE cate_idx = #{param1}
+	</select>
 
-<!-- 식당/코스 태그로부터 특정 태그 검색값을 불러옵니다. -->
-<select id="fromTag" resultType="com.eat.tags.TagDTO">
-	SELECT cate_idx, tag_idx , tag_name FROM tag WHERE tag_name LIKE CONCAT ('%', #{param1}, '%')
-</select>
+	<!-- 식당/코스 태그로부터 특정 태그 검색값을 불러옵니다. -->
+	<select id="fromTag" resultType="com.eat.tags.TagDTO">
+		SELECT cate_idx, tag_idx , tag_name FROM tag WHERE tag_name LIKE CONCAT
+		('%', #{param1}, '%')
+	</select>
 
-<!-- 지역 태그로부터 특정 태그 검색값을 불러옵니다. -->
-<select id="fromLocTag" resultType="com.eat.tags.TagDTO">
-	SELECT cate_idx, area_tag_idx AS tag_idx , tag_name FROM tag_area
-	WHERE tag_name LIKE CONCAT ('%', #{param1}, '%')
-</select>
+	<!-- 지역 태그로부터 특정 태그 검색값을 불러옵니다. -->
+	<select id="fromLocTag" resultType="com.eat.tags.TagDTO">
+		SELECT cate_idx, area_tag_idx AS tag_idx , tag_name FROM tag_area
+		WHERE tag_name LIKE CONCAT ('%', #{param1}, '%')
+	</select>
 
-<!-- 식당의 이름을 like절로 검색합니다. -->
-<select id="searchRestaName" resultType="com.eat.dto.RestaurantDTO">
-	SELECT * FROM restaurant
-	WHERE resta_name LIKE CONCAT ('%', #{param1}, '%')
-</select>
-
-
-
+	<!-- 식당의 이름을 like절로 검색합니다. -->
+	<select id="searchRestaName"
+		resultType="com.eat.dto.RestaurantDTO">
+		SELECT * FROM restaurant
+		WHERE resta_name LIKE CONCAT ('%', #{param1}, '%')
+	</select>
 
 
-<!-- 지도에 식당 좌표찍기 (위도,경도 가져오기) -->
-<select id="resta_coor" resultType="com.eat.dto.RestaurantDTO">
-	SELECT lat, lng FROM restaurant WHERE resta_idx = #{param1}
-</select>
+	<!-- 식당의 이름을 tag_name 1개로 검색합니다. -->
+	<!-- 어캐하지여러개를 -->
+	<select id="searchRestaTag" resultType="com.eat.dto.RestaurantDTO">
+		SELECT * FROM restaurant r
+		WHERE r.resta_idx
+		IN (SELECT resta_idx FROM tag_rest WHERE tag_idx
+			IN (SELECT tag_idx FROM tag WHERE class='식당' AND tag_name=#{param1}))
+	</select>
+
+
+	<!-- 지도에 식당 좌표찍기 (위도,경도 가져오기) -->
+	<select id="resta_coor" resultType="com.eat.dto.RestaurantDTO">
+		SELECT lat, lng FROM restaurant WHERE resta_idx = #{param1}
+	</select>
 
 </mapper>

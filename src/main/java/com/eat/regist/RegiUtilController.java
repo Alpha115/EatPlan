@@ -66,9 +66,9 @@ public class RegiUtilController {
 	
 	//식당을 태그별로 검색하여 불러옵니다.
 	@PostMapping("list_resta")
-	public Map<String, Object> searchRestaTag(@RequestBody String[] resta_name){
+	public Map<String, Object> searchRestaTag(@RequestBody String[] resta_tags){
 		resp=new HashMap<String, Object>();
-		ArrayList<RestaurantDTO> result=service.searchRestaTag(resta_name);
+		ArrayList<RestaurantDTO> result=service.searchRestaTag(resta_tags);
 		resp.put("result", result);
 		return resp;
 	}
