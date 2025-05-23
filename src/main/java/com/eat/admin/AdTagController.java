@@ -6,11 +6,17 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.eat.tags.TagAreaDTO;
+import com.eat.tags.TagCateDTO;
+import com.eat.tags.TagDTO;
+import com.eat.tags.TagRequestDTO;
 
 // 식당과 코스 태그를 관리하는 컨트롤러입니다. 모든 기능에는 관리자 권한 토큰이 필요합니다.
 @CrossOrigin
@@ -43,5 +49,66 @@ public class AdTagController {
 	// 위에꺼 만들어졌니...? 식당에 지역태그 추가해야하지 않겠니?
 	// 코스 태그 추가 해야되지 않겠니...?
 	
+	// 태그 카테고리 추가
+	@PostMapping("/adtag_cate")
+	public Map<String, Object> adtag_cate(
+			@RequestBody TagCateDTO dto){
+		
+		resp = new HashMap<String, Object>();
+		
+		boolean success = service.adtag_cate(dto);
+		
+		resp.put("success", success);
+		
+		return resp;
+	}
+	
+	// 태그 카테고리 삭제
+	@DeleteMapping("/adtag_cate_del")
+	public Map<String, Object> adtag_cate_del(
+			@RequestBody TagCateDTO dto){
+		
+		resp = new HashMap<String, Object>();
+		
+		boolean success = service.adtag_cate_del(dto);
+		
+		resp.put("success", success);
+		
+		return resp;
+	}
+	
+	// 태그 추가
+	@PostMapping("/adtag_write")
+	public Map<String, Object> adtag_write(
+			@RequestBody TagRequestDTO req){
+		
+		resp = new HashMap<String, Object>();
+		TagCateDTO cate_name = req.getCate_name();
+		TagAreaDTO tag_area = req.getTag_area();
+		TagDTO tag = req.getTag();
+		
+		boolean success = service.adtag_write(cate_name, tag_area, tag);
+		
+		resp.put("success", success);
+		
+		return resp;
+	}
+	
+	// 태그 삭제
+	@DeleteMapping("/adtag_del")
+	public Map<String, Object> adtag_del(
+			@RequestBody TagRequestDTO req){
+		
+		resp = new HashMap<String, Object>();
+		TagCateDTO cate_name = req.getCate_name();
+		TagAreaDTO tag_area = req.getTag_area();
+		TagDTO tag = req.getTag();
+		
+		boolean success = service.adtag_del(cate_name, tag_area, tag);
+		
+		resp.put("success", success);
+		
+		return resp;
+	}
 	
 }
