@@ -49,6 +49,9 @@ public class AdTagController {
 	// 위에꺼 만들어졌니...? 식당에 지역태그 추가해야하지 않겠니?
 	// 코스 태그 추가 해야되지 않겠니...?
 	
+	
+	
+	
 	// 태그 카테고리 추가
 	@PostMapping("/adtag_cate")
 	public Map<String, Object> adtag_cate(

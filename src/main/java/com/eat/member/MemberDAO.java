@@ -16,7 +16,7 @@ public interface MemberDAO {
 
 	// 회원가입
 	int join(MemberDTO dto);
-	int joinTag(TagPreferDTO tags);
+	int joinTag(TagPreferDTO[] tags);
 
 	// 아이디 중복 체크
 	int overlayId(String user_id);
