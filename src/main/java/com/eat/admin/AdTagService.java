@@ -1,6 +1,5 @@
 package com.eat.admin;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagCateDTO;
@@ -34,13 +34,12 @@ public class AdTagService {
 		return result;
 	}
 
-	public boolean restaTag(ArrayList<Map<String, Integer>> tags) {
-		// 받은 태그의 개수만큼 insert 쿼리문을 실행합니다.
-		int row = 0;
-		for (int i = 0; i < tags.size(); i++) {
-			row += dao.restaTag(tags.get(i));
-		}
-		log.info("AdTagService-restaTag 에서 insert한 row: {} 개", row);
+	@Transactional
+	public boolean addTags(Tags tags) {
+		// 일반 태그를 추가합니다.
+		int row = dao.addTags(tags.getResta_idx(), tags.getTag_idx());
+		row += dao.addAreaTag(tags.getResta_idx(), tags.getArea_tag_idx());
+
 		return row > 0 ? true : false;
 	}
 
@@ -81,7 +80,7 @@ public class AdTagService {
 					tag_area.setCate_idx(cate_idx);
 					row = dao.adtag_write_area(tag_area);
 				}
-			}else {
+			} else {
 				int tag_overlay = dao.tag_overlay(tag_name);
 				if (tag_overlay == 0) {
 					tag.setCate_idx(cate_idx);
@@ -95,19 +94,19 @@ public class AdTagService {
 
 	// 태그 삭제
 	public boolean adtag_del(Map<String, Integer> params) {
-		
+
 		Integer area_tag_idx = params.get("area_tag_idx");
 		Integer tag_idx = params.get("tag_idx");
 		int row = 0;
-		
+
 		if (area_tag_idx != null && area_tag_idx > 0) {
 			area_tag_idx = params.get("area_tag_idx");
 			row = dao.adtag_del_area(area_tag_idx);
-		} else if(tag_idx != null && tag_idx > 0) {
+		} else if (tag_idx != null && tag_idx > 0) {
 			tag_idx = params.get("tag_idx");
 			row = dao.adtag_del(tag_idx);
 		}
-		
+
 		return row > 0;
 	}
 

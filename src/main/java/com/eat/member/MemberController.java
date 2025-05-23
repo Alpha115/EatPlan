@@ -33,8 +33,7 @@ public class MemberController {
 
 	// 로그인
 	@PostMapping(value = "/login")
-	public Map<String, Object> login(
-			@RequestBody Map<String, String> params) {
+	public Map<String, Object> login(@RequestBody Map<String, String> params) {
 		resp = new HashMap<String, Object>();
 		boolean success = service.login(params);
 		resp.put("success", success);
@@ -55,27 +54,27 @@ public class MemberController {
 	}
 
 	// 아이디 중복 체크
-	@GetMapping(value="/overlay/id/{user_id}")
+	@GetMapping(value = "/overlay/id/{user_id}")
 	public Map<String, Object> overlayId(@PathVariable String user_id) {
 		resp = new HashMap<String, Object>();
 		boolean success = service.overlayId(user_id);
 		resp.put("use", success);
 		return resp;
 	}
-	
+
 	// 닉네임 중복 체크
-	@GetMapping(value="/overlay/nickname/{nickname}")
+	@GetMapping(value = "/overlay/nickname/{nickname}")
 	public Map<String, Object> overlayNick(@PathVariable String nickname) {
 		resp = new HashMap<String, Object>();
 		boolean success = service.overlayNick(nickname);
 		resp.put("use", success);
 		return resp;
 	}
-	
-	//회원가입 프로필 사진 추가
-	@PostMapping(value="/profileUpload")
+
+	// 회원가입 프로필 사진 추가
+	@PostMapping(value = "/profileUpload")
 	public Map<String, Object> profileUpload(@RequestParam(required = false) MultipartFile[] files,
-			@ModelAttribute MemberDTO dto) { //form데이터  -> 자바 객체에 자동 매핑 되도록 , setter 호출
+			@ModelAttribute MemberDTO dto) { // form데이터 -> 자바 객체에 자동 매핑 되도록 , setter 호출
 		resp = new HashMap<String, Object>();
 		boolean success = service.profileUpload(files, dto);
 		resp.put("success", success);
@@ -84,35 +83,35 @@ public class MemberController {
 		return resp;
 	}
 
-	//비밀번호 찾기 요청 - 아이디 / 이메일 확인
-		@PostMapping(value ="/findPassword")
-		public Map<String, Object>finedPassword(@RequestBody MemberDTO dto){
-			
-			resp = new HashMap<String, Object>();
-			boolean success = service.findPassword(dto.getUser_id(), dto.getEmail());
-			resp.put("success", success);
-			return resp;
-		}
-		
-		//비밀번호 찾기 요청 - 비밀번호 바꾸기
-		@PutMapping(value="/updatePassword")
-		public Map<String, Object>updatePassword(@RequestBody MemberDTO dto){
-			
-			resp = new HashMap<String, Object>();
-			boolean success = service.updatePassword(dto.getUser_id(),dto.getPass());
-			resp.put("success", success);
-			
-			return resp;
-		}
-		
+	// 비밀번호 찾기 요청 - 아이디 / 이메일 확인
+	@PostMapping(value = "/findPassword")
+	public Map<String, Object> finedPassword(@RequestBody MemberDTO dto) {
+
+		resp = new HashMap<String, Object>();
+		boolean success = service.findPassword(dto.getUser_id(), dto.getEmail());
+		resp.put("success", success);
+		return resp;
+	}
+
+	// 비밀번호 찾기 요청 - 비밀번호 바꾸기
+	@PutMapping(value = "/updatePassword")
+	public Map<String, Object> updatePassword(@RequestBody MemberDTO dto) {
+
+		resp = new HashMap<String, Object>();
+		boolean success = service.updatePassword(dto.getUser_id(), dto.getPass());
+		resp.put("success", success);
+
+		return resp;
+	}
+
 }
 
-
 // 멤버와 태그목록을 동시에받는거
-class Register{
+class Register {
 	
+	  
 	/*
-	 * POST http://localhost/join Content-Type: application/json
+	 * POST http:// localhost/join Content-Type: application/json
 	 * 
 	 * { "dto": { "user_id": "user07", "pass": "pass02", "email":
 	 * "email02@email.com", "nickname": "유저02", "bio": null, "location": "서울" },
@@ -122,22 +121,24 @@ class Register{
 	 * 
 	 * }
 	 */
-	
+
 	private MemberDTO dto;
-	private TagPreferDTO[] tags; //3개 배열로 받음
-	
+	private TagPreferDTO[] tags; // 3개 배열로 받음
+
 	public MemberDTO getDto() {
 		return dto;
 	}
+
 	public void setDto(MemberDTO dto) {
 		this.dto = dto;
 	}
+
 	public TagPreferDTO[] getTags() {
 		return tags;
 	}
+
 	public void setTags(TagPreferDTO[] tags) {
 		this.tags = tags;
 	}
-	
-	
+
 }

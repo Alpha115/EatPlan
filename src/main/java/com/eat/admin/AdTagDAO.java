@@ -18,6 +18,8 @@ public interface AdTagDAO {
 	int pages(int limit);
 
 	int restaTag(Map<String, Integer> map);
+	int addTags(int resta_idx, int[] tag_idx);
+	int addAreaTag(int resta_idx, int area_tag_idx);
 
 	// 태그 카테고리 추가, 중복확인, 삭제
 	int adtag_cate(TagCateDTO dto); // 태그 카테고리 추가
@@ -31,4 +33,6 @@ public interface AdTagDAO {
 	int tag_overlay(String tag_name); // 태그 중복확인
 	int adtag_del_area(int area_tag_idx); // 지역 태그 삭제
 	int adtag_del(int tag_idx); // 태그 삭제
+
+
 }

@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eat.dto.MemberDTO;
-import com.eat.dto.TagPreferDTO;
 
 @Service
 public class MemberService {
@@ -32,10 +31,7 @@ public class MemberService {
 	@Transactional
 	public boolean join(Register info) {
 		int row = dao.join(info.getDto());
-		// 선호태그 n개를 입력받는 for문
-		for (TagPreferDTO data : info.getTags()) {
-			row+=dao.joinTag(data);
-		}
+		row+=dao.joinTag(info.getTags());
 		return row > info.getTags().length ? true : false;
 	}
 	// 아이디 중복 체크
