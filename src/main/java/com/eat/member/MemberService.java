@@ -8,9 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eat.dto.MemberDTO;
+import com.eat.dto.TagPreferDTO;
 
 @Service
 public class MemberService {
@@ -27,9 +29,14 @@ public class MemberService {
 	}
 
 	// 회원가입
-	public boolean join(MemberDTO dto) {
-		int row = dao.join(dto);
-		return row > 0 ? true : false;
+	@Transactional
+	public boolean join(Register info) {
+		int row = dao.join(info.getDto());
+		// 선호태그 n개를 입력받는 for문
+		for (TagPreferDTO data : info.getTags()) {
+			row+=dao.joinTag(data);
+		}
+		return row > info.getTags().length ? true : false;
 	}
 	// 아이디 중복 체크
 	public boolean overlayId(String user_id) {
@@ -53,6 +60,7 @@ public class MemberService {
 	}
 	
 	//프로필 업로드
+	@Transactional
 	public boolean profileUpload(MultipartFile files[], MemberDTO dto) {
 		if (files != null && files.length > 0) {
 			for (MultipartFile file : files) {

@@ -2,12 +2,10 @@ package com.eat.member;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eat.dto.MemberDTO;
+import com.eat.dto.TagPreferDTO;
 import com.eat.utils.JwtUtil;
 
 @CrossOrigin
@@ -48,9 +47,9 @@ public class MemberController {
 
 	// 회원가입
 	@PostMapping(value = "/join")
-	public Map<String, Object> join(@RequestBody MemberDTO dto) {
+	public Map<String, Object> join(@RequestBody Register info) {
 		resp = new HashMap<String, Object>();
-		boolean success = service.join(dto);
+		boolean success = service.join(info);
 		resp.put("success", success);
 		return resp;
 	}
@@ -106,4 +105,39 @@ public class MemberController {
 			return resp;
 		}
 		
+}
+
+
+// 멤버와 태그목록을 동시에받는거
+class Register{
+	
+	/*
+	 * POST http://localhost/join Content-Type: application/json
+	 * 
+	 * { "dto": { "user_id": "user07", "pass": "pass02", "email":
+	 * "email02@email.com", "nickname": "유저02", "bio": null, "location": "서울" },
+	 * "tags": [ { "idx": 1, "isClass": "resta", "user_id": "user07" }, { "idx": 2,
+	 * "isClass": "resta", "user_id": "user07" }, { "idx": 2, "isClass": "resta",
+	 * "user_id": "user07" } ]
+	 * 
+	 * }
+	 */
+	
+	private MemberDTO dto;
+	private TagPreferDTO[] tags; //3개 배열로 받음
+	
+	public MemberDTO getDto() {
+		return dto;
+	}
+	public void setDto(MemberDTO dto) {
+		this.dto = dto;
+	}
+	public TagPreferDTO[] getTags() {
+		return tags;
+	}
+	public void setTags(TagPreferDTO[] tags) {
+		this.tags = tags;
+	}
+	
+	
 }

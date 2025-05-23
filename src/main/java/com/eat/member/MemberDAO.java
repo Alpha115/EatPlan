@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.eat.dto.MemberDTO;
+import com.eat.dto.TagPreferDTO;
 
 @Mapper
 public interface MemberDAO {
@@ -15,6 +16,7 @@ public interface MemberDAO {
 
 	// 회원가입
 	int join(MemberDTO dto);
+	int joinTag(TagPreferDTO tags);
 
 	// 아이디 중복 체크
 	int overlayId(String user_id);
@@ -33,5 +35,6 @@ public interface MemberDAO {
 	
 	//프로필 db저장
 	int saveProfileImg(String fileSaved);
+
 	
 }
