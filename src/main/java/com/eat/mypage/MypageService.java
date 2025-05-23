@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.eat.dto.MypageDTO;
 import com.eat.dto.PhotoDTO;
+import com.eat.dto.TagPreferDTO;
 
 @Service
 public class MypageService {
@@ -39,6 +40,11 @@ public class MypageService {
 	// 회원정보 불러오기
 	public List<MypageDTO> member_list(String user_id) {
 		return dao.member_list(user_id);
+	}
+	
+	// 태그 불러오기
+	public List<TagPreferDTO> member_tag_list(String user_id) {
+		return dao.member_tag_list(user_id);
 	}
 
 	// 회원정보 수정
