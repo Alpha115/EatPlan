@@ -1,5 +1,6 @@
 package com.eat.regist;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,18 +93,18 @@ public class RegistService {
 		List<DetailRestaDTO> restaList = dao.course_detail_resta(post_idx);
 		List<DetailCmtDTO> cmtList = dao.course_detail_cmt(post_idx);
 		List<CourseTagDTO> tagList = dao.course_tag_idx(post_idx);
+		List<TagDTO> tagListResult = new ArrayList<>();
+		List<TagAreaDTO> tagAreaListResult = new ArrayList<>();
 		
 		if (tagList != null && tagList.size() > 0) {
 			for (CourseTagDTO tag_info : tagList) {
-				
-				if (tag_info.getIsClass().equals("area_tag") && tag_info.getIsClass() != null) {
-					List<TagAreaDTO> tag_area = dao.course_tag_area(tag_info.getIdx());
-					resp.setTag_name_area(tag_area);
-				}else if (tag_info.getIsClass().equals("tag") && tag_info.getIsClass() != null) {
-					List<TagDTO> tag = dao.course_tag(tag_info.getIdx());	
-					resp.setTag_name(tag);
-				}
-				
+			    String isClass = tag_info.getIsClass();
+
+			    if ("area_tag".equals(isClass)) {
+			        tagAreaListResult.addAll(dao.course_tag_area(tag_info.getIdx()));
+			    } else if ("tag".equals(isClass)) {
+			        tagListResult.addAll(dao.course_tag(tag_info.getIdx()));
+			    }
 			}
 		}
 		
@@ -112,6 +113,8 @@ public class RegistService {
 		resp.setContent_detail_resta(restaList);
 		resp.setContent_detail_cmt(cmtList);
 		resp.setTags(tagList);
+		resp.setTag_name(tagListResult);
+		resp.setTag_name_area(tagAreaListResult);
 		
 		return resp;
 	}
