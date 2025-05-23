@@ -2,6 +2,8 @@ package com.eat.dto;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MypageDTO {
 
 	// member
@@ -12,6 +14,8 @@ public class MypageDTO {
 	private String location;
 	private boolean admin;
 	private boolean withdraw;
+	private MultipartFile[] files;
+	
 
 	private List<TagPreferDTO> tagList;
 
@@ -100,7 +104,13 @@ public class MypageDTO {
 		this.img_idx = img_idx;
 	}
 
-	
+	public MultipartFile[] getFiles() {
+		return files;
+	}
+
+	public void setFiles(MultipartFile[] files) {
+		this.files = files;
+	}
 	
 	
 }

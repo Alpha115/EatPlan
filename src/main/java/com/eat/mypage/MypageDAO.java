@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.eat.dto.MypageDTO;
+import com.eat.dto.PhotoDTO;
 
 @Mapper
 public interface MypageDAO {
@@ -27,10 +28,10 @@ public interface MypageDAO {
 	void addMemberTags(@Param("user_id") String user_id,@Param("tagList") List<String> addTags);
 	
 	//프로필 정보 수정
-	boolean profile_update(MypageDTO dto);
+	int profile_update(MypageDTO dto);
 	
 	//사진 정보 DB에 저장
-	int saveProfileImg(Map<String, Object>param);
+	int saveProfileImg(PhotoDTO photoDTO);
 
 	// 프로필 삭제
 	int profile_del(int img_idx);

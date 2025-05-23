@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -60,27 +61,15 @@ public class MypageController {
 	
 	//프로필 변경
 	@PutMapping(value="/profile_update")
-	public Map<String, Object> profile_update(@RequestParam(required = false) MultipartFile[] files,
-			MypageDTO dto){
+	public Map<String, Object> profile_update(@ModelAttribute MypageDTO dto){
 		
 		resp = new HashMap<String, Object>();
 		
-		for(MultipartFile file : files) {
-			log.info("file name : " + file.getOriginalFilename());
-		}
+
 		
-		if(files != null) {
-			for (MultipartFile file : files) {
-				log.info("file name : " + file.getOriginalFilename());
-				// ↑ 프로필 설정x 기본 회원 정보만 수정 했을 때 완료시키기 위해
-			}
-		}else {
-			log.info("파일 없음");
-		}
-		
-		boolean success =service.profile_update(files, dto);
+		boolean success =service.profile_update(dto);
 		resp.put("success", success);
-		resp.put("img_idx", dto.getImg_idx());
+
 		
 		return resp;
 	}
