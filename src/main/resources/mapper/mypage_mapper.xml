@@ -15,6 +15,12 @@
 			,withdraw
 		FROM member m WHERE user_id = #{user_id} and withdraw = true
 	</select>
+	
+	<!-- 태그 불러오기 -->
+	<select id="member_tag_list" resultType="com.eat.dto.TagPreferDTO">
+		SELECT * FROM tag_prefer tp 
+			WHERE user_id = #{user_id}
+	</select>
 
 	<!-- 회원정보 수정 -->
 	<update id="member_update"
