@@ -20,13 +20,13 @@
 	</select>
 
 	<!-- 코스 리스트 닉네임 -->
-	<select id="course_list_nick" resultType="map">
+	<select id="course_list_nick" resultType="String">
 		SELECT nickname FROM
 		member WHERE user_id =#{param1}
 	</select>
 
 	<!-- 코스 리스트 댓글 수 -->
-	<select id="course_list_cmtcnt" resultType="map">
+	<select id="course_list_cmt_cnt" resultType="int">
 		SELECT
 		IFNULL(COUNT(comment_idx), 0) AS comment_cnt
 		FROM comment
@@ -35,7 +35,7 @@
 	</select>
 
 	<!-- 코스 리스트 좋아요 수 -->
-	<select id="course_list_likecnt" resultType="map">
+	<select id="course_list_like_cnt" resultType="int">
 		SELECT
 		IFNULL(COUNT(like_idx), 0) AS like_cnt
 		FROM liked
@@ -44,7 +44,7 @@
 	</select>
 
 	<!-- 코스 리스트 별점 평균 -->
-	<select id="course_list_staravg" resultType="map">
+	<select id="course_list_star_avg" resultType="int">
 		SELECT
 		IFNULL(FLOOR(AVG(star)), 0) AS star_avg
 		FROM star
@@ -53,7 +53,7 @@
 	</select>
 
 	<!-- 코스 리스트 일반 태그 -->
-	<select id="course_list_tag" resultType="map">
+	<select id="course_list_tag" resultType="String">
 		SELECT tag_name
 		FROM tag
 		WHERE tag_idx IN (SELECT idx FROM tag_course WHERE post_idx =
@@ -61,16 +61,23 @@
 	</select>
 
 	<!-- 코스 리스트 지역 태그 -->
-	<select id="course_list_tagarea" resultType="map">
+	<select id="course_list_tag_area" resultType="String">
 		SELECT tag_name
-		FROM
-		tag_area
+		FROM tag_area
 		WHERE area_tag_idx in (SELECT idx FROM tag_course WHERE
 		post_idx = #{param1} AND class='area_tag')
 	</select>
+	
+	<!-- 코스 리스트 세부일정 idx -->
+	<select id="detail" resultType="com.eat.dto.DetailRestaDTO">
+		SELECT detail_idx
+		FROM detail_restaurant
+		WHERE post_idx = #{param1}
+		ORDER BY detail_idx
+	</select>
 
 	<!-- 코스 리스트 이미지 불러오기 -->
-	<select id="course_list_img" resultType="map">
+	<select id="course_list_img" resultType="String">
 		SELECT
 		COALESCE(
 		(

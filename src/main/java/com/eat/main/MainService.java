@@ -1,5 +1,6 @@
 package com.eat.main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,48 +27,38 @@ public class MainService {
 
 	// 코스 리스트 불러오기
 	public Map<String, Object> course_list(int page) {
+		
 		Map<String, Object> resp = new HashMap<String, Object>();
 		this.page = page;
 		resp.put("page", this.page);
 		int offset = (this.page - 1) * limit;
-		resp.put("list", dao.course_list(offset, limit));
+		List<CourseDTO> list = dao.course_list(offset, limit);
+		
+		List<Map<String, Object>> result_list = new ArrayList<Map<String,Object>>();
+		
+		if (list != null) {
+			for (CourseDTO content : list) {
+				Map<String, Object> course_data = new HashMap<String, Object>();
+				course_data.put("course", content);
+				course_data.put("nickname", dao.course_list_nick(content.getUser_id()));
+				course_data.put("cmt_cnt", dao.course_list_cmt_cnt(content.getPost_idx()));
+				course_data.put("like_cnt", dao.course_list_like_cnt(content.getPost_idx()));
+				course_data.put("star_avg", dao.course_list_star_avg(content.getPost_idx()));
+				course_data.put("course_tag", dao.course_list_tag(content.getPost_idx()));
+				course_data.put("course_tag_area", dao.course_list_tag_area(content.getPost_idx()));
+				List<DetailRestaDTO> detail = dao.detail(content.getPost_idx());
+				if (detail != null && !detail.isEmpty()) {
+					DetailRestaDTO first_detail = detail.get(0);
+					course_data.put("course_img", dao.course_list_img(first_detail.getDetail_idx()));
+				}
+				result_list.add(course_data);
+			}
+		}
+		
+		resp.put("list", result_list);
+		resp.put("page", this.page);
 		resp.put("pages", dao.pages(limit));
 		return resp;
-	}
-
-	// 코스 리스트 닉네임 불러오기
-	public Map<String, Object> course_list_nick(String id) {
-		return dao.course_list_nick(id);
-	}
-
-	// 코스 리스트 댓글 수 불러오기
-	public Map<String, Object> course_list_cmtcnt(String idx) {
-		return dao.course_list_cmtcnt(idx);
-	}
-
-	// 코스 리스트 좋아요 수 불러오기
-	public Map<String, Object> course_list_likecnt(String idx) {
-		return dao.course_list_likecnt(idx);
-	}
-
-	// 코스 리스트 별점 평균 불러오기
-	public Map<String, Object> course_list_staravg(String idx) {
-		return dao.course_list_staravg(idx);
-	}
-
-	// 코스 리스트 일반 태그 불러오기
-	public Map<String, Object> course_list_tag(String idx) {
-		return dao.course_list_tag(idx);
-	}
-
-	// 코스 리스트 지역 태그 불러오기
-	public Map<String, Object> course_list_tagarea(String idx) {
-		return dao.course_list_tagarea(idx);
-	}
-
-	// 코스 리스트 사진 불러오기
-	public Map<String, Object> course_list_img(String idx) {
-		return dao.course_list_img(idx);
 	}
 	
 	// 코스 상세보기
