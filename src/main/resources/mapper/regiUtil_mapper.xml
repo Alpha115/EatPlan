@@ -15,6 +15,11 @@
 		cate_idx
 		FROM tag WHERE cate_idx = #{param1}
 	</select>
+	
+	<!-- 지역 전체를 불러옵니다. -->
+	<select id="listTagArea" resultType="com.eat.tags.TagAreaDTO">
+		SELECT * FROM tag_area;
+	</select>
 
 	<!-- 식당/코스 태그로부터 특정 태그 검색값을 불러옵니다. -->
 	<select id="fromTag" resultType="com.eat.tags.TagDTO">

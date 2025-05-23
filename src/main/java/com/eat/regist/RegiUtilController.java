@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.dto.RestaurantDTO;
+import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagCateDTO;
 import com.eat.tags.TagDTO;
 
@@ -43,6 +44,16 @@ public class RegiUtilController {
 		resp.put("list_tag", list);
 		return resp;
 	}
+	
+	// 지역 태그 카테고리의 리스트 전체를 불러오는 기능입니다.
+	@GetMapping("/list_tag_area")
+	public Map<String, Object> listTagArea(){
+		resp=new HashMap<String, Object>();
+		ArrayList<TagAreaDTO> list=service.listTagArea();
+		resp.put("list_area", list);
+		return resp;
+	}
+	
 
 	// 식당/코스/지역 태그를 검색하는 기능입니다.
 	@PostMapping("/search_tag")

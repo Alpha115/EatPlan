@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.eat.dto.RestaurantDTO;
+import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagCateDTO;
 import com.eat.tags.TagDTO;
 
@@ -27,5 +28,7 @@ public interface RegiUtilDAO {
 
 	// 태그 1개로 식당을 검색함
 	ArrayList<RestaurantDTO> searchRestaTag(String[] tags, int count);
+
+	ArrayList<TagAreaDTO> listTagArea();
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eat.dto.RestaurantDTO;
+import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagCateDTO;
 import com.eat.tags.TagDTO;
 
@@ -46,6 +47,10 @@ public class RegiUtilService {
 	public ArrayList<RestaurantDTO> searchRestaTag(String[] resta_tags) {
 		ArrayList<RestaurantDTO> result = dao.searchRestaTag(resta_tags, resta_tags.length);
 		return result;
+	}
+
+	public ArrayList<TagAreaDTO> listTagArea() {
+		return dao.listTagArea();
 	}
 
 }
