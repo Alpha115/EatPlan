@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.eat.dto.CourseDTO;
 import com.eat.dto.MainDTO;
 import com.eat.dto.MsgDTO;
-import com.eat.dto.MypageDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.ReportDTO;
 import com.eat.dto.ReportHistoryDTO;
@@ -129,5 +128,11 @@ public class ReportService {
 
 		// 6.반환 되게 하기
 		return new_filename;
+	}
+
+	// 신고 처리상태 변경
+	public boolean report_done(String report_idx, String done) {
+		int row = dao.report_done(report_idx, done);
+		return row > 0;
 	}
 }

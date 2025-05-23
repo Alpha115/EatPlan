@@ -43,4 +43,7 @@ public interface ReportDAO {
 	// 신고 이미지 저장
 	int saveReportImg(Map<String, Object> param);
 
+	// 신고 처리상태 변경
+	int report_done(String report_idx, String done);
+
 }

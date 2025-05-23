@@ -100,6 +100,13 @@
 	LIMIT #{param3} OFFSET #{param2}
 </select>
 
+<!-- 신고 처리상태 변경 -->
+<update id="report_done">
+	UPDATE report
+	SET done = ${param2}
+	WHERE report_idx = #{param1}
+</update>
+
 <!-- 히스토리 총 페이지 -->
 <select id="his_pages" resultType="int">
 	SELECT CEIL(COUNT(his_idx)/#{param1}) AS pages FROM report_history WHERE report_idx = #{param2}
