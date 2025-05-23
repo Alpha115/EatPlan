@@ -49,7 +49,7 @@
 	</insert>
 	
 	<!-- 프로필 변경  -->
-	<update id="profile_update" parameterType="map">
+	<update id="profile_update" parameterType="com.eat.dto.MypageDTO">
 	update member
 	SET img_idx = #{img_idx}
 	where user_id = #{user_id}
@@ -72,10 +72,10 @@
 		WHERE img_idx = #{img_idx}
 	</select>
 	
-	<insert id="saveProfileImg" parameterType="map" 
+	<insert id="saveProfileImg" parameterType="com.eat.dto.PhotoDTO" 
 	useGeneratedKeys="true" keyProperty="img_idx">
-  INSERT INTO photo (new_filename, img_idx)
-  VALUES (#{new_filename}, #{img_idx})
+  INSERT INTO photo (new_filename, class)
+  VALUES (#{new_filename},#{photo_class})
 </insert>
 	
 	

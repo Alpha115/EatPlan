@@ -22,9 +22,11 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eat.dto.MypageDTO;
+import com.eat.dto.PhotoDTO;
 
 @Service
 public class MypageService {
@@ -52,21 +54,30 @@ public class MypageService {
 	}
 
 	// 프로필 사진 변경
-	public boolean profile_update(MultipartFile[] files, MypageDTO dto) {
+	@Transactional
+	public boolean profile_update(MypageDTO dto) {
+		
+		MultipartFile[] files = dto.getFiles();
+		
 		if (files != null && files.length > 0) {
 			for (MultipartFile file : files) {
 				String fileSaved = fileSave(file);
 				
-				Map<String, Object> param = new HashMap<String, Object>();
-				param.put("fileSaved", fileSaved);
-				param.put("img_idx", dto.getImg_idx());
+				PhotoDTO photoDTO = new PhotoDTO();
+				photoDTO.setNew_filename(fileSaved);
+				photoDTO.setPhoto_class("profile");
 				
-				int newImgIdx = dao.saveProfileImg(param); // 사진 DB에 저장
+				dao.saveProfileImg(photoDTO); // 사진 DB에 저장
+				int newImgIdx =  photoDTO.getImg_idx();
+				
+				log.info("newImgidx = " + newImgIdx);
+				
 				dto.setImg_idx(newImgIdx);
 			}
 
 		}
-		return dao.profile_update(dto);
+		int row = dao.profile_update(dto);
+		return row >0;
 	}
 
 	// 프로필 사진 저장
