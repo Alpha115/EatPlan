@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.eat.admin.AdMemberDAO">
+
+	<!-- 관리자: 유저에게 관리자 권한을 부여하거나, 삭제하는 기능 -->
+	<update id="addAdmin">
+		UPDATE member SET admin=!admin WHERE user_id
+		=#{param1}
+	</update>
+
+	<!-- 회원 조회 / 정지 -->
+	<insert id="suspendUser"
+		parameterType="com.eat.dto.BanPeriDTO">
+		INSERT INTO ban_peri (user_id, start, end)
+		VALUES
+		(#{user_id}, #{start}, #{end})
+	</insert>
+
+	<select id="findUser" parameterType="String"
+		resultType="com.eat.dto.UserDTO">
+		SELECT user_id, nickname, email FROM member WHERE user_id = #{user_id}
+	</select>
+
+	<!-- 정지 회원 로그인 막기 -->
+	<select id="blockchk" parameterType="String" resultType="int">
+		<![CDATA[ 비교연산자때문에 오류 생길 수 있어서 CDATA이걸로 감싸야한다고 함 
+		SELECT COUNT(*) FROM ban_peri
+		WHERE user_id = #{user_id}
+		AND start <= NOW()
+		AND end >= NOW()
+		
+	]]>
+	</select>
+
+
+</mapper>

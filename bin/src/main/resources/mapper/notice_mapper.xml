@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eat.notice.NoticeDAO">
+
+<select id="list" resultType="com.eat.dto.NoticeDTO">
+	SELECT * FROM notice ORDER BY notice_idx DESC
+	LIMIT #{param2} OFFSET #{param1}
+</select>
+
+<select id="pages" resultType="int">
+	SELECT CEIL(COUNT(notice_idx)/#{param1}) AS pages FROM notice
+</select>
+
+
+<insert id="write" parameterType="map">
+	INSERT INTO notice (user_id, subject, content, highlight)
+		VALUES (#{user_id}, #{subject}, #{content}, #{highlight})
+</insert>
+
+<select id="detail" resultType="com.eat.dto.NoticeDTO">
+	SELECT * FROM notice WHERE notice_idx = #{param1}
+</select>
+
+<update id="upHit">
+	UPDATE notice SET b_Hit = b_Hit +1 WHERE notice_idx =#{param1}
+</update>
+
+<update id="update" parameterType="com.eat.dto.NoticeDTO">
+	UPDATE notice SET subject=#{subject} , content=#{content}, highlight=#{highlight}
+	WHERE notice_idx = #{notice_idx}
+</update>
+
+<delete id="delete">
+	DELETE FROM notice WHERE notice_idx = #{param1}
+</delete>
+
+
+</mapper>

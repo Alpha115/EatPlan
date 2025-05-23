@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eat.member.MemberDAO">
+
+	<!-- 로그인 -->
+	<select id="login" parameterType="map" resultType="int">
+		SELECT
+		COUNT(user_id) FROM member
+		WHERE user_id = #{user_id} AND pass =
+		#{pass}
+	</select>
+
+
+	<!-- 회원가입 -->
+	<insert id="join" parameterType="com.eat.dto.MemberDTO">
+		INSERT INTO member (
+		user_id, pass, nickname, email, bio, location, admin
+		)VALUES(
+		#{user_id}
+		,#{pass}
+		,#{nickname}
+		,#{email}
+		,#{bio}
+		,#{location}
+		,false
+		)
+	</insert>
+	
+	<!-- 회원가입/태그입력 -->
+	<!-- foreach문 쓰면 될듯 -->
+	<insert id="joinTag" parameterType="com.eat.dto.TagPreferDTO">
+		INSERT INTO tag_prefer (idx, class, user_id) VALUES
+		<foreach collection="tags" item="tag" separator=",">
+			 (#{tag.idx}, #{tag.isClass}, #{tag.user_id})
+		</foreach>
+	</insert>
+
+	<!-- 아이디 중복 체크 -->
+	<select id="overlayId" resultType="int">
+		SELECT COUNT(user_id) FROM
+		member
+		WHERE user_id = #{param1}
+	</select>
+	<!-- 닉네임 중복 체크 -->
+	<select id="overlayNick" resultType="int">
+		SELECT COUNT(nickname) FROM
+		member
+		WHERE nickname = #{param1}
+	</select>
+
+	<!-- 비밀번호 찾기 - 아이디 / 이메일 확인 -->
+	<select id="findPass" resultType="int">
+		SELECT COUNT(*) FROM users
+		WHERE user_id = #{user_id} AND email = #{email}
+	</select>
+
+	<!-- 프로필 변경 -->
+	<insert id="fileSave" parameterType="String"
+	useGeneratedKeys="true" keyProperty="img_idx"> 
+			INSERT INTO profile_img(file_name, upload_date)
+			VALUES (#{fileSaved}, NOW())
+	</insert>
+	
+	<!-- 프로필 db저장 -->
+	<update id="profileUpload" parameterType="com.eat.dto.MemberDTO">
+    UPDATE member
+    SET img_idx = #{img_idx}
+    WHERE user_id = #{user_id}
+</update>
+
+</mapper>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eat.mypage.MypageDAO">
+
+	<!-- 회원정보 불러오기 -->
+	<select id="member_list" resultType="com.eat.dto.MypageDTO">
+		SELECT
+			user_id
+			,pass
+			,nickname
+			,email
+			,bio
+			,location
+			,withdraw
+		FROM member m WHERE user_id = #{user_id} and withdraw = true
+	</select>
+	
+	<!-- 태그 불러오기 -->
+	<select id="member_tag_list" resultType="com.eat.dto.TagPreferDTO">
+		SELECT * FROM tag_prefer tp 
+			WHERE user_id = #{user_id}
+	</select>
+
+	<!-- 회원정보 수정 -->
+	<update id="member_update"
+		parameterType="com.eat.dto.MypageDTO">
+		UPDATE member SET email = #{email},
+		nickname = #{nickname},
+		bio = #{bio},
+		location = #{location},
+		withdraw = #{withdraw}
+		WHERE user_id = #{user_id}
+	</update>
+
+	<!-- 회원 탈퇴 -->
+	<update id="member_secession">
+		update member set withdraw = true
+			where user_id = #{user_id}
+	</update>
+
+	<!-- 회원 정보 수정 - 태그 삭제 -->
+	<delete id="deletMemberTags">
+		DELETE FROM
+		tag_prefer where user_id = #{param1}
+	</delete>
+
+	<!-- 회원 정보 수정 - 태그 추가 -->
+	<insert id="addMemberTags" parameterType="map">
+		INSERT INTO tag_prefer (user_id, idx)
+		VALUES
+		<foreach collection="tagList" item="tag" separator=",">
+			(#{user_id}, #{tag})
+		</foreach>
+	</insert>
+	
+	<!-- 프로필 변경  -->
+	<update id="profile_update" parameterType="com.eat.dto.MypageDTO">
+	update member
+	SET img_idx = #{img_idx}
+	where user_id = #{user_id}
+	</update>
+	
+	<!-- 프로필 삭제 -->
+	<delete id="profile_del">
+	DELETE FROM photo
+	WHERE img_idx = #{param1}
+	</delete>
+	
+	<!-- 프로필 db조회 -->
+	<select id="photo_del" resultType="map">
+	Select * from photo where img_idx = #{param1}
+	</select>
+	
+	<!-- 프로필 정보 가져오기 -->
+	<select id="imgInfo" resultType="map">
+	SELECT new_filename FROM photo
+		WHERE img_idx = #{img_idx}
+	</select>
+	
+	<insert id="saveProfileImg" parameterType="com.eat.dto.PhotoDTO" 
+	useGeneratedKeys="true" keyProperty="img_idx">
+  INSERT INTO photo (new_filename, class)
+  VALUES (#{new_filename},#{photo_class})
+</insert>
+	
+	
+</mapper>
