@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.dto.CourseDTO;
@@ -61,21 +62,20 @@ public class RegistController {
 		return resp;
 	}
 	
-	/*
-	 * // 코스 수정 할 게시글 불러오기
-	 * 
-	 * @GetMapping(value="/regist_update_content/{post_idx}") public Map<String,
-	 * Object> regist_update_content(
-	 * 
-	 * @PathVariable String post_idx){
-	 * 
-	 * resp = new HashMap<String, Object>();
-	 * 
-	 * resp = service.regist_update_content(Integer.parseInt(post_idx));
-	 * 
-	 * return resp; }
-	 */
-	
+	  // 코스 수정 할 게시글 불러오기
+	  @GetMapping(value="/regist_update_content")
+	  public Map<String, Object> regist_update_content(
+			  @RequestParam int post_idx){
+	  
+	  resp = new HashMap<String, Object>();
+	  
+	  RegistRequestDTO content = service.regist_update_content(post_idx);
+	  
+	  resp.put("content", content);
+	  
+	  return resp;
+	  }
+	  
 	// 코스 수정
 	@PutMapping(value="/update/{post_idx}")
 	public Map<String, Object> course_update(

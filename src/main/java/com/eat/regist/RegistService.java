@@ -13,7 +13,10 @@ import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.RegistRequestDTO;
 import com.eat.dto.TimelineDTO;
+import com.eat.tags.TagAreaDTO;
+import com.eat.tags.TagDTO;
 
 @Service
 public class RegistService {
@@ -79,14 +82,40 @@ public class RegistService {
 		return resp;
 	}
 
-	/*
-	 * // 코스 수정 할 게시글 불러오기 public Map<String, Object> regist_update_content(int
-	 * post_idx) { Map<String, Object> resp = new HashMap<String, Object>();
-	 * 
-	 * resp.put("content", dao.regist_update_content(post_idx));
-	 * 
-	 * return resp; }
-	 */
+	
+	// 코스 수정 할 게시글 불러오기 
+	public RegistRequestDTO regist_update_content(int post_idx) {
+		
+		RegistRequestDTO resp = new RegistRequestDTO();
+		CourseDTO course = dao.course_content(post_idx);
+		TimelineDTO timeline = dao.course_timeline(post_idx);
+		List<DetailRestaDTO> restaList = dao.course_detail_resta(post_idx);
+		List<DetailCmtDTO> cmtList = dao.course_detail_cmt(post_idx);
+		List<CourseTagDTO> tagList = dao.course_tag_idx(post_idx);
+		
+		if (tagList != null && tagList.size() > 0) {
+			for (CourseTagDTO tag_info : tagList) {
+				
+				if (tag_info.getIsClass().equals("area_tag") && tag_info.getIsClass() != null) {
+					List<TagAreaDTO> tag_area = dao.course_tag_area(tag_info.getIdx());
+					resp.setTag_name_area(tag_area);
+				}else if (tag_info.getIsClass().equals("tag") && tag_info.getIsClass() != null) {
+					List<TagDTO> tag = dao.course_tag(tag_info.getIdx());	
+					resp.setTag_name(tag);
+				}
+				
+			}
+		}
+		
+		resp.setContent(course);
+		resp.setTime(timeline);
+		resp.setContent_detail_resta(restaList);
+		resp.setContent_detail_cmt(cmtList);
+		resp.setTags(tagList);
+		
+		return resp;
+	}
+	 
 	
 	// 코스 수정
 	public boolean update(

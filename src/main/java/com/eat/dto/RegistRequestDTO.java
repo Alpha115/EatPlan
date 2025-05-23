@@ -2,14 +2,31 @@ package com.eat.dto;
 
 import java.util.List;
 
-// 코스 작성을 위한 DTO 5단합체
+import com.eat.tags.TagAreaDTO;
+import com.eat.tags.TagDTO;
+
+// 코스 작성, 수정, 상세보기를 위한 DTO 7단합체
 public class RegistRequestDTO {
 	private CourseDTO content;
 	private TimelineDTO time;
     private List<DetailRestaDTO> content_detail_resta;     
     private List<DetailCmtDTO> content_detail_cmt;
-    private List<CourseTagDTO> tags;  
-	
+    private List<CourseTagDTO> tags;
+    private List<TagDTO> tag_name;
+    private List<TagAreaDTO> tag_name_area;
+    
+	public List<TagDTO> getTag_name() {
+		return tag_name;
+	}
+	public void setTag_name(List<TagDTO> tag_name) {
+		this.tag_name = tag_name;
+	}
+	public List<TagAreaDTO> getTag_name_area() {
+		return tag_name_area;
+	}
+	public void setTag_name_area(List<TagAreaDTO> tag_name_area) {
+		this.tag_name_area = tag_name_area;
+	}
 	public List<DetailRestaDTO> getContent_detail_resta() {
 		return content_detail_resta;
 	}

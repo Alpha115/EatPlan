@@ -9,6 +9,8 @@ import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
 import com.eat.dto.TimelineDTO;
+import com.eat.tags.TagAreaDTO;
+import com.eat.tags.TagDTO;
 
 @Mapper
 public interface RegistDAO {
@@ -25,6 +27,15 @@ public interface RegistDAO {
 	int regist_tmp_cnt(String user_id); // 코스 작성 임시저장 게시물 수
 	int pages(int limit); // 코스 작성 임시저장 불러오기 페이지
 
+	// 코스 수정 할 게시글 불러오기
+	CourseDTO course_content(int post_idx);
+	TimelineDTO course_timeline(int post_idx);
+	List<DetailRestaDTO> course_detail_resta(int post_idx);
+	List<DetailCmtDTO> course_detail_cmt(int post_idx);
+	List<CourseTagDTO> course_tag_idx(int post_idx);
+	List<TagAreaDTO> course_tag_area(int idx);
+	List<TagDTO> course_tag(int idx);
+	
 	// 코스 수정
 	int update(CourseDTO content, int post_idx); // 코스 수정 몸통
 	int update_time(TimelineDTO time, int post_idx); // 코스 수정 타임라인
@@ -37,5 +48,6 @@ public interface RegistDAO {
 
 	// 코스 삭제
 	int delete(List<CourseDTO> del_idx);
+
 
 }
