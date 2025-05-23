@@ -41,11 +41,11 @@ public class RegiUtilService {
 		return dao.searchRestaName(resta_name);
 	}
 
-	// 식당을 지역+식당 태그별로 검색하는 함수입니다. 
-	// 지역태그안했는데 걍 하지말자 제발
+	// 식당을 지역+식당 태그별로 검색하는 함수입니다.
+	// 지역태그안했는데 지역은제발 1개만하자...하알겠다
 	public ArrayList<RestaurantDTO> searchRestaTag(String[] resta_tags) {
-		
-		return dao.searchRestaTag(resta_tags, resta_tags.length);
+		ArrayList<RestaurantDTO> result = dao.searchRestaTag(resta_tags, resta_tags.length);
+		return result;
 	}
 
 }

@@ -36,7 +36,7 @@
 	</select>
 
 
-	<!-- 식당의 이름을 tag_name으로 검색합니다. -->
+	<!-- 식당의 이름을 tag_name[] 으로 검색합니다. -->
 	<select id="searchRestaTag" resultType="com.eat.dto.RestaurantDTO">
 		SELECT 
 			r.*
@@ -49,7 +49,7 @@
 				</foreach>
 			)
 		GROUP BY tr.resta_idx HAVING COUNT(tr.tag_idx) = #{count}
-		ORDER BY tr.resta_idx
+		ORDER BY tr.resta_idx DESC
 	</select>
 
 
