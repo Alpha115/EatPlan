@@ -19,6 +19,20 @@
 	LIMIT #{param2} OFFSET #{param1}
 </select>
 
+<!-- 신고 글 쓰기 -->
+<insert id="report_write" parameterType="com.eat.dto.ReportDTO"
+	useGeneratedKeys="true" keyColumn="report_idx" keyProperty="report_idx">
+	INSERT INTO report (suspect_id, reporter_id, img_idx, subject, content, class, public)
+	VALUES (#{suspect_id}, #{reporter_id}, #{img_idx}, #{subject}, #{content}, #{isClass}, #{isPublic})
+</insert>
+
+<!-- 신고 사진 저장 -->
+<insert id="saveReportImg" parameterType="map"
+	useGeneratedKeys="true" keyColumn="img_idx" keyProperty="img_idx">
+	INSERT INTO photo (class, new_filename)
+	VALUES ('report', #{new_filename})
+</insert>
+
 <!-- 신고 상세보기 몸통-->
 <select id="report_detail" resultType="com.eat.dto.ReportDTO" resultMap="reportMap">
 	SELECT

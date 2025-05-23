@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.dto.CourseDTO;
+import com.eat.dto.RegistRequestDTO;
 
 @CrossOrigin
 @RestController
@@ -90,6 +91,17 @@ public class MainController {
 	public Map<String, Object> course_list_img(@RequestBody Map<String, String> param) {
 		resp = new HashMap<String, Object>();
 		resp = service.course_list_img(param.get("detail_idx"));
+		return resp;
+	}
+	
+	//코스 상세보기
+	@GetMapping(value="/courseDetail")
+	public Map<String, Object>courseDetail(@RequestParam int post_idx){
+		
+		Map<String, Object> resp = new HashMap<String, Object>();
+		RegistRequestDTO dto = service.courseDetail(post_idx);
+		resp.put("dto", dto);
+		
 		return resp;
 	}
 	

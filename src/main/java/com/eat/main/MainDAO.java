@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
+import com.eat.dto.DetailCmtDTO;
+import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.TimelineDTO;
 
 @Mapper
 public interface MainDAO {
@@ -37,6 +40,13 @@ public interface MainDAO {
 	
 	// 코스 리스트 이미지 불러오기
 	Map<String, Object> course_list_img(String idx);
+	
+	//코스 상세보기
+	public CourseDTO getCourseDTO(int post_idx);
+	public TimelineDTO getTimelineDTO(int post_idx);
+	public List<DetailRestaDTO> getDetailRestaList(int post_idx);
+	public List<DetailCmtDTO> getCmtDTOList(int post_idx);
+	public List<CourseTagDTO> getCourseList(int post_idx);
 	
 	//코스 검색
 	List<CourseDTO> search_course(String subject, String user_id, String tag);

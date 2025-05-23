@@ -10,11 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eat.dto.CourseDTO;
 import com.eat.dto.MainDTO;
@@ -31,6 +33,19 @@ public class ReportController {
 	Map<String, Object> resp = null;
 	Logger log = LoggerFactory.getLogger(getClass());
 
+	// 신고글 작성
+	@PostMapping(value="/report_write")
+	public Map<String, Object> report_write(
+			@ModelAttribute ReportDTO content){
+		
+		resp = new HashMap<String, Object>();
+		
+		boolean success = service.report_write(content);
+		resp.put("success", success);
+		
+		return resp;
+	}
+	
 	// 신고 목록 불러오기
 	@GetMapping(value="/report_list/{page}")
 	public Map<String, Object> report_list(
@@ -48,7 +63,7 @@ public class ReportController {
 	}
 	
 	// 신고 상세보기
-	@GetMapping(value="report_detail/{report_idx}")
+	@GetMapping(value="/report_detail/{report_idx}")
 	public Map<String, Object> report_detail(
 			@PathVariable int report_idx){
 		
@@ -104,7 +119,7 @@ public class ReportController {
 	}
 	
 	// 히스토리 불러오기
-	@GetMapping(value="history_list/{report_idx}")
+	@GetMapping(value="/history_list/{report_idx}")
 	public Map<String, Object> history_list(
 			@PathVariable int report_idx,
 			@RequestParam (defaultValue = "1") int page){

@@ -71,7 +71,6 @@ public class MypageService {
 
 	// 프로필 사진 저장
 	private String fileSave(MultipartFile file) {
-		boolean success = false;
 
 		// 1.확장자 추출해서
 		String ori_fileName = file.getOriginalFilename();
@@ -84,7 +83,7 @@ public class MypageService {
 		String new_filename = UUID.randomUUID().toString() + ext;
 
 		// 3.저장 경로 정하고
-		String imgDir = "c:/upload";
+		String imgDir = "c:/upload/";
 		File profPath = new File(imgDir);
 
 		// 4.저장 경로 없으면 만들라고 시키고

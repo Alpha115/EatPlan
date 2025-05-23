@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
+import com.eat.dto.DetailCmtDTO;
+import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.RegistRequestDTO;
+import com.eat.dto.TimelineDTO;
 
 @Service
 public class MainService {
@@ -64,6 +68,25 @@ public class MainService {
 	// 코스 리스트 사진 불러오기
 	public Map<String, Object> course_list_img(String idx) {
 		return dao.course_list_img(idx);
+	}
+	
+	// 코스 상세보기
+	public RegistRequestDTO courseDetail(int post_idx) {
+		
+		CourseDTO course = dao.getCourseDTO(post_idx);
+		TimelineDTO timeline = dao.getTimelineDTO(post_idx);
+		List<DetailRestaDTO> restaList = dao.getDetailRestaList(post_idx);
+		List<DetailCmtDTO> cmtList = dao.getCmtDTOList(post_idx);
+		List<CourseTagDTO> tagList = dao.getCourseList(post_idx);
+		
+		RegistRequestDTO resp = new RegistRequestDTO();
+		resp.setContent(course);
+		resp.setTime(timeline);
+		resp.setContent_detail_resta(restaList);
+		resp.setContent_detail_cmt(cmtList);
+		resp.setTags(tagList);
+		
+		return resp;
 	}
 	
 	//코스검색
