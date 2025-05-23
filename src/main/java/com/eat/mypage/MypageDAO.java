@@ -8,12 +8,16 @@ import org.apache.ibatis.annotations.Param;
 
 import com.eat.dto.MypageDTO;
 import com.eat.dto.PhotoDTO;
+import com.eat.dto.TagPreferDTO;
 
 @Mapper
 public interface MypageDAO {
 	
 	// 회원정보 불러오기
 	List<MypageDTO> member_list(String user_id);
+	
+	// 태그 불러오기
+	List<TagPreferDTO> member_tag_list(String user_id);
 
 	// 회원정보 수정
 	boolean member_update(MypageDTO dto);

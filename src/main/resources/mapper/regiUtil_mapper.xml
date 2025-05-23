@@ -15,6 +15,11 @@
 		cate_idx
 		FROM tag WHERE cate_idx = #{param1}
 	</select>
+	
+	<!-- 지역 전체를 불러옵니다. -->
+	<select id="listTagArea" resultType="com.eat.tags.TagAreaDTO">
+		SELECT * FROM tag_area;
+	</select>
 
 	<!-- 식당/코스 태그로부터 특정 태그 검색값을 불러옵니다. -->
 	<select id="fromTag" resultType="com.eat.tags.TagDTO">
@@ -36,12 +41,13 @@
 	</select>
 
 
-	<!-- 식당의 이름을 tag_name으로 검색합니다. -->
+	<!-- 식당의 이름을 tag_name[] 으로 검색합니다. -->
 	<select id="searchRestaTag" resultType="com.eat.dto.RestaurantDTO">
 		SELECT 
 			r.*
 		FROM tag_rest tr JOIN tag t JOIN restaurant r
 		ON tr.tag_idx = t.tag_idx AND tr.resta_idx =r.resta_idx
+			AND r.area_tag_idx IN (SELECT area_tag_idx FROM tag_area WHERE tag_name LIKE CONCAT ('%', #{area}, '%'))
 		WHERE tr.tag_idx IN 
 			(SELECT tag_idx FROM tag WHERE tag_name IN 
 				<foreach collection="tags" item="tag" separator="," open="(" close=")">
@@ -49,7 +55,7 @@
 				</foreach>
 			)
 		GROUP BY tr.resta_idx HAVING COUNT(tr.tag_idx) = #{count}
-		ORDER BY tr.resta_idx
+		ORDER BY tr.resta_idx DESC
 	</select>
 
 

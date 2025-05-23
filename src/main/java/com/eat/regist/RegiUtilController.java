@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.dto.RestaurantDTO;
+import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagCateDTO;
 import com.eat.tags.TagDTO;
 
@@ -43,6 +44,16 @@ public class RegiUtilController {
 		resp.put("list_tag", list);
 		return resp;
 	}
+	
+	// 지역 태그 카테고리의 리스트 전체를 불러오는 기능입니다.
+	@GetMapping("/list_tag_area")
+	public Map<String, Object> listTagArea(){
+		resp=new HashMap<String, Object>();
+		ArrayList<TagAreaDTO> list=service.listTagArea();
+		resp.put("list_area", list);
+		return resp;
+	}
+	
 
 	// 식당/코스/지역 태그를 검색하는 기능입니다.
 	@PostMapping("/search_tag")
@@ -66,9 +77,9 @@ public class RegiUtilController {
 	
 	//식당을 태그별로 검색하여 불러옵니다.
 	@PostMapping("list_resta")
-	public Map<String, Object> searchRestaTag(@RequestBody String[] resta_tags){
+	public Map<String, Object> searchRestaTag(@RequestBody RestaTags tags){
 		resp=new HashMap<String, Object>();
-		ArrayList<RestaurantDTO> result=service.searchRestaTag(resta_tags);
+		ArrayList<RestaurantDTO> result=service.searchRestaTag(tags.getResta_tags(), tags.getResta_area());
 		resp.put("result", result);
 		return resp;
 	}
@@ -88,5 +99,39 @@ public class RegiUtilController {
 		
 		return resp;
 	}
+	
+}
+
+
+
+// 받아오는 태그를 묶는 클래스
+class RestaTags{
+	
+//	### 요청
+//	POST http://localhost/list_resta
+//	Content-Type: application/json
+//
+//	{
+//	  "resta_tags":["4인", "데이트", "회식"],
+//	  "resta_area": "종로"
+//	}
+
+	
+	private String resta_area;
+	private String[] resta_tags;
+	
+	public String getResta_area() {
+		return resta_area;
+	}
+	public void setResta_area(String resta_area) {
+		this.resta_area = resta_area;
+	}
+	public String[] getResta_tags() {
+		return resta_tags;
+	}
+	public void setResta_tags(String[] resta_tags) {
+		this.resta_tags = resta_tags;
+	}
+	
 	
 }

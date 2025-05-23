@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eat.dto.RestaurantDTO;
+import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagCateDTO;
 import com.eat.tags.TagDTO;
 
@@ -41,11 +42,16 @@ public class RegiUtilService {
 		return dao.searchRestaName(resta_name);
 	}
 
-	// 식당을 지역+식당 태그별로 검색하는 함수입니다. 
-	// 지역태그안했는데 걍 하지말자 제발
-	public ArrayList<RestaurantDTO> searchRestaTag(String[] resta_tags) {
-		
-		return dao.searchRestaTag(resta_tags, resta_tags.length);
+	// 식당을 지역+식당 태그별로 검색하는 함수입니다.
+	// 지역태그안했는데 지역은제발 1개만하자...하알겠다
+	public ArrayList<RestaurantDTO> searchRestaTag(String[] resta_tags, String resta_area) {
+		ArrayList<RestaurantDTO> result
+			= dao.searchRestaTag(resta_tags, resta_tags.length, resta_area);
+		return result;
+	}
+
+	public ArrayList<TagAreaDTO> listTagArea() {
+		return dao.listTagArea();
 	}
 
 }

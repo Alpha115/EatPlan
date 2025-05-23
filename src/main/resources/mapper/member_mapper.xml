@@ -15,7 +15,7 @@
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.eat.dto.MemberDTO">
 		INSERT INTO member (
-		user_id, pass, nickname, email, bio, location
+		user_id, pass, nickname, email, bio, location, admin
 		)VALUES(
 		#{user_id}
 		,#{pass}
@@ -23,7 +23,14 @@
 		,#{email}
 		,#{bio}
 		,#{location}
+		,false
 		)
+	</insert>
+	
+	<!-- 회원가입/태그입력 -->
+	<insert id="joinTag" parameterType="com.eat.dto.TagPreferDTO">
+		INSERT INTO tag_prefer (idx, class, user_id)
+			VALUES (#{idx}, #{isClass}, #{user_id})
 	</insert>
 
 	<!-- 아이디 중복 체크 -->

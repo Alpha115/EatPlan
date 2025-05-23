@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eat.dto.MypageDTO;
+import com.eat.dto.TagPreferDTO;
 
 @CrossOrigin
 @RestController
@@ -39,6 +40,15 @@ public class MypageController {
 		resp = new HashMap<String, Object>();
 		List<MypageDTO> list = service.member_list(dto.getUser_id());
 		resp.put("list", list);
+		return resp;
+	}
+	
+	// 태그 불러오기
+	@PostMapping(value="/member_tag_list")
+	public Map<String, Object> member_tag_list(@RequestBody TagPreferDTO tagdto) {
+		resp = new HashMap<String, Object>();
+		List<TagPreferDTO> taglist = service.member_tag_list(tagdto.getUser_id());
+		resp.put("taglist", taglist);
 		return resp;
 	}
 
