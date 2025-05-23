@@ -47,6 +47,7 @@
 			r.*
 		FROM tag_rest tr JOIN tag t JOIN restaurant r
 		ON tr.tag_idx = t.tag_idx AND tr.resta_idx =r.resta_idx
+			AND r.area_tag_idx IN (SELECT area_tag_idx FROM tag_area WHERE tag_name LIKE CONCAT ('%', #{area}, '%'))
 		WHERE tr.tag_idx IN 
 			(SELECT tag_idx FROM tag WHERE tag_name IN 
 				<foreach collection="tags" item="tag" separator="," open="(" close=")">

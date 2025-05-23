@@ -27,7 +27,7 @@ public interface RegiUtilDAO {
 	ArrayList<RestaurantDTO> searchRestaName(String resta_name);
 
 	// 태그 1개로 식당을 검색함
-	ArrayList<RestaurantDTO> searchRestaTag(String[] tags, int count);
+	ArrayList<RestaurantDTO> searchRestaTag(String[] tags, int count, String area);
 
 	ArrayList<TagAreaDTO> listTagArea();
 
