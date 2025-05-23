@@ -66,6 +66,7 @@
 	WHERE tag_name = #{tag_name}
 </select>
 
+
 <!-- 지역 태그 삭제 -->
 <delete id="adtag_del_area">
 	DELETE FROM tag_area

@@ -93,17 +93,19 @@ public class AdTagService {
 		return row > 0;
 	}
 
-	public boolean adtag_del(TagCateDTO cate_name, TagAreaDTO tag_area, TagDTO tag) {
+	// 태그 삭제
+	public boolean adtag_del(Map<String, Integer> params) {
 		
+		Integer area_tag_idx = params.get("area_tag_idx");
+		Integer tag_idx = params.get("tag_idx");
 		int row = 0;
-		String cate = cate_name.getCate_name();
 		
-		if (cate != null) {
-			if (cate.equals("지역")) {
-				row = dao.adtag_del_area(tag_area);
-			}else {
-				row = dao.adtag_del(tag);
-			}
+		if (area_tag_idx != null && area_tag_idx > 0) {
+			area_tag_idx = params.get("area_tag_idx");
+			row = dao.adtag_del_area(area_tag_idx);
+		} else if(tag_idx != null && tag_idx > 0) {
+			tag_idx = params.get("tag_idx");
+			row = dao.adtag_del(tag_idx);
 		}
 		
 		return row > 0;

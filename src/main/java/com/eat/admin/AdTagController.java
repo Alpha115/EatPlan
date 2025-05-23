@@ -93,18 +93,15 @@ public class AdTagController {
 		
 		return resp;
 	}
-	
+
 	// 태그 삭제
 	@DeleteMapping("/adtag_del")
 	public Map<String, Object> adtag_del(
-			@RequestBody TagRequestDTO req){
+			@RequestBody Map<String, Integer> params){
 		
-		resp = new HashMap<String, Object>();
-		TagCateDTO cate_name = req.getCate_name();
-		TagAreaDTO tag_area = req.getTag_area();
-		TagDTO tag = req.getTag();
+		resp= new HashMap<String, Object>();
 		
-		boolean success = service.adtag_del(cate_name, tag_area, tag);
+		boolean success = service.adtag_del(params);
 		
 		resp.put("success", success);
 		

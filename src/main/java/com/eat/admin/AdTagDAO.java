@@ -29,7 +29,6 @@ public interface AdTagDAO {
 	int adtag_write(TagDTO tag); // 태그 추가
 	int tag_area_overlay(String tag_area_name); // 지역 태그 중복확인
 	int tag_overlay(String tag_name); // 태그 중복확인
-	int adtag_del_area(TagAreaDTO tag_area); // 지역 태그 삭제
-	int adtag_del(TagDTO tag); // 태그 삭제
-
+	int adtag_del_area(int area_tag_idx); // 지역 태그 삭제
+	int adtag_del(int tag_idx); // 태그 삭제
 }
