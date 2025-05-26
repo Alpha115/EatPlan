@@ -16,6 +16,8 @@ import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
 import com.eat.dto.RegistRequestDTO;
 import com.eat.dto.TimelineDTO;
+import com.eat.tags.TagAreaDTO;
+import com.eat.tags.TagDTO;
 
 @Service
 public class MainService {
@@ -27,15 +29,15 @@ public class MainService {
 
 	// 코스 리스트 불러오기
 	public Map<String, Object> course_list(int page) {
-		
+
 		Map<String, Object> resp = new HashMap<String, Object>();
 		this.page = page;
 		resp.put("page", this.page);
 		int offset = (this.page - 1) * limit;
 		List<CourseDTO> list = dao.course_list(offset, limit);
-		
-		List<Map<String, Object>> result_list = new ArrayList<Map<String,Object>>();
-		
+
+		List<Map<String, Object>> result_list = new ArrayList<Map<String, Object>>();
+
 		if (list != null) {
 			for (CourseDTO content : list) {
 				Map<String, Object> course_data = new HashMap<String, Object>();
@@ -54,36 +56,57 @@ public class MainService {
 				result_list.add(course_data);
 			}
 		}
-		
+
 		resp.put("list", result_list);
 		resp.put("page", this.page);
 		resp.put("pages", dao.pages(limit));
 		return resp;
 	}
-	
+
 	// 코스 상세보기
 	public RegistRequestDTO courseDetail(int post_idx) {
-		
+
 		CourseDTO course = dao.getCourseDTO(post_idx);
 		TimelineDTO timeline = dao.getTimelineDTO(post_idx);
 		List<DetailRestaDTO> restaList = dao.getDetailRestaList(post_idx);
 		List<DetailCmtDTO> cmtList = dao.getCmtDTOList(post_idx);
 		List<CourseTagDTO> tagList = dao.getCourseList(post_idx);
-		
+		List<TagDTO> tagListResult = new ArrayList<TagDTO>();
+		List<TagAreaDTO> tagAreaListResult = new ArrayList<TagAreaDTO>();
+
 		RegistRequestDTO resp = new RegistRequestDTO();
-		resp.setContent(course);
-		resp.setTime(timeline);
-		resp.setContent_detail_resta(restaList);
-		resp.setContent_detail_cmt(cmtList);
-		resp.setTags(tagList);
+
+		if (tagList != null && tagList.size() > 0) {
+			for (CourseTagDTO tag_info : tagList) {
+				String isClass = tag_info.getIsClass();
+
+				List<TagDTO> tags = dao.course_tags(tag_info.getIdx());
+				if (tags != null) {
+					tagListResult.addAll(tags);
+				}
+
+				List<TagAreaDTO> areaTags = dao.course_list_tags_area(tag_info.getIdx());
+				if (areaTags != null) {
+					tagAreaListResult.addAll(areaTags);
+				}
+			}
+		}
+				resp.setContent(course);
+				resp.setTime(timeline);
+				resp.setContent_detail_resta(restaList);
+				resp.setContent_detail_cmt(cmtList);
+				resp.setTags(tagList);
+				resp.setTag_name(tagListResult);
+				resp.setTag_name_area(tagAreaListResult);
+
+				return resp;
 		
-		return resp;
 	}
-	
-	//코스검색
+
+	// 코스검색
 	public List<CourseDTO> search_course(String subject, String user_id, String tag) {
 		List<CourseDTO> resp = dao.search_course(subject, user_id, tag);
-		
+
 		for (CourseDTO course : resp) {
 			List<CourseTagDTO> tags = dao.getTags(course.getPost_idx());
 			course.setTags(tags);

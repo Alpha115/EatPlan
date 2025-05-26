@@ -9,6 +9,8 @@ import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
 import com.eat.dto.TimelineDTO;
+import com.eat.tags.TagAreaDTO;
+import com.eat.tags.TagDTO;
 
 @Mapper
 public interface MainDAO {
@@ -20,7 +22,7 @@ public interface MainDAO {
 	int course_list_like_cnt(int post_idx); // 코스 리스트 좋아요 수
 	int course_list_star_avg(int post_idx); // 코스 리스트 별점 평균
 	List<String> course_list_tag(int post_idx); // 코스 리스트 태그
-	List<String> course_list_tag_area(int post_idx); // 코스 리스트 지역태그
+	List<TagAreaDTO> course_list_tag_area(int post_idx); // 코스 리스트 지역태그
 	List<DetailRestaDTO> detail(int post_idx); // 코스 리스트 세부일정 idx
 	String course_list_img(int detail_idx); // 코스 리스트 이미지
 	
@@ -35,11 +37,16 @@ public interface MainDAO {
 	public List<DetailRestaDTO> getDetailRestaList(int post_idx);
 	public List<DetailCmtDTO> getCmtDTOList(int post_idx);
 	public List<CourseTagDTO> getCourseList(int post_idx);
+	List<TagDTO> course_tags(int idx);
+	List<TagAreaDTO> course_list_tags_area(int idx);
 	
 	//코스 검색
 	List<CourseDTO> search_course(String subject, String user_id, String tag);
 	
 	//코스 태그 가져오기
 	List<CourseTagDTO> getTags(int post_idx);
+	
+	
+	
 
 }

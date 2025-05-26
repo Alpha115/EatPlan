@@ -136,6 +136,21 @@
 		WHERE post_idx = #{post_idx}
 	</select>
 
+	<!-- 코스 상세 - 일반 태그 정보 조회 -->
+	<select id="course_tags" resultType="com.eat.tags.TagDTO">
+		SELECT tag_name FROM tag
+		WHERE tag_idx = #{tag_idx}
+	</select>
+
+	<!-- 코스 상세 - 지역 태그 정보 조회 -->
+	<select id="course_list_tags_area"
+		resultType="com.eat.tags.TagAreaDTO">
+		SELECT tag_name FROM tag_area
+		WHERE area_tag_idx = #{param1}
+	</select>
+
+
+
 	<!-- 코스 검색 --><!-- % : 0개 이상의 임의 문자 %abd% -> abc를 포함하는 모든 문자열 검색 가능 -->
 	<select id="search_course" resultType="com.eat.dto.CourseDTO">
 		SELECT * FROM post
