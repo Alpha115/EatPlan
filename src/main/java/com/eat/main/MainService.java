@@ -2,6 +2,7 @@ package com.eat.main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -104,12 +105,29 @@ public class MainService {
 	}
 
 	// 코스검색
-	public List<CourseDTO> search_course(String subject, String user_id, String tag) {
-		List<CourseDTO> resp = dao.search_course(subject, user_id, tag);
+	public List<CourseDTO> search_course(String subject, String user_id, String tag, Integer post_idx) {
+		List<CourseDTO> resp = dao.search_course(subject, user_id, tag,post_idx);
 
 		for (CourseDTO course : resp) {
 			List<CourseTagDTO> tags = dao.getTags(course.getPost_idx());
 			course.setTags(tags);
+		
+		List<TagDTO> tagsName =new ArrayList<>();
+		List<TagAreaDTO>tagsAreaName = new ArrayList<>();
+		
+		
+		for (CourseTagDTO tagInfo : tags) {
+			if("tag".equals(tagInfo.getIsClass())) {
+				tagsName.addAll(dao.searchTags(tagInfo.getIdx()));
+			}else if("area_tag".equals(tagInfo.getIsClass())) {
+				tagsAreaName.addAll(dao.searchTagsArea(tagInfo.getIdx()));
+			}
+			
+		}
+		
+		course.setTag_name(tagsName);
+		course.setTag_name_area(tagsAreaName);
+		
 		}
 		return resp;
 	}

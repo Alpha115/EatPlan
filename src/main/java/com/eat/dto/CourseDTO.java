@@ -3,6 +3,9 @@ package com.eat.dto;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.eat.tags.TagAreaDTO;
+import com.eat.tags.TagDTO;
+
 // post 테이블 DTO
 public class CourseDTO {
 
@@ -15,8 +18,26 @@ public class CourseDTO {
 	private boolean isPublic;
 	private boolean blind;
 	private boolean tmp;
-
+	
+	private List<TagDTO> tag_name;
+	private List<TagAreaDTO> tag_name_area;
 	private List<CourseTagDTO> tags; // 태그 정보
+	
+	public List<TagDTO> getTag_name() {
+		return tag_name;
+	}
+	public void setTag_name(List<TagDTO> tag_name) {
+		this.tag_name = tag_name;
+	}
+	public List<TagAreaDTO> getTag_name_area() {
+		return tag_name_area;
+	}
+	public void setTag_name_area(List<TagAreaDTO> tag_name_area) {
+		this.tag_name_area = tag_name_area;
+	}
+	
+	
+	
 	
 	
 	public List<CourseTagDTO> getTags() {
