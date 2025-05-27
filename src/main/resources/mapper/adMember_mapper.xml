@@ -40,13 +40,9 @@
   			FROM member
   			ORDER BY
 		    <choose>
-		      <when test="sortColumn == 'nickname'">nickname</when>
-		      <when test="sortColumn == 'email'">email</when>
+		      <when test="param1 == 'nickname'">nickname</when>
+		      <when test="param1 == 'email'">email</when>
 		      <otherwise>reg_date</otherwise>
-		    </choose>
-		    <choose>
-		      <when test="sortDirection == 'asc'">ASC</when>
-		      <otherwise>DESC</otherwise>
 		    </choose>
 	</select>
 

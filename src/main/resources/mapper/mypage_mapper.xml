@@ -13,7 +13,7 @@
 			,bio
 			,location
 			,withdraw
-		FROM member m WHERE user_id = #{user_id} and withdraw = true
+		FROM member m WHERE user_id = #{user_id} and withdraw = false
 	</select>
 	
 	<!-- 태그 불러오기 -->

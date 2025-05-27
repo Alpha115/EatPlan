@@ -29,10 +29,10 @@ public class AdMemberController {
 	
 	// 회원 리스트를 출력하는 기능입니다. 관리자 로그인 및 토큰이 필요합니다.
 	// 관리자 기준 회원 리스트 출력 기능을 여기서 작성해주세요.
-	@GetMapping("/admember_list/{user_id}")
-	public Map<String, Object> admember_list(@PathVariable String user_id) {
+	@GetMapping("/admember_list/{align}")
+	public Map<String, Object> admember_list(@PathVariable String align) {
 		resp = new HashMap<String, Object>();
-		List<MemberDTO> list = service.admember_list(user_id);
+		List<MemberDTO> list = service.admember_list(align);
 		resp.put("list", list);
 		return resp;
 	}

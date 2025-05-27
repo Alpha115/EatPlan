@@ -25,7 +25,7 @@ public interface AdMemberDAO {
 	int blockchk(String user_id);
 
 	// 회원 리스트 불러오기
-	List<MemberDTO> admember_list(String user_id);
+	List<MemberDTO> admember_list(String align);
 
 	
 	

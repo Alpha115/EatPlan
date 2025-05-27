@@ -47,8 +47,8 @@ public class AdMemberService {
 	}
 
 	// 회원 리스트 불러오기
-	public List<MemberDTO> admember_list(String user_id) {
-		return dao.admember_list(user_id);
+	public List<MemberDTO> admember_list(String align) {
+		return dao.admember_list(align);
 	}
 	
 	
