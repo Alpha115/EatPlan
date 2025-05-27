@@ -58,4 +58,6 @@ public interface MypageDAO {
 
 	int pages(String user_id);
 
+	int liked_pages(String user_id);
+
 }

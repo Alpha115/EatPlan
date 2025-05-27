@@ -19,6 +19,16 @@ public class CourseDTO {
 	private boolean blind;
 	private boolean tmp;
 	
+	private int total_like_count; // 좋아요 개수
+	
+	public int getTotal_like_count() {
+		return total_like_count;
+	}
+	public void setTotal_like_count(int total_like_count) {
+		this.total_like_count = total_like_count;
+	}
+	
+	
 	private List<TagDTO> tag_name;
 	private List<TagAreaDTO> tag_name_area;
 	private List<CourseTagDTO> tags; // 태그 정보

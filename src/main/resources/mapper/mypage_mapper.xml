@@ -103,6 +103,11 @@
 		FROM post WHERE user_id = #{user_id}
 	</select>
 	
+	<select id="liked_pages" resultType="int">
+		SELECT CEIL(COUNT(liked)/10) AS pages
+		FROM liked WHERE user_id = #{user_id}
+	</select>
+	
 	<!-- 내가 좋아요 한 글 모아보기 -->
 	<select id="like_course_list" resultType="com.eat.dto.CourseDTO">
 		SELECT

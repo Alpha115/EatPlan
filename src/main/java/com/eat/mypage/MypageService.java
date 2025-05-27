@@ -227,7 +227,7 @@ public class MypageService {
 	public Map<String, Object> like_course_list(String user_id, String page) {
 		Map<String, Object> resp = new HashMap<String, Object>();
 	    
-	    int totalCount = dao.pages(user_id); // user_id 기준 페이지 수 계산
+	    int totalCount = dao.liked_pages(user_id); // user_id 기준 페이지 수 계산
 	    int p = Integer.parseInt(page);
 	    int offset = (p - 1) * 10;
 	    List<CourseDTO> list = dao.like_course_list(user_id, offset);
