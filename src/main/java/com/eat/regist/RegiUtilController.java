@@ -46,7 +46,7 @@ public class RegiUtilController {
 	}
 	
 	// 태그 리스트 전체 불러오기
-	@GetMapping("/list_tag/")
+	@GetMapping("/list_tag")
 	public Map<String, Object> listTagWhole() {
 		resp = new HashMap<String, Object>();
 		ArrayList<TagDTO> list = service.listTagWhole();
