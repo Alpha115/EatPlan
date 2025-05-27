@@ -30,4 +30,6 @@ public interface RegiUtilDAO {
 
 	ArrayList<TagAreaDTO> listTagArea();
 
+	ArrayList<TagDTO> listTagWhole();
+
 }

@@ -10,10 +10,19 @@
 	<select id="listTag" resultType="com.eat.tags.TagDTO">
 		SELECT
 		tag_idx,
-		class AS isCourse,
+		class AS isClass,
 		tag_name,
 		cate_idx
 		FROM tag WHERE cate_idx = #{param1}
+	</select>
+	
+	<select id="listTagWhole" resultType="com.eat.tags.TagDTO">
+		SELECT
+		tag_idx,
+		class AS isClass,
+		tag_name,
+		cate_idx
+		FROM tag
 	</select>
 	
 	<!-- 지역 전체를 불러옵니다. -->

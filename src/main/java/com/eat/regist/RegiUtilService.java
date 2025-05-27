@@ -53,4 +53,8 @@ public class RegiUtilService {
 		return dao.listTagArea();
 	}
 
+	public ArrayList<TagDTO> listTagWhole() {
+		return dao.listTagWhole();
+	}
+
 }

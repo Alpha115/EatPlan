@@ -45,6 +45,15 @@ public class RegiUtilController {
 		return resp;
 	}
 	
+	// 태그 리스트 전체 불러오기
+	@GetMapping("/list_tag/")
+	public Map<String, Object> listTagWhole() {
+		resp = new HashMap<String, Object>();
+		ArrayList<TagDTO> list = service.listTagWhole();
+		resp.put("list_tag_whole", list);
+		return resp;
+	}
+	
 	// 지역 태그 카테고리의 리스트 전체를 불러오는 기능입니다.
 	@GetMapping("/list_tag_area")
 	public Map<String, Object> listTagArea(){
