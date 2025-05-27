@@ -92,7 +92,15 @@
 
 	<!-- 내가 쓴 게시글 모아보기 -->
 	<select id="my_course_list" resultType="com.eat.dto.CourseDTO">
-		SELECT * FROM post WHERE user_id = #{user_id}
+		SELECT * FROM post 
+		WHERE user_id = #{user_id}
+		ORDER BY post_idx DESC
+		LIMIT 10 OFFSET #{offset}
+	</select>
+	
+	<select id="pages" resultType="int">
+		SELECT CEIL(COUNT(post_idx)/10) AS pages
+		FROM post WHERE user_id = #{user_id}
 	</select>
 	
 	<!-- 내가 좋아요 한 글 모아보기 -->
@@ -110,7 +118,8 @@
 		FROM post p1 WHERE p1.post_idx IN
 		(SELECT post_idx 
 		FROM liked WHERE user_id = #{user_id})
-		ORDER BY post_idx DESC;
+		ORDER BY post_idx DESC
+		LIMIT 10 OFFSET #{offset}
 	</select>
 	
 	
