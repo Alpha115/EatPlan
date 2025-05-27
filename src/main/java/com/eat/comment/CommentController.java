@@ -29,21 +29,20 @@ public class CommentController {
 
 	 // 댓글 리스트
 	   @GetMapping(value = "/comment_list")
-	   public Map<String, Object> comment_list(@RequestBody MainDTO dto,
+	   public Map<String, Object> comment_list(@RequestParam int post_idx,
 			   @RequestParam (defaultValue = "1") int page){
 		   
-		   Map<String, Object> resp = service.comment_list(dto.getPost_idx(), page);
+		   Map<String, Object> resp = service.comment_list(post_idx, page);
 		   
 		   return resp;
 	   }
 
 	   //댓글 작성
 	      @PostMapping(value = "/comment_insert")
-	      public Map<String, Object> comment_insert (@RequestBody MainDTO dto,
-	            @RequestBody Map<String, String> params
+	      public Map<String, Object> comment_insert (@RequestBody Map<String, String> params
 	            /*@RequestHeader Map<String, String> header*/){
 	         
-	         log.info("user_id: " + dto.getUser_id());
+	         log.info("user_id: " + params.get("user_id"));
 	         log.info("params : " + params);
 	         /* log.info("header : {} " , header); */
 	         
@@ -57,7 +56,6 @@ public class CommentController {
 	          * 
 	          * if(loginId != null && loginId.equals(params.get("id"))) {
 	          */
-	            params.put("user_id", dto.getUser_id());
 	            boolean success = service.comment_insert(params);
 	            resp.put("success", success);
 	            /* login = true; */
@@ -83,12 +81,12 @@ public class CommentController {
 
 	   // 댓글 삭제
 	   @DeleteMapping(value = "/comment_del")
-	   public Map<String, Object> comment_del(@RequestBody Map<String, String> params) {
+	   public Map<String, Object> comment_del(@RequestParam("comment_idx") int comment_idx) {
 
-	      log.info("params : " + params);
+	      log.info("comment_idx : " + comment_idx);
 	      resp = new HashMap<String, Object>();
 	    
-	      boolean success = service.comment_del(params);
+	      boolean success = service.comment_del(comment_idx);
 	      resp.put("success", success);
 
 	      return resp;

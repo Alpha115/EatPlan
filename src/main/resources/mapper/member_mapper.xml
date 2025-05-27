@@ -50,11 +50,20 @@
 	</select>
 
 	<!-- 비밀번호 찾기 - 아이디 / 이메일 확인 -->
-	<select id="findPass" resultType="int">
-		SELECT COUNT(*) FROM users
-		WHERE user_id = #{user_id} AND email = #{email}
+	 <select id="findPassword" resultType="int">
+    SELECT COUNT(*) FROM member
+    WHERE user_id = #{user_id}
+      AND email = #{email}
 	</select>
-
+	
+	<!-- 비밀번호 찾기 - 비밀번호 변경 -->
+	<update id="updatePassword">
+		UPDATE member
+		SET pass = #{pass}
+		WHERE user_id = #{user_id}
+	</update>
+  
+  
 	<!-- 프로필 변경 -->
 	<insert id="fileSave" parameterType="String"
 	useGeneratedKeys="true" keyProperty="img_idx"> 

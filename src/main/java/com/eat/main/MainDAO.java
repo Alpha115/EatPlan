@@ -1,8 +1,10 @@
 package com.eat.main;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
@@ -41,10 +43,17 @@ public interface MainDAO {
 	List<TagAreaDTO> course_list_tags_area(int idx);
 	
 	//코스 검색
-	List<CourseDTO> search_course(String subject, String user_id, String tag);
+	List<CourseDTO> search_course(@Param("subject") String subject, 
+			@Param("user_id")String user_id, 
+			@Param("tag")String tag,
+			@Param("post_idx") Integer post_idx);
+	Collection<? extends TagDTO> searchTags(int idx);
+	Collection<? extends TagAreaDTO> searchTagsArea(int idx);
 	
 	//코스 태그 가져오기
 	List<CourseTagDTO> getTags(int post_idx);
+
+	
 	
 	
 	

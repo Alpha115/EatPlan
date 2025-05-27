@@ -87,7 +87,7 @@ public class MemberController {
 
 	// 비밀번호 찾기 요청 - 아이디 / 이메일 확인
 	@PostMapping(value = "/findPassword")
-	public Map<String, Object> finedPassword(@RequestBody MemberDTO dto) {
+	public Map<String, Object> findPassword(@RequestBody MemberDTO dto) {
 
 		resp = new HashMap<String, Object>();
 		boolean success = service.findPassword(dto.getUser_id(), dto.getEmail());

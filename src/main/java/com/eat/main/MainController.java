@@ -50,11 +50,14 @@ public class MainController {
 	
 	//코스검색
 	@GetMapping(value= "/search_course")
-	public ResponseEntity<List<CourseDTO>>search_course(@RequestParam (required = false)String subject , 
-			@RequestParam (required = false)String user_id,
-			@RequestParam (required = false)String tag){
+	public ResponseEntity<List<CourseDTO>>search_course(
+			@RequestParam (value = "subject", required = false)String subject , 
+			@RequestParam (value = "user_id", required = false)String user_id,
+			@RequestParam (value = "tag", required = false)String tag,
+			@RequestParam(value = "post_idx", required = false) Integer post_idx){
 		
-		List<CourseDTO> resp = service.search_course(subject, user_id, tag);
+		System.out.println("post_idx = " + post_idx);
+		List<CourseDTO> resp = service.search_course(subject, user_id, tag,post_idx);
 		
 		return ResponseEntity.ok(resp);
 		
