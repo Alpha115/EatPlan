@@ -39,19 +39,28 @@ public class MainController {
 				resp = service.course_list(page);
 			}
 		} catch (Exception e) {
-			resp.put("msg", "로그인 하세용");
+			resp.put("msg", JwtUtil.login_message);
 		}
+		
 		return resp;
 	}
 
 	// 코스 상세보기
 	@GetMapping(value = "/courseDetail")
-	public Map<String, Object> courseDetail(@RequestParam int post_idx) {
+	public Map<String, Object> courseDetail(@RequestParam int post_idx, @RequestHeader Map<String, String> header) {
 
-		Map<String, Object> resp = new HashMap<String, Object>();
-		RegistRequestDTO dto = service.courseDetail(post_idx);
-		resp.put("dto", dto);
+		resp = new HashMap<String, Object>();
 
+		try {
+			String loginId=(String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+			if(!loginId.equals("")) {
+				RegistRequestDTO dto = service.courseDetail(post_idx);
+				resp.put("dto", dto);
+			}
+		} catch (Exception e) {
+			resp.put("msg", JwtUtil.login_message);
+		}
+		
 		return resp;
 	}
 
