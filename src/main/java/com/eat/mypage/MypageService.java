@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eat.dto.CourseDTO;
 import com.eat.dto.MypageDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.TagPreferDTO;
@@ -192,6 +193,16 @@ public class MypageService {
 
 		// resource , header, status
 		return new ResponseEntity<Resource>(res, headers, HttpStatus.OK);
+	}
+
+	// 내가 쓴 게시글 모아보기
+	public List<CourseDTO> my_course_list(String user_id) {
+		return dao.my_course_list(user_id);
+	}
+
+	// 내가 좋아요 한 글 모아보기
+	public List<CourseDTO> like_course_list(String user_id) {
+		return dao.like_course_list(user_id);
 	}
 
 }

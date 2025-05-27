@@ -1,9 +1,12 @@
 package com.eat.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eat.dto.BanPeriDTO;
+import com.eat.dto.MemberDTO;
 import com.eat.dto.UserDTO;
 
 @Service
@@ -41,6 +44,11 @@ public class AdMemberService {
 	public boolean blockchk(String user_id) {
 		int count = dao.blockchk(user_id);
 				return count >0;
+	}
+
+	// 회원 리스트 불러오기
+	public List<MemberDTO> admember_list(String user_id) {
+		return dao.admember_list(user_id);
 	}
 	
 	
