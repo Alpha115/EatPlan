@@ -116,19 +116,19 @@ public class MypageController {
 	}
 	
 	// 내가 쓴 게시글 모아보기
-	@GetMapping(value="/my_course_list/{user_id}")
-	public Map<String, Object> my_course_list(@PathVariable String user_id) {
+	@GetMapping(value="/my_course_list/{user_id}/{page}")
+	public Map<String, Object> my_course_list(@PathVariable String user_id, @PathVariable String page) {
 		resp = new HashMap<String, Object>();
-		List<CourseDTO> list = service.my_course_list(user_id);
+		Map<String, Object> list = service.my_course_list(user_id, page);
 		resp.put("list", list);
 		return resp;
 	}
 	
 	// 내가 좋아요 한 글 모아보기
-	@GetMapping(value="/like_course_list/{user_id}")
-	public Map<String, Object> like_course_list(@PathVariable String user_id) {
+	@GetMapping(value="/like_course_list/{user_id}/{page}")
+	public Map<String, Object> like_course_list(@PathVariable String user_id, @PathVariable String page) {
 		resp = new HashMap<String, Object>();
-		List<CourseDTO> list = service.like_course_list(user_id);
+		Map<String, Object> list = service.like_course_list(user_id, page);
 		resp.put("list", list);
 		return resp;
 	}

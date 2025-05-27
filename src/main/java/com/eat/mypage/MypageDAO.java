@@ -51,9 +51,11 @@ public interface MypageDAO {
 	String member_pass(String user_id);
 
 	// 내가 쓴 게시글 모아보기
-	List<CourseDTO> my_course_list(String user_id);
+	List<CourseDTO> my_course_list(String user_id, int offset);
 
 	// 내가 좋아요 한 글 모아보기
-	List<CourseDTO> like_course_list(String user_id);
+	List<CourseDTO> like_course_list(String user_id, int offset);
+
+	int pages(String user_id);
 
 }

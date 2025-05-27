@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -207,13 +208,34 @@ public class MypageService {
 	}
 
 	// 내가 쓴 게시글 모아보기
-	public List<CourseDTO> my_course_list(String user_id) {
-		return dao.my_course_list(user_id);
+	public Map<String, Object> my_course_list(String user_id, String page) {
+	    Map<String, Object> resp = new HashMap<String, Object>();
+	    
+	    int totalCount = dao.pages(user_id); // user_id 기준 페이지 수 계산
+	    int p = Integer.parseInt(page);
+	    int offset = (p - 1) * 10;
+
+	    List<CourseDTO> list = dao.my_course_list(user_id, offset);
+
+	    resp.put("list", list);
+	    resp.put("totalCount", totalCount); // 프론트에서 사용할 총 페이지 수 or 총 게시글 수
+
+	    return resp;
 	}
 
 	// 내가 좋아요 한 글 모아보기
-	public List<CourseDTO> like_course_list(String user_id) {
-		return dao.like_course_list(user_id);
+	public Map<String, Object> like_course_list(String user_id, String page) {
+		Map<String, Object> resp = new HashMap<String, Object>();
+	    
+	    int totalCount = dao.pages(user_id); // user_id 기준 페이지 수 계산
+	    int p = Integer.parseInt(page);
+	    int offset = (p - 1) * 10;
+	    List<CourseDTO> list = dao.like_course_list(user_id, offset);
+		
+	    resp.put("list", list);
+	    resp.put("totalCount", totalCount);
+	    
+		return resp;
 	}
 
 }
