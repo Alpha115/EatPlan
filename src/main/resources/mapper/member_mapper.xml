@@ -54,7 +54,15 @@
     SELECT COUNT(*) FROM member
     WHERE user_id = #{user_id}
       AND email = #{email}
-</select>
+	</select>
+	
+	<!-- 비밀번호 찾기 - 비밀번호 변경 -->
+	<update id="updatePassword">
+		UPDATE member
+		SET pass = #{pass}
+		WHERE user_id = #{user_id}
+	</update>
+  
   
 	<!-- 프로필 변경 -->
 	<insert id="fileSave" parameterType="String"

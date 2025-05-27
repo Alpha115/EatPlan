@@ -32,9 +32,8 @@ public class CommentService {
 	}
 
 	// 댓글 삭제
-	public boolean comment_del(Map<String, String> params) {
-		int commentIdx = Integer.parseInt(params.get("comment_idx"));
-		int row = dao.comment_del(commentIdx);
+	public boolean comment_del(int comment_idx) {
+		int row = dao.comment_del(comment_idx);
 		return row > 0;
 	}
 	
@@ -53,15 +52,5 @@ public class CommentService {
 		
 		return resp;
 	}
-	
-	// 댓글 리스트
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
