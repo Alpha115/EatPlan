@@ -1,8 +1,11 @@
 package com.eat.admin;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.eat.dto.BanPeriDTO;
+import com.eat.dto.MemberDTO;
 import com.eat.dto.UserDTO;
 
 
@@ -20,6 +23,9 @@ public interface AdMemberDAO {
 	
 	// 정지 회원 로그인 막기
 	int blockchk(String user_id);
+
+	// 회원 리스트 불러오기
+	List<MemberDTO> admember_list(String user_id);
 
 	
 	

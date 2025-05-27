@@ -38,8 +38,10 @@ public class MemberController {
 		boolean success = service.login(params);
 		resp.put("success", success);
 		if (success == true) {
-			String token = JwtUtil.getToken("id", params.get("id"));
+			String id = params.get("user_id");
+			String token = JwtUtil.getToken("user_id", params.get("user_id"));
 			resp.put("token", token);
+			resp.put("user_id", id);
 		}
 		return resp;
 	}

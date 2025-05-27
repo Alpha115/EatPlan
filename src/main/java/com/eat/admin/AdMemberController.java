@@ -1,6 +1,7 @@
 package com.eat.admin;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.dto.BanPeriDTO;
+import com.eat.dto.MemberDTO;
 
 
 @CrossOrigin
@@ -27,6 +29,13 @@ public class AdMemberController {
 	
 	// 회원 리스트를 출력하는 기능입니다. 관리자 로그인 및 토큰이 필요합니다.
 	// 관리자 기준 회원 리스트 출력 기능을 여기서 작성해주세요.
+	@GetMapping("/admember_list/{user_id}")
+	public Map<String, Object> admember_list(@PathVariable String user_id) {
+		resp = new HashMap<String, Object>();
+		List<MemberDTO> list = service.admember_list(user_id);
+		resp.put("list", list);
+		return resp;
+	}
 	
 	
 	// 회원에게 관리자 권한을 부여하는 기능입니다. 관리자 로그인 및 토큰이 필요합니다.

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.eat.dto.CourseDTO;
 import com.eat.dto.MypageDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.TagPreferDTO;
@@ -48,5 +49,11 @@ public interface MypageDAO {
 	
 	// 비밀번호 확인
 	String member_pass(String user_id);
+
+	// 내가 쓴 게시글 모아보기
+	List<CourseDTO> my_course_list(String user_id);
+
+	// 내가 좋아요 한 글 모아보기
+	List<CourseDTO> like_course_list(String user_id);
 
 }
