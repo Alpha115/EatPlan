@@ -38,7 +38,13 @@
 		update member set withdraw = true
 			where user_id = #{user_id}
 	</update>
-
+	
+	<!-- 비밀번호 확인 -->
+	<select id="member_pass" parameterType="string" resultType="string">
+    SELECT pass FROM member WHERE user_id = #{user_id}
+</select>
+	
+	
 	<!-- 회원 정보 수정 - 태그 삭제 -->
 	<delete id="deletMemberTags">
 		DELETE FROM

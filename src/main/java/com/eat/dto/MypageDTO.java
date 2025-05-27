@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class MypageDTO {
 
 	// member
+	private String user_id;
 	private String pass;
 	private String email;
 	private String nickname;
@@ -23,7 +24,7 @@ public class MypageDTO {
 	private int img_idx;
 	
 	
-	private String user_id;
+	
 	public String getUser_id() {
 		return user_id;
 	}

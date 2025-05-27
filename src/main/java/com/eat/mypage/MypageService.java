@@ -193,5 +193,16 @@ public class MypageService {
 		// resource , header, status
 		return new ResponseEntity<Resource>(res, headers, HttpStatus.OK);
 	}
+	
+	
+	// 비밀번호 확인
+	public boolean member_pass(MypageDTO dto) {
+		String passWord= dao.member_pass(dto.getUser_id());
+		
+		if (passWord == null)
+			return false;
+		
+		return dto.getPass().equals(passWord);
+	}
 
 }

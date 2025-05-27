@@ -45,5 +45,8 @@ public interface MypageDAO {
 
 	// 프로필 정보 가져오기
 	Map<String, String> imgInfo(int img_idx);
+	
+	// 비밀번호 확인
+	String member_pass(String user_id);
 
 }

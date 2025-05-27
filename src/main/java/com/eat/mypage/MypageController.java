@@ -68,6 +68,16 @@ public class MypageController {
 		return resp;
 	}
 	
+	//비밀번호 확인 기능
+	@PostMapping("/member_pass")
+	public Map<String, Object> member_pass(@RequestBody MypageDTO dto){
+		resp = new HashMap<String, Object>();
+		boolean success = service.member_pass(dto);
+		resp.put("success", success);
+		return resp;
+	}
+	
+	
 	//프로필 변경
 	@PutMapping(value="/profile_update")
 	public Map<String, Object> profile_update(@ModelAttribute MypageDTO dto){
