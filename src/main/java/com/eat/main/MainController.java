@@ -39,9 +39,8 @@ public class MainController {
 				resp = service.course_list(page);
 			}
 		} catch (Exception e) {
-			log.info("로그인 하라고 어떻게 빠꾸보내지?");
+			resp.put("msg", "로그인 하세용");
 		}
-		
 		return resp;
 	}
 
