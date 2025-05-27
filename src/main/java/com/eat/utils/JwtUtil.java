@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.crypto.SecretKey;
 
-import org.springframework.web.bind.annotation.RequestHeader;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -53,13 +51,13 @@ public class JwtUtil {
 	}
 
 	// 토큰 확인 메소드
-	public boolean chkToken(String user_id, @RequestHeader Map<String, String> header) {
-		String loginId= (String) readToken(header.get("authorization")).get("id");
-		if(!loginId.equals("")&&loginId.equals(user_id)) {
-			return true;
-		}
-		return false;
-	}
+	/*
+	 * public boolean checkToken(String user_id, Map<String, String> header) {
+	 * String token=header.get("authorization"); Map<String, Object>
+	 * payload=readToken(token); String loginId= (String) payload.get("user_id");
+	 * if(!loginId.equals("")&&loginId.equals(user_id)) { return true; } return
+	 * false; }
+	 */
 	
 
 }

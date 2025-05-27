@@ -2,7 +2,6 @@ package com.eat.main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +78,7 @@ public class MainService {
 
 		if (tagList != null && tagList.size() > 0) {
 			for (CourseTagDTO tag_info : tagList) {
-				String isClass = tag_info.getIsClass();
+//				String isClass = tag_info.getIsClass();
 
 				List<TagDTO> tags = dao.course_tags(tag_info.getIdx());
 				if (tags != null) {
