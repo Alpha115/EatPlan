@@ -14,7 +14,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtil {
 
 	private static SecretKey pri_key = null;
-	public static String login_message = "로그인하쎄요";
+	public static String login_message = "로그아웃 상태입니다.";
 
 	public static SecretKey getPri_key() {
 		return pri_key;

@@ -32,16 +32,16 @@ public class MainController {
 	@GetMapping(value = "/course_list/{page}")
 	public Map<String, Object> course_list(@PathVariable int page, @RequestHeader Map<String, String> header) {
 		resp = new HashMap<String, Object>();
-		
+
 		try {
-			String loginId=(String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-			if(!loginId.equals("")) {
+			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+			if (!loginId.equals("")) {
 				resp = service.course_list(page);
 			}
 		} catch (Exception e) {
 			resp.put("msg", JwtUtil.login_message);
 		}
-		
+
 		return resp;
 	}
 
@@ -52,15 +52,15 @@ public class MainController {
 		resp = new HashMap<String, Object>();
 
 		try {
-			String loginId=(String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-			if(!loginId.equals("")) {
+			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+			if (!loginId.equals("")) {
 				RegistRequestDTO dto = service.courseDetail(post_idx);
 				resp.put("dto", dto);
 			}
 		} catch (Exception e) {
 			resp.put("msg", JwtUtil.login_message);
 		}
-		
+
 		return resp;
 	}
 
@@ -69,11 +69,20 @@ public class MainController {
 	public ResponseEntity<List<CourseDTO>> search_course(
 			@RequestParam(value = "subject", required = false) String subject,
 			@RequestParam(value = "user_id", required = false) String user_id,
-			@RequestParam(value = "tag", required = false) String tag) {
+			@RequestParam(value = "tag", required = false) String tag, @RequestHeader Map<String, String> header) {
 
-		List<CourseDTO> resp = service.search_course(subject, user_id, tag);
+		List<CourseDTO> entity = null;
 
-		return ResponseEntity.ok(resp);
+		try {
+			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+			if (!loginId.equals("")) {
+				entity = service.search_course(subject, user_id, tag);
+				return ResponseEntity.ok(entity);
+			}
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
+		return null;
 
 	}
 

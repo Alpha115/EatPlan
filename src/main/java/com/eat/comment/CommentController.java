@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.eat.utils.JwtUtil;
 
 @CrossOrigin
 @RestController
@@ -22,71 +25,81 @@ public class CommentController {
 	@Autowired
 	CommentService service;
 
-	Map<String, Object> resp = new HashMap<String, Object>();
+	Map<String, Object> resp = null;
 	Logger log = LoggerFactory.getLogger(getClass());
 
-	 // 댓글 리스트
-	   @GetMapping(value = "/comment_list")
-	   public Map<String, Object> comment_list(@RequestParam int post_idx,
-			   @RequestParam (defaultValue = "1") int page){
-		   
-		   Map<String, Object> resp = service.comment_list(post_idx, page);
-		   
-		   return resp;
-	   }
+	// 댓글 리스트
+	@GetMapping(value = "/comment_list")
+	public Map<String, Object> comment_list(@RequestParam int post_idx, @RequestParam(defaultValue = "1") int page,
+			@RequestHeader Map<String, String> header) {
+		resp = new HashMap<String, Object>();
 
-	   //댓글 작성
-	      @PostMapping(value = "/comment_insert")
-	      public Map<String, Object> comment_insert (@RequestBody Map<String, String> params
-	            /*@RequestHeader Map<String, String> header*/){
-	         
-	         log.info("user_id: " + params.get("user_id"));
-	         log.info("params : " + params);
-	         /* log.info("header : {} " , header); */
-	         
-	         resp = new HashMap<String, Object>();
-	         /* boolean login = false; */
-	         /* String token = header.get("authorization"); */
-	         
-	         /*
-	          * Map<String, Object> payload = JwtUtil.readToken(token); String loginId =
-	          * (String) payload.get("id");
-	          * 
-	          * if(loginId != null && loginId.equals(params.get("id"))) {
-	          */
-	            boolean success = service.comment_insert(params);
-	            resp.put("success", success);
-	            /* login = true; */
-	         //}
-	         
-	         // resp.put("loginYN", login);
-	         
-	         return resp;
-	      }
+		try {
+			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+			if (!loginId.equals("")) {
+				resp.put("list", service.comment_list(post_idx, page));
+			}
+		} catch (Exception e) {
+			resp.put("msg", JwtUtil.login_message);
+		}
 
-	   // 댓글 수정
-	   @PutMapping(value = "/comment_update")
-	   public Map<String, Object> comment_update(@RequestBody Map<String, String> params) {
-
-	      log.info("params : " + params);
-	      resp = new HashMap<String, Object>();
-	     
-	      boolean success = service.comment_update(params);
-	      resp.put("success", success);
-
-	      return resp;
-	   }
-
-	   // 댓글 삭제
-	   @DeleteMapping(value = "/comment_del")
-	   public Map<String, Object> comment_del(@RequestParam("comment_idx") int comment_idx) {
-
-	      log.info("comment_idx : " + comment_idx);
-	      resp = new HashMap<String, Object>();
-	    
-	      boolean success = service.comment_del(comment_idx);
-	      resp.put("success", success);
-
-	      return resp;
-	   }
+		return resp;
 	}
+
+	// 댓글 작성
+	@PostMapping(value = "/comment_insert")
+	public Map<String, Object> comment_insert(@RequestBody Map<String, String> params,
+			@RequestHeader Map<String, String> header) {
+		resp = new HashMap<String, Object>();
+
+		try {
+			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+			if (!loginId.equals("")) {
+				boolean success = service.comment_insert(params);
+				resp.put("success", success);
+			}
+		} catch (Exception e) {
+			resp.put("msg", JwtUtil.login_message);
+		}
+		return resp;
+	}
+
+	// 댓글 수정
+	@PutMapping(value = "/comment_update")
+	public Map<String, Object> comment_update(@RequestBody Map<String, String> params,
+			@RequestHeader Map<String, String> header) {
+		resp = new HashMap<String, Object>();
+		
+		try {
+			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+			if (!loginId.equals("")) {
+				boolean success = service.comment_update(params);
+				resp.put("success", success);
+			}
+		} catch (Exception e) {
+			resp.put("msg", JwtUtil.login_message);
+		}
+
+		return resp;
+	}
+
+	// 댓글 삭제
+	@DeleteMapping(value = "/comment_del")
+	public Map<String, Object> comment_del(@RequestParam("comment_idx") int comment_idx,
+			@RequestHeader Map<String, String> header) {
+
+		log.info("comment_idx : " + comment_idx);
+		resp = new HashMap<String, Object>();
+		
+		try {
+			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+			if (!loginId.equals("")) {
+				boolean success = service.comment_del(comment_idx);
+				resp.put("success", success);
+			}
+		} catch (Exception e) {
+			resp.put("msg", JwtUtil.login_message);
+		}
+		return resp;
+	}
+}
