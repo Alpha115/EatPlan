@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.crypto.SecretKey;
 
-import com.eat.dto.RegistRequestDTO;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
