@@ -88,8 +88,11 @@ public class ReportService {
 
 	// 신고 목록 총 페이지
 	public int report_pages() {
-		return dao.report_pages(content_cnt);
-	}
+        // 전체 신고 건수 조회
+        int totalCount = dao.countReports();
+        // 올림 계산: (total + pageSize - 1) / pageSize
+        return (totalCount + content_cnt - 1) / content_cnt;
+    }
 	
 	// 히스토리 총 페이지
 	public int his_pages(int report_idx) {

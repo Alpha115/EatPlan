@@ -37,6 +37,9 @@ public interface ReportDAO {
 	// 신고 목록 총 페이지
 	int report_pages(int content_cnt);
 	
+	// 카운트용 메서드 시그니처
+	int countReports();
+	
 	// 히스토리 총 페이지
 	int his_pages(int content_cnt, int report_idx);
 

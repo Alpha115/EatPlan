@@ -117,6 +117,10 @@
 	SELECT CEIL(COUNT(report_idx)/#{param1}) AS pages FROM report_history
 </select>
 
+<select id="countReports" resultType="int">
+  SELECT COUNT(*) FROM report
+</select>
+
 <resultMap id="reportMap" type="com.eat.dto.ReportDTO">
     <result property="isClass" column="class"/>
 </resultMap>
