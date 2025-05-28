@@ -158,15 +158,11 @@
     (#{subject} IS NULL OR p.subject LIKE CONCAT('%', #{subject}, '%')) 
     AND
     (#{user_id} IS NULL OR p.user_id = #{user_id})
-    <if test="post_idx != null">
-        AND p.post_idx = #{post_idx}
-    </if>
     <if test="tag != null and tag != ''">
     AND EXISTS (
         SELECT 1 FROM tag_course tc
         LEFT JOIN tag t ON tc.idx = t.tag_idx AND tc.class = 'tag'
         LEFT JOIN tag_area ta ON tc.idx = ta.area_tag_idx AND tc.class = 'area_tag'
-        WHERE tc.post_idx = p.post_idx
           AND (t.tag_name LIKE CONCAT('%', #{tag}, '%') OR ta.tag_name LIKE CONCAT('%', #{tag}, '%'))
     )
     </if>
