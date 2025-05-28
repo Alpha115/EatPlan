@@ -30,36 +30,21 @@ public class MainController {
 
 	// 코스 리스트 불러오기
 	@GetMapping(value = "/course_list/{page}")
-	public Map<String, Object> course_list(@PathVariable int page, @RequestHeader Map<String, String> header) {
+	public Map<String, Object> course_list(@PathVariable int page) {
 		resp = new HashMap<String, Object>();
-
-		try {
-			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-			if (!loginId.equals("")) {
-				resp = service.course_list(page);
-			}
-		} catch (Exception e) {
-			resp.put("msg", JwtUtil.login_message);
-		}
+		resp = service.course_list(page);
 
 		return resp;
 	}
 
 	// 코스 상세보기
 	@GetMapping(value = "/courseDetail")
-	public Map<String, Object> courseDetail(@RequestParam int post_idx, @RequestHeader Map<String, String> header) {
+	public Map<String, Object> courseDetail(@RequestParam int post_idx) {
 
 		resp = new HashMap<String, Object>();
 
-		try {
-			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-			if (!loginId.equals("")) {
-				RegistRequestDTO dto = service.courseDetail(post_idx);
-				resp.put("dto", dto);
-			}
-		} catch (Exception e) {
-			resp.put("msg", JwtUtil.login_message);
-		}
+		RegistRequestDTO dto = service.courseDetail(post_idx);
+		resp.put("detail", dto); // detail로 수정
 
 		return resp;
 	}
@@ -69,20 +54,12 @@ public class MainController {
 	public ResponseEntity<List<CourseDTO>> search_course(
 			@RequestParam(value = "subject", required = false) String subject,
 			@RequestParam(value = "user_id", required = false) String user_id,
-			@RequestParam(value = "tag", required = false) String tag, @RequestHeader Map<String, String> header) {
+			@RequestParam(value = "tag", required = false) String tag) {
 
 		List<CourseDTO> entity = null;
 
-		try {
-			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-			if (!loginId.equals("")) {
-				entity = service.search_course(subject, user_id, tag);
-				return ResponseEntity.ok(entity);
-			}
-		} catch (Exception e) {
-				e.printStackTrace();
-		}
-		return null;
+		entity = service.search_course(subject, user_id, tag);
+		return ResponseEntity.ok(entity);
 
 	}
 

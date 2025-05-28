@@ -30,18 +30,10 @@ public class CommentController {
 
 	// 댓글 리스트
 	@GetMapping(value = "/comment_list")
-	public Map<String, Object> comment_list(@RequestParam int post_idx, @RequestParam(defaultValue = "1") int page,
-			@RequestHeader Map<String, String> header) {
+	public Map<String, Object> comment_list(@RequestParam int post_idx, @RequestParam(defaultValue = "1") int page) {
 		resp = new HashMap<String, Object>();
 
-		try {
-			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-			if (!loginId.equals("")) {
-				resp.put("list", service.comment_list(post_idx, page));
-			}
-		} catch (Exception e) {
-			resp.put("msg", JwtUtil.login_message);
-		}
+		resp.put("list", service.comment_list(post_idx, page));
 
 		return resp;
 	}
@@ -52,14 +44,12 @@ public class CommentController {
 			@RequestHeader Map<String, String> header) {
 		resp = new HashMap<String, Object>();
 
-		try {
-			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-			if (!loginId.equals("")) {
-				boolean success = service.comment_insert(params);
-				resp.put("success", success);
-			}
-		} catch (Exception e) {
-			resp.put("msg", JwtUtil.login_message);
+		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+		if (loginId.equals(params.get("user_id"))) {
+			boolean success = service.comment_insert(params);
+			resp.put("success", success);
+		} else {
+			resp.put("success", false);
 		}
 		return resp;
 	}
@@ -69,17 +59,14 @@ public class CommentController {
 	public Map<String, Object> comment_update(@RequestBody Map<String, String> params,
 			@RequestHeader Map<String, String> header) {
 		resp = new HashMap<String, Object>();
-		
-		try {
-			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-			if (!loginId.equals("")) {
-				boolean success = service.comment_update(params);
-				resp.put("success", success);
-			}
-		} catch (Exception e) {
-			resp.put("msg", JwtUtil.login_message);
-		}
 
+		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+		if (loginId.equals(params.get("user_id"))) {
+			boolean success = service.comment_update(params);
+			resp.put("success", success);
+		} else {
+			resp.put("success", false);
+		}
 		return resp;
 	}
 
@@ -90,16 +77,14 @@ public class CommentController {
 
 		log.info("comment_idx : " + comment_idx);
 		resp = new HashMap<String, Object>();
-		
-		try {
-			String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-			if (!loginId.equals("")) {
-				boolean success = service.comment_del(comment_idx);
-				resp.put("success", success);
-			}
-		} catch (Exception e) {
-			resp.put("msg", JwtUtil.login_message);
+
+		// user_id 어디감?
+		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+		if (!loginId.equals("")) {
+			boolean success = service.comment_del(comment_idx);
+			resp.put("success", success);
 		}
+
 		return resp;
 	}
 }
