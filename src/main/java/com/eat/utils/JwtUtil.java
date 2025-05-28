@@ -14,7 +14,6 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtil {
 
 	private static SecretKey pri_key = null;
-	public static String login_message = "로그아웃 상태입니다.";
 
 	public static SecretKey getPri_key() {
 		return pri_key;
@@ -54,13 +53,9 @@ public class JwtUtil {
 
 	// 토큰 확인 메소드
 
-//	try {
-//		String loginId=(String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-//		if(!loginId.equals("")) {
-//			/*코드입력*/
-//		}
-//	} catch (Exception e) {
-//		resp.put("msg", JwtUtil.login_message);
+//	String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+//	if (loginId.equals("")) {
+//		/*코드입력*/
 //	}
 
 }

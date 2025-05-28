@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eat.admin.AdminAuth;
 import com.eat.utils.JwtUtil;
 
 @CrossOrigin
@@ -24,6 +25,8 @@ public class CommentController {
 
 	@Autowired
 	CommentService service;
+	@Autowired
+	AdminAuth auth;
 
 	Map<String, Object> resp = null;
 	Logger log = LoggerFactory.getLogger(getClass());
