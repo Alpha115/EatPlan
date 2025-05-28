@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eat.admin.AdminAuth;
 import com.eat.dto.MemberDTO;
 import com.eat.dto.TagPreferDTO;
 import com.eat.utils.JwtUtil;
@@ -27,6 +28,8 @@ public class MemberController {
 
 	@Autowired
 	MemberService service;
+	@Autowired
+	AdminAuth auth;
 
 	Map<String, Object> resp = new HashMap<String, Object>();
 	Logger log = LoggerFactory.getLogger(getClass());
@@ -37,11 +40,12 @@ public class MemberController {
 		resp = new HashMap<String, Object>();
 		boolean success = service.login(params);
 		resp.put("success", success);
-		if (success == true) {
+		if (success) {
 			String id = params.get("user_id");
 			String token = JwtUtil.getToken("user_id", params.get("user_id"));
 			resp.put("token", token);
 			resp.put("user_id", id);
+			resp.put("admin", auth.authorization(id));	//관리자 권한 부여
 		}
 		return resp;
 	}
