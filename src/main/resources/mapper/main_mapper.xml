@@ -180,7 +180,7 @@
 		
 		<!-- 별점 평균: star 테이블 사용 -->
    		 IFNULL(
-        (SELECT ROUND(AVG(s.star),1)
+        (SELECT FLOOR(AVG(s.star),1)
          FROM star s
         WHERE s.post_idx = p.post_idx),
         0.0
