@@ -153,7 +153,40 @@
 
 	<!-- 코스 검색 --><!-- % : 0개 이상의 임의 문자 %abd% -> abc를 포함하는 모든 문자열 검색 가능 -->
 	<select id="search_course" resultType="com.eat.dto.CourseDTO">
-		SELECT * FROM post p
+		SELECT p.post_idx,
+		 p.user_id, 
+		 p.subject, 
+		 p.b_hit AS b_hit,
+		 p.reg_date, 
+		 p.post_cmt,
+		 p.`public` AS isPublic,
+		 p.blind, 
+		 p.tmp,
+		
+		<!-- 좋아요 수: liked 테이블 사용 -->
+		 IFNULL(
+      	(SELECT COUNT(*) 
+         FROM liked l 
+        WHERE l.post_idx = p.post_idx),
+      	0
+   	    ) AS total_like_count,
+		
+		<!-- 댓글 수 -->
+		IFNULL(
+		(SELECT COUNT(*) FROM comment c WHERE c.post_idx = p.post_idx),
+		0
+		) AS total_comment_count,
+		
+		
+		<!-- 별점 평균: star 테이블 사용 -->
+   		 IFNULL(
+        (SELECT ROUND(AVG(s.star),1)
+         FROM star s
+        WHERE s.post_idx = p.post_idx),
+        0.0
+         ) AS star_average
+		
+		 FROM post p
 		<where>
 		(#{subject} IS NULL OR p.subject LIKE CONCAT('%', #{subject}, '%'))
 		AND
