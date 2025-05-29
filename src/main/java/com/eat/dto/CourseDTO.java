@@ -19,6 +19,9 @@ public class CourseDTO {
 	private boolean blind;
 	private boolean tmp;
 	
+	
+
+	private String nickname;
 	private String thumbnail;
 	
 	
@@ -29,6 +32,14 @@ public class CourseDTO {
 	private double star_average; // 별점 평균
 	
 	public List<PhotoDTO> photos;
+	
+	 public String getNickname() {
+			return nickname;
+		}
+
+		public void setNickname(String nickname) {
+			this.nickname = nickname;
+		}
 	
 	
 	public String getThumbnail() {

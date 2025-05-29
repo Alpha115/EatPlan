@@ -154,7 +154,7 @@
 	<!-- 코스 검색 --><!-- % : 0개 이상의 임의 문자 %abd% -> abc를 포함하는 모든 문자열 검색 가능 -->
 	<select id="search_course" resultType="com.eat.dto.CourseDTO">
 		SELECT p.post_idx,
-		 p.user_id, 
+		 m.nickname   AS nickname,
 		 p.subject, 
 		 p.b_hit AS b_hit,
 		 p.reg_date, 
@@ -187,6 +187,9 @@
          ) AS star_average
 		
 		 FROM post p
+		 LEFT JOIN member m
+		 	ON p.user_id = m.user_id
+		 	
 		<where>
 		(#{subject} IS NULL OR p.subject LIKE CONCAT('%', #{subject}, '%'))
 		AND
