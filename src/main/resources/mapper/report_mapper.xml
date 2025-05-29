@@ -34,7 +34,7 @@
 </insert>
 
 <!-- 신고 상세보기 몸통-->
-<select id="report_detail" resultType="com.eat.dto.ReportDTO" resultMap="reportMap">
+<select id="report_detail" resultType="com.eat.dto.ReportDTO">
 	SELECT
 		suspect_id
 		,subject
