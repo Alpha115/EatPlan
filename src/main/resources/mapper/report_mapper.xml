@@ -10,10 +10,10 @@
 		,reporter_id
 		,suspect_id
 		,subject
-		,class
+		,`class` AS isClass
 		,report_date
 		,done
-		,public
+		,`public` AS isPublic
 		,img_idx
 	FROM report
 	LIMIT #{param2} OFFSET #{param1}
@@ -41,7 +41,7 @@
 		,content
 		,reported_idx
 		,reporter_id
-		,class
+		,`class` AS isClass
 		,done
 	FROM report
 	WHERE report_idx = #{param1}
