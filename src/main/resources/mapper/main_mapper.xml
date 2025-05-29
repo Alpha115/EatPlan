@@ -154,7 +154,7 @@
 	<!-- 코스 검색 --><!-- % : 0개 이상의 임의 문자 %abd% -> abc를 포함하는 모든 문자열 검색 가능 -->
 	<select id="search_course" resultType="com.eat.dto.CourseDTO">
 		SELECT p.post_idx,
-		 p.user_id, 
+		 m.nickname   AS nickname,
 		 p.subject, 
 		 p.b_hit AS b_hit,
 		 p.reg_date, 
@@ -180,17 +180,20 @@
 		
 		<!-- 별점 평균: star 테이블 사용 -->
    		 IFNULL(
-        (SELECT ROUND(AVG(s.star),1)
+        (SELECT ROUND(AVG(s.star),0)
          FROM star s
         WHERE s.post_idx = p.post_idx),
-        0.0
+        0
          ) AS star_average
 		
 		 FROM post p
+		 LEFT JOIN member m
+		 	ON p.user_id = m.user_id
+		 	
 		<where>
 		(#{subject} IS NULL OR p.subject LIKE CONCAT('%', #{subject}, '%'))
 		AND
-		(#{user_id} IS NULL OR p.user_id = #{user_id})
+		m.nickname IS NOT NULL
 		<if test="tag != null and tag != ''">
 			AND EXISTS (
 			SELECT 1 
@@ -205,18 +208,42 @@
 		</where>
 	</select>
 
+	<!-- Photo 조회 -->
+	<select id="getPhotosByPostIdx"
+		resultType="com.eat.dto.PhotoDTO">
+		SELECT img_idx, `class` AS photo_class, new_filename
+		FROM photo
+		WHERE img_idx = #{post_idx}
+	</select>
+
 	<!-- 태그 검색 -->
-<select id="getTags" resultType="com.eat.dto.CourseTagDTO">
+	<select id="getTags" resultType="com.eat.dto.CourseTagDTO">
     SELECT idx, class AS isClass, post_idx FROM tag_course WHERE post_idx = #{post_idx}
-</select>
+	</select>
 
-<select id="searchTags" resultType="com.eat.tags.TagDTO">
+	<select id="searchTags" resultType="com.eat.tags.TagDTO">
     SELECT * FROM tag WHERE tag_idx = #{idx}
-</select>
+	</select>
 
-<select id="searchTagsArea" resultType="com.eat.tags.TagAreaDTO">
+	<select id="searchTagsArea" resultType="com.eat.tags.TagAreaDTO">
     SELECT * FROM tag_area WHERE area_tag_idx = #{idx}
-</select>
+	</select>
 
+	 <!-- 한 장짜리 썸네일 조회 -->
+	<select id="courseListImg" resultType="String">
+    	SELECT COALESCE(
+      	(
+        SELECT p.new_filename
+          FROM detail_restaurant dr
+          JOIN restaurant r ON dr.resta_idx = r.resta_idx
+          LEFT JOIN photo p  ON r.img_idx   = p.img_idx
+                             AND p.class    = 'restaurant'
+         WHERE dr.post_idx = #{post_idx}
+         ORDER BY dr.detail_idx, r.resta_idx
+         LIMIT 1
+      ),
+      'no_image'
+    )
+  </select>
 
 </mapper>

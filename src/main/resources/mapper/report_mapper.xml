@@ -10,10 +10,10 @@
 		,reporter_id
 		,suspect_id
 		,subject
-		,class
+		,`class` AS isClass
 		,report_date
 		,done
-		,public
+		,`public` AS isPublic
 		,img_idx
 	FROM report
 	LIMIT #{param2} OFFSET #{param1}
@@ -34,17 +34,19 @@
 </insert>
 
 <!-- 신고 상세보기 몸통-->
-<select id="report_detail" resultType="com.eat.dto.ReportDTO" resultMap="reportMap">
+<select id="report_detail" resultType="com.eat.dto.ReportDTO">
 	SELECT
 		suspect_id
 		,subject
 		,content
 		,reported_idx
-		,class
+		,reporter_id
+		,`class` AS isClass
 		,done
 	FROM report
 	WHERE report_idx = #{param1}
 </select>
+
 <!-- 신고 상세보기 - 신고된 코스 정보 -->
 <select id="report_course" resultType="com.eat.dto.CourseDTO">
 	SELECT
@@ -56,6 +58,7 @@
 	FROM post
 	WHERE post_idx = #{param1}
 </select>
+
 <!-- 신고 상세보기 - 신고된 쪽지 정보 -->
 <select id="report_msg" resultType="com.eat.dto.MsgDTO">
 	SELECT
@@ -67,6 +70,7 @@
 	FROM message
 	WHERE msg_idx = #{param1}
 </select>
+
 <!-- 신고 상세보기 - 신고된 댓글 정보 -->
 <select id="report_cmt" resultType="com.eat.dto.MainDTO">
 	SELECT
@@ -77,6 +81,7 @@
 	FROM comment
 	WHERE comment_idx = #{param1}
 </select>
+
 <!-- 신고 상세보기 -이미지 -->
 <select id="photo" resultType="com.eat.dto.PhotoDTO">
 	SELECT

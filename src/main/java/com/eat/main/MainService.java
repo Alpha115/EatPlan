@@ -14,6 +14,7 @@ import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.PhotoDTO;
 import com.eat.dto.RegistRequestDTO;
 import com.eat.dto.TimelineDTO;
 import com.eat.tags.TagAreaDTO;
@@ -126,6 +127,14 @@ public class MainService {
 		
 		course.setTag_name(tagsName);
 		course.setTag_name_area(tagsAreaName);
+		
+		
+		List<PhotoDTO> photos = dao.getPhotosByPostIdx(course.getPost_idx());
+		course.setPhotos(photos);
+		
+		
+		String thumb = dao.courseListImg(course.getPost_idx());
+        course.setThumbnail(thumb);
 		
 		}
 		return resp;

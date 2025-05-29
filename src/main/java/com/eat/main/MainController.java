@@ -55,6 +55,7 @@ public class MainController {
 			@RequestParam(value = "tag", required = false) String tag) {
 
 		List<CourseDTO> entity = null;
+		log.info("받아온 제목 : "+subject+" 받아온 아이디 : "+user_id+" 받아온 태그 : "+tag);
 
 		entity = service.search_course(subject, user_id, tag);
 		return ResponseEntity.ok(entity);
