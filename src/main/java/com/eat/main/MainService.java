@@ -133,6 +133,9 @@ public class MainService {
 		course.setPhotos(photos);
 		
 		
+		String thumb = dao.courseListImg(course.getPost_idx());
+        course.setThumbnail(thumb);
+		
 		}
 		return resp;
 	}

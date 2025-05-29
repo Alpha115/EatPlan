@@ -49,12 +49,13 @@ public interface MainDAO {
 			@Param("tag")String tag);
 	Collection<? extends TagDTO> searchTags(int idx);
 	Collection<? extends TagAreaDTO> searchTagsArea(int idx);
-	List<PhotoDTO>  getPhotosByPostIdx(@Param("post_idx")int post_idx);
+	List<PhotoDTO>  getPhotosByPostIdx(@Param("post_idx") int post_idx);
+	String courseListImg(@Param("post_idx") int post_idx);
 	
 	//코스 태그 가져오기
 	List<CourseTagDTO> getTags(int post_idx);
-	
 
+	
 	
 	
 	

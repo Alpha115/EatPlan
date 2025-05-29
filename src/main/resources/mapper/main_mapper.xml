@@ -226,5 +226,21 @@
     SELECT * FROM tag_area WHERE area_tag_idx = #{idx}
 	</select>
 
+	 <!-- 한 장짜리 썸네일 조회 -->
+	<select id="courseListImg" resultType="String">
+    	SELECT COALESCE(
+      	(
+        SELECT p.new_filename
+          FROM detail_restaurant dr
+          JOIN restaurant r ON dr.resta_idx = r.resta_idx
+          LEFT JOIN photo p  ON r.img_idx   = p.img_idx
+                             AND p.class    = 'restaurant'
+         WHERE dr.post_idx = #{post_idx}
+         ORDER BY dr.detail_idx, r.resta_idx
+         LIMIT 1
+      ),
+      'no_image'
+    )
+  </select>
 
 </mapper>
