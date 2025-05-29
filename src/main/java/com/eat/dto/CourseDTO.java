@@ -18,11 +18,36 @@ public class CourseDTO {
 	private boolean isPublic;
 	private boolean blind;
 	private boolean tmp;
+	
+	private String thumbnail;
+	
+	
+	
 
 	private int total_like_count; // 좋아요 개수
 	private int total_comment_count; // 댓글 수
 	private double star_average; // 별점 평균
 	
+	public List<PhotoDTO> photos;
+	
+	
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	
+	public List<PhotoDTO> getPhotos() {
+		return photos;
+	}
+	
+	
+	public void setPhotos(List<PhotoDTO> photos) {
+		this.photos = photos;
+	}
+
 	public int getTotal_comment_count() {
 		return total_comment_count;
 	}

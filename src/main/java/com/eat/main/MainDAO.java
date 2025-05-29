@@ -10,6 +10,7 @@ import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.PhotoDTO;
 import com.eat.dto.TimelineDTO;
 import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagDTO;
@@ -48,10 +49,13 @@ public interface MainDAO {
 			@Param("tag")String tag);
 	Collection<? extends TagDTO> searchTags(int idx);
 	Collection<? extends TagAreaDTO> searchTagsArea(int idx);
+	List<PhotoDTO>  getPhotosByPostIdx(@Param("post_idx") int post_idx);
+	String courseListImg(@Param("post_idx") int post_idx);
 	
 	//코스 태그 가져오기
 	List<CourseTagDTO> getTags(int post_idx);
 
+	
 	
 	
 	
