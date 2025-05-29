@@ -134,5 +134,14 @@ public class MypageController {
 		return resp;
 	}
 	
+	// 이메일 중복 체크
+	@GetMapping(value = "/overlay/email/{email}")
+	public Map<String, Object> overlayEmail(@PathVariable String email) {
+		resp = new HashMap<String, Object>();
+		boolean success = service.overlayEmail(email);
+		resp.put("success", success);
+		return resp;
+	}
+	
 }
 	

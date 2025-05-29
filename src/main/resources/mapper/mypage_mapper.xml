@@ -127,5 +127,12 @@
 		LIMIT 10 OFFSET #{offset}
 	</select>
 	
+	<!-- 이메일 중복 체크 -->
+	<select id="overlayEmail" resultType="int">
+		SELECT COUNT(email) FROM
+		member
+		WHERE email = #{param1}
+	</select>
+	
 	
 </mapper>

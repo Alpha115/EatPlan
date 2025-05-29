@@ -238,4 +238,10 @@ public class MypageService {
 		return resp;
 	}
 
+	// 이메일 중복 체크
+	public boolean overlayEmail(String email) {
+		int cnt = dao.overlayEmail(email);
+		return cnt == 0 ? true : false;
+	}
+
 }

@@ -60,4 +60,7 @@ public interface MypageDAO {
 
 	int liked_pages(String user_id);
 
+	// 이메일 중복 체크
+	int overlayEmail(String email);
+
 }
