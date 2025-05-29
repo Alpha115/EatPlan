@@ -18,14 +18,14 @@ public class AdBlindController {
 	@Autowired
 	AdBlindService service;
 	
-	Map<String, Object> resp = new HashMap<String, Object>();
+	Map<String, Object> resp = null;
 	Logger log = LoggerFactory.getLogger(getClass());
 	
 	//코스 블라인드
 	@PatchMapping(value="/{post_idx}/course_blind")
 	public Map<String, Object>course_blind(@PathVariable int post_idx){
 		
-		Map<String, Object> resp = new HashMap<String, Object>();
+		resp = new HashMap<String, Object>();
 		boolean success = service.course_blind(post_idx);
 		resp.put("success", success);
 		
@@ -38,7 +38,7 @@ public class AdBlindController {
 			@PathVariable int comment_idx,
 			@PathVariable String user_id){
 		
-		Map<String, Object> resp = new HashMap<String, Object>();
+		resp = new HashMap<String, Object>();
 		boolean success = service.comment_blind(comment_idx,post_idx,user_id);
 		resp.put("success", success);
 		

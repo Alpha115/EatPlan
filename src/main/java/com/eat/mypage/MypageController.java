@@ -27,7 +27,7 @@ import com.eat.dto.TagPreferDTO;
 @RestController
 public class MypageController {
 
-	Map<String, Object> resp = new HashMap<String, Object>();
+	Map<String, Object> resp = null;
 	Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
@@ -54,6 +54,7 @@ public class MypageController {
 	// 회원정보 수정
 	@PutMapping(value = "/member_update")
 	public Map<String, Object> member_update(@RequestBody MypageDTO dto) {
+		resp = new HashMap<String, Object>();
 		boolean success = service.member_update(dto);
 		resp.put("success", success);
 		return resp;
@@ -69,6 +70,7 @@ public class MypageController {
 	}
 	
 	//비밀번호 확인 기능
+	// ---------------프론트 기능 아닌가
 	@PostMapping("/member_pass")
 	public Map<String, Object> member_pass(@RequestBody MypageDTO dto){
 		resp = new HashMap<String, Object>();
