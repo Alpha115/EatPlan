@@ -23,6 +23,17 @@ public class CourseDTO {
 	private int total_comment_count; // 댓글 수
 	private double star_average; // 별점 평균
 	
+	public List<PhotoDTO> photos;
+	
+	
+	public List<PhotoDTO> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(List<PhotoDTO> photos) {
+		this.photos = photos;
+	}
+
 	public int getTotal_comment_count() {
 		return total_comment_count;
 	}
