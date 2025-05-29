@@ -193,7 +193,7 @@
 		<where>
 		(#{subject} IS NULL OR p.subject LIKE CONCAT('%', #{subject}, '%'))
 		AND
-		(#{user_id} IS NULL OR p.user_id = #{user_id})
+		m.nickname IS NOT NULL
 		<if test="tag != null and tag != ''">
 			AND EXISTS (
 			SELECT 1 
