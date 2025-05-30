@@ -67,11 +67,12 @@
 		WHERE area_tag_idx in (SELECT idx FROM tag_course WHERE
 		post_idx = #{param1} AND class='area_tag')
 	</select>
-	
+
 	<!-- 코스 리스트 세부일정 idx -->
 	<select id="detail" resultType="com.eat.dto.DetailRestaDTO">
 		SELECT detail_idx
-		FROM detail_restaurant
+		FROM
+		detail_restaurant
 		WHERE post_idx = #{param1}
 		ORDER BY detail_idx
 	</select>
@@ -102,7 +103,7 @@
 		SELECT
 		CEIL(COUNT(post_idx)/#{param1}) AS pages FROM post
 	</select>
-	
+
 	<!-- 코스 상세보기 -->
 	<!-- 코스 상세 - 메인 -->
 	<select id="getCourseDTO" resultType="com.eat.dto.CourseDTO">
@@ -154,57 +155,58 @@
 	<!-- 코스 검색 --><!-- % : 0개 이상의 임의 문자 %abd% -> abc를 포함하는 모든 문자열 검색 가능 -->
 	<select id="search_course" resultType="com.eat.dto.CourseDTO">
 		SELECT p.post_idx,
-		 m.nickname   AS nickname,
-		 p.subject, 
-		 p.b_hit AS b_hit,
-		 p.reg_date, 
-		 p.post_cmt,
-		 p.`public` AS isPublic,
-		 p.blind, 
-		 p.tmp,
-		
+		m.nickname AS nickname,
+		p.subject,
+		p.b_hit AS b_hit,
+		p.reg_date,
+		p.post_cmt,
+		p.`public` AS isPublic,
+		p.blind,
+		p.tmp,
+
 		<!-- 좋아요 수: liked 테이블 사용 -->
-		 IFNULL(
-      	(SELECT COUNT(*) 
-         FROM liked l 
-        WHERE l.post_idx = p.post_idx),
-      	0
-   	    ) AS total_like_count,
-		
+		IFNULL(
+		(SELECT COUNT(*)
+		FROM liked l
+		WHERE l.post_idx = p.post_idx),
+		0
+		) AS total_like_count,
+
 		<!-- 댓글 수 -->
 		IFNULL(
 		(SELECT COUNT(*) FROM comment c WHERE c.post_idx = p.post_idx),
 		0
 		) AS total_comment_count,
-		
-		
+
+
 		<!-- 별점 평균: star 테이블 사용 -->
-   		 IFNULL(
-        (SELECT ROUND(AVG(s.star),0)
-         FROM star s
-        WHERE s.post_idx = p.post_idx),
-        0
-         ) AS star_average
-		
-		 FROM post p
-		 LEFT JOIN member m
-		 	ON p.user_id = m.user_id
-		 	
+		IFNULL(
+		(SELECT ROUND(AVG(s.star),0)
+		FROM star s
+		WHERE s.post_idx = p.post_idx),
+		0
+		) AS star_average
+
+		FROM post p
+		LEFT JOIN member m
+		ON p.user_id = m.user_id
+
 		<where>
-		(#{subject} IS NULL OR p.subject LIKE CONCAT('%', #{subject}, '%'))
-		AND
-		m.nickname IS NOT NULL
-		<if test="tag != null and tag != ''">
-			AND EXISTS (
-			SELECT 1 
-			FROM tag_course tc
-			LEFT JOIN tag t ON tc.idx = t.tag_idx AND tc.`class` = 'tag'
-			LEFT JOIN tag_area ta ON tc.idx = ta.area_tag_idx AND tc.`class` = 'area_tag'
-			WHERE tc.post_idx = p.post_idx
-			AND (t.tag_name LIKE CONCAT('%', #{tag}, '%') 
-			OR ta.tag_name LIKE CONCAT('%', #{tag}, '%'))
-			)
-		</if>
+			(#{subject} IS NULL OR p.subject LIKE CONCAT('%', #{subject}, '%'))
+			AND
+			m.nickname IS NOT NULL
+			<if test="tag != null and tag != ''">
+				AND EXISTS (
+				SELECT 1
+				FROM tag_course tc
+				LEFT JOIN tag t ON tc.idx = t.tag_idx AND tc.`class` = 'tag'
+				LEFT JOIN tag_area ta ON tc.idx = ta.area_tag_idx AND tc.`class` =
+				'area_tag'
+				WHERE tc.post_idx = p.post_idx
+				AND (t.tag_name LIKE CONCAT('%', #{tag}, '%')
+				OR ta.tag_name LIKE CONCAT('%', #{tag}, '%'))
+				)
+			</if>
 		</where>
 	</select>
 
@@ -212,45 +214,47 @@
 	<select id="getPhotosByPostIdx"
 		resultType="com.eat.dto.PhotoDTO">
 		SELECT img_idx, `class` AS photo_class, new_filename
-		FROM photo
+		FROM
+		photo
 		WHERE img_idx = #{post_idx}
 	</select>
 
 	<!-- 태그 검색 -->
 	<select id="getTags" resultType="com.eat.dto.CourseTagDTO">
-    SELECT idx, class AS isClass, post_idx FROM tag_course WHERE post_idx = #{post_idx}
+		SELECT idx, class AS isClass, post_idx FROM tag_course WHERE post_idx =
+		#{post_idx}
 	</select>
 
 	<select id="searchTags" resultType="com.eat.tags.TagDTO">
-    SELECT * FROM tag WHERE tag_idx = #{idx}
+		SELECT * FROM tag WHERE tag_idx = #{idx}
 	</select>
 
 	<select id="searchTagsArea" resultType="com.eat.tags.TagAreaDTO">
-    SELECT * FROM tag_area WHERE area_tag_idx = #{idx}
+		SELECT * FROM tag_area WHERE area_tag_idx = #{idx}
 	</select>
 
-	 <!-- 한 장짜리 썸네일 조회 -->
+	<!-- 한 장짜리 썸네일 조회 -->
 	<select id="courseListImg" resultType="String">
-  SELECT COALESCE(
-      (
-        SELECT p.new_filename
-          FROM detail_restaurant dr
-          JOIN restaurant      r ON dr.resta_idx = r.resta_idx
-          JOIN photo           p ON r.img_idx    = p.img_idx
-                             AND p.class      = 'restaurant'
-         WHERE dr.post_idx = #{post_idx}         
-         ORDER BY dr.detail_idx, r.resta_idx
-         LIMIT 1
-      ),
-      'no_image'
-   
-  </select>
-  
-  <select id="fileInfo">
-		SELECT new_filename 
-			FROM photo WHERE file_idx=#{param1}
+		SELECT COALESCE(
+		(
+		SELECT p.new_filename
+		FROM detail_restaurant dr
+		JOIN restaurant r ON dr.resta_idx = r.resta_idx
+		JOIN photo p ON r.img_idx = p.img_idx
+		AND p.class = 'restaurant'
+		WHERE dr.post_idx = #{post_idx}
+		ORDER BY dr.detail_idx, r.resta_idx
+		LIMIT 1
+		),
+		'no_image'
+
 	</select>
-  
+
+	<select id="fileInfo">
+		SELECT new_filename
+		FROM photo WHERE file_idx=#{param1}
+	</select>
+
 
 
 </mapper>
