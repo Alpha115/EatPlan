@@ -154,10 +154,7 @@ public class MainService {
 		Resource res = null;
 		HttpHeaders headers = new HttpHeaders();
 		
-		// 1. file_idx 를 이용해 new_filename, ori_filename 을 가져온다.
 		String fileName = dao.fileInfo(file_idx);
-		
-		// 2. new_filename 으로 파일을 가져온다.
 		res = new FileSystemResource("C:/upload/"+fileName);
 		
 		// 3. photo 냐 download 냐 에 따라 Header 를 설정 해 준다.
