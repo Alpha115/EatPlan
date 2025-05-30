@@ -62,7 +62,7 @@ public interface MainDAO {
 
 	
 	
-	String fileInfo(String file_idx);
+	String fileInfo(String new_filename);
 	
 	
 

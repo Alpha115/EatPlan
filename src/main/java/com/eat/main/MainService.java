@@ -156,11 +156,11 @@ public class MainService {
 
 
 	// --------------------사진 요청 ---------------------//
-	public ResponseEntity<Resource> getFile(String file_idx, String type) {
+	public ResponseEntity<Resource> getFile(String new_filename, String type) {
 		Resource res = null;
 		HttpHeaders headers = new HttpHeaders();
 		
-		String fileName = dao.fileInfo(file_idx);
+		String fileName = dao.fileInfo(new_filename);
 		res = new FileSystemResource("C:/upload/"+fileName);
 		
 		// 3. photo 냐 download 냐 에 따라 Header 를 설정 해 준다.
