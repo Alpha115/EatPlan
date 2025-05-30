@@ -243,7 +243,14 @@
          LIMIT 1
       ),
       'no_image'
-    )
-</select>
+   
+  </select>
+  
+  <select id="fileInfo">
+		SELECT new_filename 
+			FROM photo WHERE file_idx=#{param1}
+	</select>
+  
+
 
 </mapper>
