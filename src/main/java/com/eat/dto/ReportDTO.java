@@ -8,7 +8,7 @@ public class ReportDTO {
 
 	private int report_idx;
 	private String reporter_id;
-	private int img_idx;
+	private Integer img_idx;
 	private String suspect_id;
 	private String subject;
 	private String content;
@@ -37,12 +37,14 @@ public class ReportDTO {
 	public void setReporter_id(String reporter_id) {
 		this.reporter_id = reporter_id;
 	}
-	public int getImg_idx() {
+	
+	public Integer getImg_idx() {
 		return img_idx;
 	}
-	public void setImg_idx(int img_idx) {
+	public void setImg_idx(Integer img_idx) {
 		this.img_idx = img_idx;
 	}
+
 	public String getSuspect_id() {
 		return suspect_id;
 	}

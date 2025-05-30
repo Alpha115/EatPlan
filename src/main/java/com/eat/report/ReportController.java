@@ -69,30 +69,58 @@ public class ReportController {
 		
 		resp = new HashMap<String, Object>();
 		
+		
 		//신고 상세보기 - 몸통
 		ReportDTO detail = service.report_detail(report_idx);
-		int reported_idx = detail.getReported_idx();
+		if (detail == null) {
+			log.error("해당 신고가 존재하지 않습니다: " + report_idx);
+			resp.put("error", "해당 신고가 존재하지 않습니다.");
+		    return resp;
+		}
+		Integer reported_idx = detail.getReported_idx();
 		String isClass = detail.getIsClass();
-		int img_idx = detail.getImg_idx();
+		Integer img_idx = detail.getImg_idx();
+		
 		log.info("신고받은 idx : "+reported_idx);
 		log.info("신고 분류 : "+isClass);
 
+		if (isClass == null || reported_idx == null) {
+	        log.error("신고글 정보 누락: isClass=" + isClass + ", reported_idx=" + reported_idx);
+	        resp.put("error", "신고 정보가 올바르지 않습니다.");
+	        return resp;
+	    }
+		
 		//신고 상세보기 - 분류
-		if (isClass != null && isClass.equals("course") ) {
-			CourseDTO reported_course = service.report_course(reported_idx);
-			resp.put("reported_course", reported_course);
-		}else if (isClass != null && isClass.equals("message")) {
-			MsgDTO reported_msg = service.report_msg(reported_idx);
-			resp.put("reported_msg", reported_msg);
-		}else if (isClass != null && isClass.equals("comment")) {
-			MainDTO reported_cmt = service.report_cmt(reported_idx);
-			resp.put("reported_cmt", reported_cmt);
-		}else {
-			resp.put("reported_?", "신고 분류를 확인하세요");
-		}
+		switch (isClass) {
+        case "course":
+            CourseDTO reported_course = service.report_course(reported_idx);
+            resp.put("reported_course", reported_course);
+            break;
+        case "message":
+            MsgDTO reported_msg = service.report_msg(reported_idx);
+            resp.put("reported_msg", reported_msg);
+            break;
+        case "comment":
+            MainDTO reported_cmt = service.report_cmt(reported_idx);
+            resp.put("reported_cmt", reported_cmt);
+            break;
+        default:
+            log.warn("알 수 없는 신고 분류: " + isClass);
+            resp.put("error", "지원되지 않는 신고 유형입니다.");
+    }
+		/*
+		 * if (isClass != null && isClass.equals("course") ) { CourseDTO reported_course
+		 * = service.report_course(reported_idx); resp.put("reported_course",
+		 * reported_course); }else if (isClass != null && isClass.equals("message")) {
+		 * MsgDTO reported_msg = service.report_msg(reported_idx);
+		 * resp.put("reported_msg", reported_msg); }else if (isClass != null &&
+		 * isClass.equals("comment")) { MainDTO reported_cmt =
+		 * service.report_cmt(reported_idx); resp.put("reported_cmt", reported_cmt);
+		 * }else { resp.put("reported_?", "신고 분류를 확인하세요"); }
+		 */
 		
 		//신고 상세보기 - 이미지
-		if (img_idx >0) {
+		if (img_idx != null && img_idx > 0) {
 			PhotoDTO photo = service.photo(img_idx);
 			resp.put("photo", photo);
 		}else {
