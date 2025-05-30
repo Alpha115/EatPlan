@@ -248,6 +248,24 @@
 		),
 		'no_image'
 
+  SELECT COALESCE(
+      (
+        SELECT p.new_filename
+          FROM detail_restaurant dr
+          JOIN restaurant      r ON dr.resta_idx = r.resta_idx
+          JOIN photo           p ON r.img_idx    = p.img_idx
+                             AND p.class      = 'restaurant'
+         WHERE dr.post_idx = #{post_idx}         
+         ORDER BY dr.detail_idx, r.resta_idx
+         LIMIT 1
+      ),
+      'no_image'
+   
+  </select>
+  
+  <select id="fileInfo">
+		SELECT new_filename 
+			FROM photo WHERE img_idx=#{param1}
 	</select>
 
 	<select id="fileInfo">
