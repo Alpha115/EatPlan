@@ -65,7 +65,7 @@ public class MainController {
 	
 	// --------------------사진 요청 ---------------------//
 	@GetMapping("/image/{file_idx}")
-	public ResponseEntity<Resource> image(@PathVariable String file_idx){
+	public ResponseEntity<Resource> getImage(@PathVariable String file_idx){
 		return service.getFile(file_idx,"photo");
 	}
 
