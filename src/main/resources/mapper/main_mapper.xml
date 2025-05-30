@@ -155,58 +155,64 @@
 	<!-- 코스 검색 --><!-- % : 0개 이상의 임의 문자 %abd% -> abc를 포함하는 모든 문자열 검색 가능 -->
 	<select id="search_course" resultType="com.eat.dto.CourseDTO">
 		SELECT p.post_idx,
-		m.nickname AS nickname,
-		p.subject,
-		p.b_hit AS b_hit,
-		p.reg_date,
-		p.post_cmt,
-		p.`public` AS isPublic,
-		p.blind,
-		p.tmp,
-
-		<!-- 좋아요 수: liked 테이블 사용 -->
-		IFNULL(
-		(SELECT COUNT(*)
-		FROM liked l
-		WHERE l.post_idx = p.post_idx),
-		0
-		) AS total_like_count,
-
-		<!-- 댓글 수 -->
-		IFNULL(
-		(SELECT COUNT(*) FROM comment c WHERE c.post_idx = p.post_idx),
-		0
-		) AS total_comment_count,
-
-
-		<!-- 별점 평균: star 테이블 사용 -->
-		IFNULL(
-		(SELECT ROUND(AVG(s.star),0)
-		FROM star s
-		WHERE s.post_idx = p.post_idx),
-		0
-		) AS star_average
-
+			m.nickname AS nickname,
+			p.subject,
+			p.b_hit AS b_hit,
+			p.reg_date,
+			p.post_cmt,
+			p.`public` AS isPublic,
+			p.blind,
+			p.tmp,
+	
+			-- 좋아요 수
+			IFNULL((SELECT COUNT(*) FROM liked l WHERE l.post_idx = p.post_idx), 0) AS total_like_count,
+			-- 댓글 수
+			IFNULL((SELECT COUNT(*) FROM comment c WHERE c.post_idx = p.post_idx), 0) AS total_comment_count,
+			-- 별점 평균
+			IFNULL((SELECT ROUND(AVG(s.star), 0) FROM star s WHERE s.post_idx = p.post_idx), 0) AS star_average
+	
 		FROM post p
-		LEFT JOIN member m
-		ON p.user_id = m.user_id
-
+		LEFT JOIN member m ON p.user_id = m.user_id
+	
 		<where>
-			(#{subject} IS NULL OR p.subject LIKE CONCAT('%', #{subject}, '%'))
-			AND
-			m.nickname IS NOT NULL
-			<if test="tag != null and tag != ''">
-				AND EXISTS (
-				SELECT 1
-				FROM tag_course tc
-				LEFT JOIN tag t ON tc.idx = t.tag_idx AND tc.`class` = 'tag'
-				LEFT JOIN tag_area ta ON tc.idx = ta.area_tag_idx AND tc.`class` =
-				'area_tag'
-				WHERE tc.post_idx = p.post_idx
-				AND (t.tag_name LIKE CONCAT('%', #{tag}, '%')
-				OR ta.tag_name LIKE CONCAT('%', #{tag}, '%'))
+	
+			<!-- 제목 또는 닉네임이 있을 경우 조건 추가 -->
+			<if test="(subject != null and subject != '') or (nickname != null and nickname != '')">
+				(
+					<if test="subject != null and subject != ''">
+						p.subject LIKE CONCAT('%', #{subject}, '%')
+					</if>
+					<if test="subject != null and subject != '' and nickname != null and nickname != ''">
+						OR
+					</if>
+					<if test="nickname != null and nickname != ''">
+						m.nickname LIKE CONCAT('%', #{nickname}, '%')
+					</if>
 				)
 			</if>
+	
+			<!-- 태그 조건 -->
+			<if test="tag != null and tag != ''">
+				AND EXISTS (
+					SELECT 1
+					FROM tag_course tc
+					LEFT JOIN tag t ON tc.idx = t.tag_idx AND tc.`class` = 'tag'
+					LEFT JOIN tag_area ta ON tc.idx = ta.area_tag_idx AND tc.`class` = 'area_tag'
+					WHERE tc.post_idx = p.post_idx
+					AND (
+						t.tag_name LIKE CONCAT('%', #{tag}, '%')
+						OR ta.tag_name LIKE CONCAT('%', #{tag}, '%')
+					)
+				)
+			</if>
+	
+			<!-- 모든 검색 조건이 null일 경우: 결과 없음 -->
+			<if test="(subject == null or subject == '') 
+				and (nickname == null or nickname == '') 
+				and (tag == null or tag == '')">
+				AND 1 = 0
+			</if>
+	
 		</where>
 	</select>
 

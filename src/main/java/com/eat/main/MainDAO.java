@@ -47,7 +47,7 @@ public interface MainDAO {
 	
 	//코스 검색
 	List<CourseDTO> search_course(@Param("subject") String subject, 
-			@Param("user_id")String user_id, 
+			@Param("nickname")String nickname, 
 			@Param("tag")String tag);
 	Collection<? extends TagDTO> searchTags(int idx);
 	Collection<? extends TagAreaDTO> searchTagsArea(int idx);

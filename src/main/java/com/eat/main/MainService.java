@@ -114,8 +114,8 @@ public class MainService {
 	}
 
 	// 코스검색
-	public List<CourseDTO> search_course(String subject, String user_id, String tag) {
-		List<CourseDTO> resp = dao.search_course(subject, user_id, tag);
+	public List<CourseDTO> search_course(String subject, String nickname, String tag) {
+		List<CourseDTO> resp = dao.search_course(subject, nickname, tag);
 
 		for (CourseDTO course : resp) {
 			List<CourseTagDTO> tags = dao.getTags(course.getPost_idx());

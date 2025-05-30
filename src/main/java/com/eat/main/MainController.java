@@ -63,13 +63,13 @@ public class MainController {
 	@GetMapping(value = "/search_course")
 	public ResponseEntity<List<CourseDTO>> search_course(
 			@RequestParam(value = "subject", required = false) String subject,
-			@RequestParam(value = "user_id", required = false) String user_id,
+			@RequestParam(value = "nickname", required = false) String nickname,
 			@RequestParam(value = "tag", required = false) String tag) {
 
 		List<CourseDTO> entity = null;
-		log.info("받아온 제목 : "+subject+" 받아온 아이디 : "+user_id+" 받아온 태그 : "+tag);
+		log.info("받아온 제목 : "+subject+" 받아온 아이디 : "+nickname+" 받아온 태그 : "+tag);
 
-		entity = service.search_course(subject, user_id, tag);
+		entity = service.search_course(subject, nickname, tag);
 		return ResponseEntity.ok(entity);
 
 	}
