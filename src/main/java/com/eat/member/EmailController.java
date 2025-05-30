@@ -42,8 +42,8 @@ public class EmailController {
 
 	// ----------------이메일 전송 기능 -------------------//
 	// input type : member의 email을 String으로 입력
-	@PostMapping("/sendEmail")
-	public Map<String, Object> sendEmail(@RequestBody String email) throws Exception {
+	@PostMapping("/sendNumber")
+	public Map<String, Object> sendEmail(@RequestBody Map<String, String> email) throws Exception {
 		resp = new HashMap<String, Object>();
 		Map<String, String> mail = new HashMap<String, String>();
 
@@ -51,7 +51,7 @@ public class EmailController {
 		String body = "인증번호 : \n\n" + createNum();
 
 		mail.put("sender", sender);
-		mail.put("receiver", email); // post를 통해 입력받은 유저 이메일
+		mail.put("receiver", email.get("email")); // post를 통해 입력받은 유저 이메일
 		mail.put("key", key);
 		mail.put("subject", subject);
 		mail.put("body", body);
@@ -70,7 +70,7 @@ public class EmailController {
 	}
 
 	// ----------------이메일 확인 기능 -------------------//
-	@GetMapping("/checkEmail/{number}")
+	@GetMapping("/checkNumber/{number}")
 	public Map<String, Object> checkEmail(@PathVariable int number) {
 		resp = new HashMap<String, Object>();
 		boolean checked = false;
