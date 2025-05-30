@@ -2,6 +2,7 @@ package com.eat.main;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -10,6 +11,7 @@ import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.MainDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.TimelineDTO;
 import com.eat.tags.TagAreaDTO;
@@ -54,6 +56,9 @@ public interface MainDAO {
 	
 	//코스 태그 가져오기
 	List<CourseTagDTO> getTags(int post_idx);
+	
+	// 코스 전체 리스트 불러오기 (전체)
+	List<MainDTO> course_list_all();
 
 	
 	

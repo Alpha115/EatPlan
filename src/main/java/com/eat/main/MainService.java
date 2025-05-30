@@ -14,6 +14,7 @@ import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.MainDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.RegistRequestDTO;
 import com.eat.dto.TimelineDTO;
@@ -138,6 +139,11 @@ public class MainService {
 		
 		}
 		return resp;
+	}
+	
+	// 코스 전체 리스트 불러오기 (전체)
+	public List<MainDTO> course_list_all() {
+		return dao.course_list_all();
 	}
 
 }

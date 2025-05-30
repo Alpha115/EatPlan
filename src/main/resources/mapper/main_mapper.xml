@@ -245,5 +245,10 @@
       'no_image'
     )
   </select>
+  
+  <!-- 코스 전체 리스트 불러오기 (전체) -->
+  <select id="course_list_all">
+  	SELECT * FROM post
+  </select>
 
 </mapper>

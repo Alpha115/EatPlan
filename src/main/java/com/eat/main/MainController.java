@@ -11,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.dto.CourseDTO;
+import com.eat.dto.MainDTO;
 import com.eat.dto.RegistRequestDTO;
 
 @CrossOrigin
@@ -32,6 +34,15 @@ public class MainController {
 		resp = new HashMap<String, Object>();
 		resp = service.course_list(page);
 
+		return resp;
+	}
+	
+	// 코스 전체 리스트 불러오기 (전체)
+	@GetMapping(value = "/course_list_all")
+	public Map<String, Object> course_list_all() {
+		resp = new HashMap<String, Object>();
+		List<MainDTO> list = service.course_list_all();
+		resp.put("list", list);
 		return resp;
 	}
 
