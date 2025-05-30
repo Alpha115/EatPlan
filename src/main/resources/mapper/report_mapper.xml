@@ -22,8 +22,25 @@
 <!-- 신고 글 쓰기 -->
 <insert id="report_write" parameterType="com.eat.dto.ReportDTO"
 	useGeneratedKeys="true" keyColumn="report_idx" keyProperty="report_idx">
-	INSERT INTO report (suspect_id, reporter_id, img_idx, subject, content, class, public)
-	VALUES (#{suspect_id}, #{reporter_id}, #{img_idx}, #{subject}, #{content}, #{isClass}, #{isPublic})
+	INSERT INTO report 
+	(suspect_id, 
+	reporter_id,
+	 <if test = "img_idx  !=null">
+	 img_idx,</if> 
+	 subject, 
+	 content, 
+	 `class`, 
+	 `public`)
+	VALUES 
+	(#{suspect_id}, 
+	#{reporter_id}, 
+	<if test = "img_idx  !=null">
+	#{img_idx}
+	,</if> 
+	#{subject}, 
+	#{content}, 
+	#{isClass}, 
+	#{isPublic})
 </insert>
 
 <!-- 신고 사진 저장 -->
