@@ -40,6 +40,8 @@ public class ReportService {
 				int imgIdx = dao.saveReportImg(param); // 사진 DB에 저장
 				content.setImg_idx(imgIdx);
 			}
+		}else {
+			content.setImg_idx(null);
 		}
 		
 		int row = dao.report_write(content);

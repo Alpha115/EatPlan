@@ -1,5 +1,8 @@
 package com.eat.main;
 
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +11,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.eat.dto.CourseDTO;
@@ -144,6 +152,30 @@ public class MainService {
 	// 코스 전체 리스트 불러오기 (전체)
 	public List<MainDTO> course_list_all() {
 		return dao.course_list_all();
+	}
+
+
+	// --------------------사진 요청 ---------------------//
+	public ResponseEntity<Resource> getFile(String file_idx, String type) {
+		Resource res = null;
+		HttpHeaders headers = new HttpHeaders();
+		
+		String fileName = dao.fileInfo(file_idx);
+		res = new FileSystemResource("C:/upload/"+fileName);
+		
+		// 3. photo 냐 download 냐 에 따라 Header 를 설정 해 준다.
+		try {
+			if(type.equals("photo")) {
+				String content_type = Files.probeContentType(Paths.get("C:/upload/"+fileName));
+				headers.add("Content-Type", content_type);
+			}else {
+//				headers.add("Content-Type", "application/octet-stream");		
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}				
+		//resource, header,status
+		return new ResponseEntity<Resource>(res,headers,HttpStatus.OK);
 	}
 
 }
