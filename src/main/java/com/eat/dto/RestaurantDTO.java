@@ -12,6 +12,15 @@ public class RestaurantDTO {
 	private double lng;
 	private String resta_bio;
 	
+	private PhotoDTO photo;
+	
+	
+	public PhotoDTO getPhoto() {
+		return photo;
+	}
+	public void setPhoto(PhotoDTO photo) {
+		this.photo = photo;
+	}
 	public int getResta_idx() {
 		return resta_idx;
 	}
@@ -66,6 +75,9 @@ public class RestaurantDTO {
 	public void setResta_bio(String resta_bio) {
 		this.resta_bio = resta_bio;
 	}
+
+		
+	
 	
 	
 }

@@ -48,6 +48,7 @@ public interface MainDAO {
 	List<TagDTO> course_tags(int idx);
 	List<TagAreaDTO> course_list_tags_area(int idx);
 	RestaurantDTO getRestaurantByIdx(int rIdx);
+	PhotoDTO getPhotoByImgIdx(int img_idx);
 	
 	//코스 검색
 	List<CourseDTO> search_course(@Param("subject") String subject, 

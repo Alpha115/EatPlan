@@ -131,6 +131,7 @@
 		ASC
 	</select>
 	
+	<!-- 사진 가져오기  -->
 	<select id="getRestaurantByIdx" parameterType="int" resultType="com.eat.dto.RestaurantDTO">
 	SELECT
 	resta_idx,
@@ -145,6 +146,21 @@
 	FROM restaurant
 	WHERE resta_idx = #{resta_idx}
 	</select>
+	
+	<resultMap id="PhotoResultMap" type="com.eat.dto.PhotoDTO">
+  	<id     column="img_idx"       property="img_idx"      />
+  	<result column="`class`"       property="photo_class" />
+  	<result column="new_filename"  property="new_filename" />
+	</resultMap>
+	
+	<select id="getPhotoByImgIdx" parameterType="int" resultMap="PhotoResultMap">
+  	SELECT
+   	 img_idx,
+    `class`       AS photoClass,
+    new_filename  AS newFilename
+ 	 FROM photo
+ 	 WHERE img_idx = #{imgIdx}
+</select>
 	
 	
 	<!-- 코스 상세 - 상세 일정 (코멘트) -->

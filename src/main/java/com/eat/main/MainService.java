@@ -85,10 +85,18 @@ public class MainService {
 			int rIdx = detail.getResta_idx();
 			RestaurantDTO restaInfo = dao.getRestaurantByIdx(rIdx);
 			
+			if (restaInfo.getImg_idx()>0) {
+				PhotoDTO photo = dao.getPhotoByImgIdx(restaInfo.getImg_idx());
+				restaInfo.setPhoto(photo);
+			}
+			
+			
 			List<RestaurantDTO> temp = new ArrayList<RestaurantDTO>();
 			temp.add(restaInfo);
 			detail.setResta(temp);
 		}
+		
+		
 		
 		
 		
