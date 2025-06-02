@@ -116,6 +116,12 @@
 		SELECT * FROM timeline
 		WHERE post_idx = #{post_idx}
 	</select>
+	
+	<!-- 코스 상세 - 닉네임 -->
+	<select id="getNickname" resultType="com.eat.dto.MemberDTO">
+		SELECT nickname FROM member
+		WHERE user_id = #{user_id}
+	</select>
 
 	<!-- 코스 상세 - 상세 일정 (식당) -->
 	<select id="getDetailRestaList"

@@ -23,6 +23,7 @@ import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
 import com.eat.dto.MainDTO;
+import com.eat.dto.MemberDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.RegistRequestDTO;
 import com.eat.dto.TimelineDTO;
@@ -77,6 +78,7 @@ public class MainService {
 	public RegistRequestDTO courseDetail(int post_idx) {
 
 		CourseDTO course = dao.getCourseDTO(post_idx);
+		MemberDTO nickname = dao.getNickname(course.getUser_id());
 		TimelineDTO timeline = dao.getTimelineDTO(post_idx);
 		List<DetailRestaDTO> restaList = dao.getDetailRestaList(post_idx);
 		List<DetailCmtDTO> cmtList = dao.getCmtDTOList(post_idx);
@@ -103,6 +105,7 @@ public class MainService {
 		}
 				resp.setContent(course);
 				resp.setTime(timeline);
+				resp.setNickname(nickname);
 				resp.setContent_detail_resta(restaList);
 				resp.setContent_detail_cmt(cmtList);
 				resp.setTags(tagList);

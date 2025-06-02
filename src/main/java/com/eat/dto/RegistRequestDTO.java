@@ -5,16 +5,23 @@ import java.util.List;
 import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagDTO;
 
-// 코스 작성, 수정, 상세보기를 위한 DTO 7단합체
+// 코스 작성, 수정, 상세보기를 위한 DTO 8단합체
 public class RegistRequestDTO {
 	private CourseDTO content;
 	private TimelineDTO time;
+	private MemberDTO nickname;
     private List<DetailRestaDTO> content_detail_resta;     
     private List<DetailCmtDTO> content_detail_cmt;
     private List<CourseTagDTO> tags;
     private List<TagDTO> tag_name;
     private List<TagAreaDTO> tag_name_area;
     
+	public MemberDTO getNickname() {
+		return nickname;
+	}
+	public void setNickname(MemberDTO nickname) {
+		this.nickname = nickname;
+	}
 	public List<TagDTO> getTag_name() {
 		return tag_name;
 	}

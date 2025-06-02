@@ -12,6 +12,7 @@ import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
 import com.eat.dto.MainDTO;
+import com.eat.dto.MemberDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.TimelineDTO;
 import com.eat.tags.TagAreaDTO;
@@ -39,6 +40,7 @@ public interface MainDAO {
 	//코스 상세보기
 	public CourseDTO getCourseDTO(int post_idx);
 	public TimelineDTO getTimelineDTO(int post_idx);
+	MemberDTO getNickname(String user_id);
 	public List<DetailRestaDTO> getDetailRestaList(int post_idx);
 	public List<DetailCmtDTO> getCmtDTOList(int post_idx);
 	public List<CourseTagDTO> getCourseList(int post_idx);
@@ -63,6 +65,7 @@ public interface MainDAO {
 	
 	
 	String fileInfo(String new_filename);
+	
 	
 	
 
