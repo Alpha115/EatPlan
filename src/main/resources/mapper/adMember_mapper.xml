@@ -38,8 +38,15 @@
 	<select id="admember_list" resultType="com.eat.dto.MemberDTO">
 		SELECT user_id, nickname, email, reg_date
   			FROM member
+  			WHERE
+		    <choose>
+		     <when test="param2=='admin'">admin = true</when>
+		     <when test="param2=='default'">admin = false</when>
+		     <otherwise>user_id != ''</otherwise>
+		    </choose>
   			ORDER BY
 		    <choose>
+		      <when test="param1 == 'user_id'">user_id</when>
 		      <when test="param1 == 'nickname'">nickname</when>
 		      <when test="param1 == 'email'">email</when>
 		      <otherwise>reg_date</otherwise>
