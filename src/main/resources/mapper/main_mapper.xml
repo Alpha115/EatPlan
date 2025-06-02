@@ -94,7 +94,7 @@
 		dr.detail_idx, r.resta_idx
 		LIMIT 1
 		),
-		'no_image'
+		'no_image.jpg'
 		) AS new_filename
 	</select>
 
@@ -155,9 +155,9 @@
 	
 	<select id="getPhotoByImgIdx" parameterType="int" resultMap="PhotoResultMap">
   	SELECT
-   	 img_idx,
-    `class`       AS photoClass,
-    new_filename  AS newFilename
+   	img_idx,
+    `class` AS photoClass,
+    COALESCE(new_filename, 'no_image.jpg') AS new_filename
  	 FROM photo
  	 WHERE img_idx = #{imgIdx}
 </select>
