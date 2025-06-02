@@ -78,28 +78,22 @@ public class MainService {
 	// 코스 상세보기
 	public RegistRequestDTO courseDetail(int post_idx) {
 
-		
 		List<DetailRestaDTO> restaList = dao.getDetailRestaList(post_idx);
-		
+
 		for (DetailRestaDTO detail : restaList) {
 			int rIdx = detail.getResta_idx();
 			RestaurantDTO restaInfo = dao.getRestaurantByIdx(rIdx);
-			
-			if (restaInfo.getImg_idx()>0) {
+
+			if (restaInfo.getImg_idx() > 0) {
 				PhotoDTO photo = dao.getPhotoByImgIdx(restaInfo.getImg_idx());
 				restaInfo.setPhoto(photo);
 			}
-			
-			
+
 			List<RestaurantDTO> temp = new ArrayList<RestaurantDTO>();
 			temp.add(restaInfo);
 			detail.setResta(temp);
 		}
-		
-		
-		
-		
-		
+
 		CourseDTO course = dao.getCourseDTO(post_idx);
 		MemberDTO nickname = dao.getNickname(course.getUser_id());
 		TimelineDTO timeline = dao.getTimelineDTO(post_idx);
@@ -108,34 +102,38 @@ public class MainService {
 		List<TagDTO> tagListResult = new ArrayList<TagDTO>();
 		List<TagAreaDTO> tagAreaListResult = new ArrayList<TagAreaDTO>();
 
-		RegistRequestDTO resp = new RegistRequestDTO();
+		
 
-		if (tagList != null && tagList.size() > 0) {
+		if (tagList != null && tagList.isEmpty()) {
 			for (CourseTagDTO tag_info : tagList) {
-//				String isClass = tag_info.getIsClass();
+				String cls = tag_info.getIsClass();
 
-				List<TagDTO> tags = dao.course_tags(tag_info.getIdx());
-				if (tags != null) {
-					tagListResult.addAll(tags);
-				}
-
-				List<TagAreaDTO> areaTags = dao.course_list_tags_area(tag_info.getIdx());
-				if (areaTags != null) {
-					tagAreaListResult.addAll(areaTags);
+				if ("tag".equals(cls)) {
+					List<TagDTO> tags = dao.course_tags(tag_info.getIdx());
+					if (tags != null && !tags.isEmpty()) {
+						tagListResult.addAll(tags);
+					}
+				} else if ("areaTag".equals(cls)) {
+					List<TagAreaDTO> areaTags = dao.course_list_tags_area(tag_info.getIdx());
+					if (areaTags != null && !areaTags.isEmpty()) {
+						tagAreaListResult.addAll(areaTags);
+					}
 				}
 			}
 		}
-				resp.setContent(course);
-				resp.setTime(timeline);
-				resp.setNickname(nickname);
-				resp.setContent_detail_resta(restaList);
-				resp.setContent_detail_cmt(cmtList);
-				resp.setTags(tagList);
-				resp.setTag_name(tagListResult);
-				resp.setTag_name_area(tagAreaListResult);
-
-				return resp;
+		RegistRequestDTO resp = new RegistRequestDTO();
 		
+		resp.setContent(course);
+		resp.setTime(timeline);
+		resp.setNickname(nickname);
+		resp.setContent_detail_resta(restaList);
+		resp.setContent_detail_cmt(cmtList);
+		resp.setTags(tagList);
+		resp.setTag_name(tagListResult);
+		resp.setTag_name_area(tagAreaListResult);
+
+		return resp;
+
 	}
 
 	// 코스검색
@@ -145,62 +143,58 @@ public class MainService {
 		for (CourseDTO course : resp) {
 			List<CourseTagDTO> tags = dao.getTags(course.getPost_idx());
 			course.setTags(tags);
-		
-		List<TagDTO> tagsName =new ArrayList<>();
-		List<TagAreaDTO>tagsAreaName = new ArrayList<>();
-		
-		
-		for (CourseTagDTO tagInfo : tags) {
-			if("tag".equals(tagInfo.getIsClass())) {
-				tagsName.addAll(dao.searchTags(tagInfo.getIdx()));
-			}else if("area_tag".equals(tagInfo.getIsClass())) {
-				tagsAreaName.addAll(dao.searchTagsArea(tagInfo.getIdx()));
+
+			List<TagDTO> tagsName = new ArrayList<>();
+			List<TagAreaDTO> tagsAreaName = new ArrayList<>();
+
+			for (CourseTagDTO tagInfo : tags) {
+				if ("tag".equals(tagInfo.getIsClass())) {
+					tagsName.addAll(dao.searchTags(tagInfo.getIdx()));
+				} else if ("area_tag".equals(tagInfo.getIsClass())) {
+					tagsAreaName.addAll(dao.searchTagsArea(tagInfo.getIdx()));
+				}
+
 			}
-			
-		}
-		
-		course.setTag_name(tagsName);
-		course.setTag_name_area(tagsAreaName);
-		
-		
-		List<PhotoDTO> photos = dao.getPhotosByPostIdx(course.getPost_idx());
-		course.setPhotos(photos);
-		
-		
-		String thumb = dao.courseListImg(course.getPost_idx());
-        course.setThumbnail(thumb);
-		
+
+			course.setTag_name(tagsName);
+			course.setTag_name_area(tagsAreaName);
+
+			List<PhotoDTO> photos = dao.getPhotosByPostIdx(course.getPost_idx());
+			course.setPhotos(photos);
+
+			String thumb = dao.courseListImg(course.getPost_idx());
+			course.setThumbnail(thumb);
+
 		}
 		return resp;
 	}
-	
+
 	// 코스 전체 리스트 불러오기 (전체)
 	public List<MainDTO> course_list_all() {
 		return dao.course_list_all();
 	}
 
-
 	// --------------------사진 요청 ---------------------//
 	public ResponseEntity<Resource> getFile(String new_filename, String type) {
 		Resource res = null;
 		HttpHeaders headers = new HttpHeaders();
-		
+
 		String fileName = dao.fileInfo(new_filename);
-		res = new FileSystemResource("C:/upload/"+fileName);
-		
+		res = new FileSystemResource("C:/upload/" + fileName);
+
 		// 3. photo 냐 download 냐 에 따라 Header 를 설정 해 준다.
 		try {
-			if(type.equals("photo")) {
-				String content_type = Files.probeContentType(Paths.get("C:/upload/"+fileName));
+			if (type.equals("photo")) {
+				String content_type = Files.probeContentType(Paths.get("C:/upload/" + fileName));
 				headers.add("Content-Type", content_type);
-			}else {
+			} else {
 //				headers.add("Content-Type", "application/octet-stream");		
-			}			
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}				
-		//resource, header,status
-		return new ResponseEntity<Resource>(res,headers,HttpStatus.OK);
+		}
+		// resource, header,status
+		return new ResponseEntity<Resource>(res, headers, HttpStatus.OK);
 	}
 
 }
