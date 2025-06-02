@@ -29,6 +29,7 @@ import com.eat.dto.MemberDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.RegistRequestDTO;
 import com.eat.dto.RestaurantDTO;
+import com.eat.dto.StarDTO;
 import com.eat.dto.TimelineDTO;
 import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagDTO;
@@ -207,6 +208,12 @@ public class MainService {
 	public boolean like(LikedDTO params) {
 		int row = dao.like(params);
 		return row>0;
+	}
+
+	// 별점 주기
+	public boolean star(StarDTO params) {
+		int row = dao.star(params);
+		return row > 0;
 	}
 
 }

@@ -322,5 +322,13 @@
 		INSERT INTO liked (user_id, class, cmt_idx, liked, post_idx)
 		VALUES (#{user_id}, #{isClass}, #{cmt_idx}, #{liked}, #{post_idx})
 	</insert>
+	
+	<!-- 별점 -->
+	<insert id="star" parameterType="com.eat.dto.StarDTO">
+	    INSERT INTO star (user_id, post_idx, star)
+	    VALUES (#{user_id}, #{post_idx}, #{star})
+	    ON DUPLICATE KEY UPDATE
+        star = #{star}
+	</insert>
 
 </mapper>

@@ -16,6 +16,7 @@ import com.eat.dto.MainDTO;
 import com.eat.dto.MemberDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.RestaurantDTO;
+import com.eat.dto.StarDTO;
 import com.eat.dto.TimelineDTO;
 import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagDTO;
@@ -72,5 +73,8 @@ public interface MainDAO {
 	
 	// 좋아요
 	int like(LikedDTO params);
+	
+	// 별점
+	int star(StarDTO params);
 	
 }

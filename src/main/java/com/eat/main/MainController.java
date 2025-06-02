@@ -21,6 +21,7 @@ import com.eat.dto.CourseDTO;
 import com.eat.dto.LikedDTO;
 import com.eat.dto.MainDTO;
 import com.eat.dto.RegistRequestDTO;
+import com.eat.dto.StarDTO;
 
 @CrossOrigin
 @RestController
@@ -94,6 +95,16 @@ public class MainController {
 		return resp;
 	}
 	
-	// 
+	// 별점 주기
+	@PostMapping(value="/star")
+	public Map<String, Object> star (
+			@RequestBody StarDTO params){
+		resp = new HashMap<String, Object>();
+		
+		boolean success = service.star(params);
+		
+		resp.put("success", success);
+		return resp;
+	}
 
 }
