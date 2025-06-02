@@ -37,3 +37,4 @@ mvnw.cmd
 .mvn/
 src/test/java/kr/co/himedia/EatPlanApplicationTests.java
 src/main/resources/application.properties
+src/main/resources/application.properties
