@@ -16,7 +16,7 @@ public class NoticeService {
 	@Autowired
 	NoticeDAO dao;
 	Logger log = LoggerFactory.getLogger(getClass());
-	private int limit = 8, page = 0; // 1페이지당 뜨는 공지사항 게시물의 갯수입니다.
+	private int limit = 10, page = 0; // 1페이지당 뜨는 공지사항 게시물의 갯수입니다.
 
 	public Map<String, Object> list(String page) {
 		Map<String, Object> result = new HashMap<String, Object>();
