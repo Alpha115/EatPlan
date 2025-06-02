@@ -23,6 +23,7 @@ import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.LikedDTO;
 import com.eat.dto.MainDTO;
 import com.eat.dto.MemberDTO;
 import com.eat.dto.PhotoDTO;
@@ -200,6 +201,12 @@ public class MainService {
 		}
 		// resource, header,status
 		return new ResponseEntity<Resource>(res, headers, HttpStatus.OK);
+	}
+
+	// 좋아요 누르기
+	public boolean like(LikedDTO params) {
+		int row = dao.like(params);
+		return row>0;
 	}
 
 }

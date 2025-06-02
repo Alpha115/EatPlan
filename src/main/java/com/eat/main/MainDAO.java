@@ -11,6 +11,7 @@ import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
 import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
+import com.eat.dto.LikedDTO;
 import com.eat.dto.MainDTO;
 import com.eat.dto.MemberDTO;
 import com.eat.dto.PhotoDTO;
@@ -66,6 +67,10 @@ public interface MainDAO {
 	// 코스 전체 리스트 불러오기 (전체)
 	List<MainDTO> course_list_all();
 
+	// 사진
 	String fileInfo(String new_filename);
+	
+	// 좋아요
+	int like(LikedDTO params);
 	
 }

@@ -12,11 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.dto.CourseDTO;
+import com.eat.dto.LikedDTO;
 import com.eat.dto.MainDTO;
 import com.eat.dto.RegistRequestDTO;
 
@@ -79,5 +81,19 @@ public class MainController {
 	public ResponseEntity<Resource> getImage(@PathVariable String new_filename){
 		return service.getFile(new_filename,"photo");
 	}
+	
+	// 좋아요 누르기
+	@PostMapping(value="/like")
+	public Map<String, Object> like (
+			@RequestBody LikedDTO params){
+		resp = new HashMap<String, Object>();
+		
+		boolean success = service.like(params);
+		
+		resp.put("success", success);
+		return resp;
+	}
+	
+	// 
 
 }

@@ -316,5 +316,11 @@
 		SELECT new_filename 
 			FROM photo WHERE new_filename=#{param1}
 	</select>
+	
+	<!-- 좋아요 -->
+	<insert id="like" parameterType="com.eat.dto.LikedDTO">
+		INSERT INTO liked (user_id, class, cmt_idx, liked, post_idx)
+		VALUES (#{user_id}, #{isClass}, #{cmt_idx}, #{liked}, #{post_idx})
+	</insert>
 
 </mapper>
