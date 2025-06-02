@@ -99,12 +99,14 @@ public class MainService {
 		TimelineDTO timeline = dao.getTimelineDTO(post_idx);
 		List<DetailCmtDTO> cmtList = dao.getCmtDTOList(post_idx);
 		List<CourseTagDTO> tagList = dao.getCourseList(post_idx);
+		
+		
 		List<TagDTO> tagListResult = new ArrayList<TagDTO>();
 		List<TagAreaDTO> tagAreaListResult = new ArrayList<TagAreaDTO>();
 
 		
 
-		if (tagList != null && tagList.isEmpty()) {
+		if (tagList != null && !tagList.isEmpty()) {
 			for (CourseTagDTO tag_info : tagList) {
 				String cls = tag_info.getIsClass();
 
