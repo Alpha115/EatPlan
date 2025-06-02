@@ -171,8 +171,12 @@
 
 	<!-- 코스 상세 - 태그 -->
 	<select id="getCourseList" resultType="com.eat.dto.CourseTagDTO">
-		SELECT * FROM tag_course
-		WHERE post_idx = #{post_idx}
+	SELECT
+    idx,
+    `class`    AS isClass,
+    post_idx
+  FROM tag_course
+  WHERE post_idx = #{post_idx}
 	</select>
 
 	<!-- 코스 상세 - 일반 태그 정보 조회 -->
@@ -185,7 +189,7 @@
 	<select id="course_list_tags_area"
 		resultType="com.eat.tags.TagAreaDTO">
 		SELECT tag_name FROM tag_area
-		WHERE area_tag_idx = #{param1}
+		WHERE area_tag_idx = #{area_tag_idx}
 	</select>
 
 
