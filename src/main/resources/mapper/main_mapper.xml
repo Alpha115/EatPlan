@@ -130,7 +130,23 @@
 		#{post_idx} ORDER BY start
 		ASC
 	</select>
-
+	
+	<select id="getRestaurantByIdx" parameterType="int" resultType="com.eat.dto.RestaurantDTO">
+	SELECT
+	resta_idx,
+	img_idx,
+	area_tag_idx,
+	address,
+	resta_name,
+	url,
+	lat,
+	lng,
+	resta_bio
+	FROM restaurant
+	WHERE resta_idx = #{resta_idx}
+	</select>
+	
+	
 	<!-- 코스 상세 - 상세 일정 (코멘트) -->
 	<select id="getCmtDTOList" resultType="com.eat.dto.DetailCmtDTO">
 		SELECT * FROM

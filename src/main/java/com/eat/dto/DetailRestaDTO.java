@@ -1,5 +1,7 @@
 package com.eat.dto;
 
+import java.util.List;
+
 // 식당 일정 정보를 담는 DTO
 public class DetailRestaDTO {
 
@@ -9,6 +11,15 @@ public class DetailRestaDTO {
 	private String comment;
 	private String start;
 	
+	private List<RestaurantDTO> resta;
+	
+	
+	public List<RestaurantDTO> getResta() {
+		return resta;
+	}
+	public void setResta(List<RestaurantDTO> resta) {
+		this.resta = resta;
+	}
 	public int getDetail_idx() {
 		return detail_idx;
 	}

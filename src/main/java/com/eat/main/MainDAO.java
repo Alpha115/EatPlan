@@ -14,6 +14,7 @@ import com.eat.dto.DetailRestaDTO;
 import com.eat.dto.MainDTO;
 import com.eat.dto.MemberDTO;
 import com.eat.dto.PhotoDTO;
+import com.eat.dto.RestaurantDTO;
 import com.eat.dto.TimelineDTO;
 import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagDTO;
@@ -46,6 +47,7 @@ public interface MainDAO {
 	public List<CourseTagDTO> getCourseList(int post_idx);
 	List<TagDTO> course_tags(int idx);
 	List<TagAreaDTO> course_list_tags_area(int idx);
+	RestaurantDTO getRestaurantByIdx(int rIdx);
 	
 	//코스 검색
 	List<CourseDTO> search_course(@Param("subject") String subject, 
@@ -65,6 +67,7 @@ public interface MainDAO {
 	
 	
 	String fileInfo(String new_filename);
+	
 	
 	
 	

@@ -26,6 +26,7 @@ import com.eat.dto.MainDTO;
 import com.eat.dto.MemberDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.RegistRequestDTO;
+import com.eat.dto.RestaurantDTO;
 import com.eat.dto.TimelineDTO;
 import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagDTO;
@@ -77,10 +78,23 @@ public class MainService {
 	// 코스 상세보기
 	public RegistRequestDTO courseDetail(int post_idx) {
 
+		
+		List<DetailRestaDTO> restaList = dao.getDetailRestaList(post_idx);
+		
+		for (DetailRestaDTO detail : restaList) {
+			int rIdx = detail.getResta_idx();
+			RestaurantDTO restaInfo = dao.getRestaurantByIdx(rIdx);
+			
+			List<RestaurantDTO> temp = new ArrayList<RestaurantDTO>();
+			temp.add(restaInfo);
+			detail.setResta(temp);
+		}
+		
+		
+		
 		CourseDTO course = dao.getCourseDTO(post_idx);
 		MemberDTO nickname = dao.getNickname(course.getUser_id());
 		TimelineDTO timeline = dao.getTimelineDTO(post_idx);
-		List<DetailRestaDTO> restaList = dao.getDetailRestaList(post_idx);
 		List<DetailCmtDTO> cmtList = dao.getCmtDTOList(post_idx);
 		List<CourseTagDTO> tagList = dao.getCourseList(post_idx);
 		List<TagDTO> tagListResult = new ArrayList<TagDTO>();
