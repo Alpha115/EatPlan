@@ -105,6 +105,11 @@
 	</select>
 
 	<!-- 코스 상세보기 -->
+	<!-- 코스 상세보기 조회수올리기 -->
+	<update id="setB_hit">
+		UPDATE post SET b_hit = b_hit+1 WHERE post_idx=#{post_idx}
+	</update>
+	
 	<!-- 코스 상세 - 메인 -->
 	<select id="getCourseDTO" resultType="com.eat.dto.CourseDTO">
 		SELECT * FROM post WHERE

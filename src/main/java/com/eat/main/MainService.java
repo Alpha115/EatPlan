@@ -17,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
@@ -76,6 +77,7 @@ public class MainService {
 	}
 
 	// 코스 상세보기
+	@Transactional
 	public RegistRequestDTO courseDetail(int post_idx) {
 
 		List<DetailRestaDTO> restaList = dao.getDetailRestaList(post_idx);
@@ -94,6 +96,7 @@ public class MainService {
 			detail.setResta(temp);
 		}
 
+		dao.setB_hit(post_idx);
 		CourseDTO course = dao.getCourseDTO(post_idx);
 		MemberDTO nickname = dao.getNickname(course.getUser_id());
 		TimelineDTO timeline = dao.getTimelineDTO(post_idx);

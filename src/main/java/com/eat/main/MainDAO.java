@@ -40,6 +40,7 @@ public interface MainDAO {
 	
 	//코스 상세보기
 	public CourseDTO getCourseDTO(int post_idx);
+	int setB_hit(int post_idx);
 	public TimelineDTO getTimelineDTO(int post_idx);
 	MemberDTO getNickname(String user_id);
 	public List<DetailRestaDTO> getDetailRestaList(int post_idx);
@@ -65,12 +66,6 @@ public interface MainDAO {
 	// 코스 전체 리스트 불러오기 (전체)
 	List<MainDTO> course_list_all();
 
-	
-	
 	String fileInfo(String new_filename);
 	
-	
-	
-	
-
 }
