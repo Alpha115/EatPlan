@@ -111,8 +111,39 @@
 	
 	<!-- 코스 상세 - 메인 -->
 	<select id="getCourseDTO" resultType="com.eat.dto.CourseDTO">
-		SELECT * FROM post WHERE
-		post_idx = #{post_idx}
+		SELECT 
+		p.post_idx,
+		p.user_id,
+		p.subject,
+		p.b_hit,
+		p.reg_date,
+		p.`public`,
+		p.blind,
+		p.tmp,
+		  <!-- 댓글 수를 계산해서 total_comment_count에 매핑 -->
+    IFNULL((
+      SELECT COUNT(*)
+        FROM comment c
+       WHERE c.post_idx = p.post_idx
+    ), 0) AS total_comment_count,
+
+    	<!-- 좋아요 수를 계산해서 total_like_count에 매핑 -->
+    IFNULL((
+      SELECT COUNT(*)
+        FROM liked l
+       WHERE l.post_idx = p.post_idx
+         AND l.`class` = 'course'
+    ), 0) AS total_like_count,
+
+    <!-- 별점 평균을 계산해서 star_average에 매핑 -->
+    IFNULL((
+      SELECT ROUND(AVG(s.star), 1)
+        FROM star s
+       WHERE s.post_idx = p.post_idx
+    ), 0) AS star_average
+		
+		 FROM post p WHERE
+		p.post_idx = #{post_idx}
 	</select>
 
 	<!-- 코스 상세 - 타임라인 -->
@@ -194,31 +225,6 @@
 		resultType="com.eat.tags.TagAreaDTO">
 		SELECT tag_name FROM tag_area
 		WHERE area_tag_idx = #{area_tag_idx}
-	</select>
-	
-	<!-- 코스 상세 - 좋아요 정보 조회 -->
-	<select id="getLikesByPost" parameterType="map"
-		resultType="com.eat.dto.LikedDTO">
-		 SELECT
-            user_id,
-            `class` AS isClass,
-            cmt_idx,
-            liked,
-            post_idx
-        FROM liked
-        WHERE post_idx = #{post_idx}
-          AND `class`   = #{isClass}
-	</select>
-
-	<!-- 코스 상세 - 별점 정보 조회 -->
-	<select id="getStarsByPost" parameterType="int"
-	resultType="com.eat.dto.StarDTO">
-	 SELECT
-            user_id,
-            post_idx,
-            star
-        FROM star
-        WHERE post_idx = #{post_idx}
 	</select>
 
 

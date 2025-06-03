@@ -104,11 +104,6 @@ public class MainService {
 		List<DetailCmtDTO> cmtList = dao.getCmtDTOList(post_idx);
 		List<CourseTagDTO> tagList = dao.getCourseList(post_idx);
 		
-		List<LikedDTO> likeList = dao.getLikesByPost(post_idx, isClass);
-		List<StarDTO> starList = dao.getStarsByPost(post_idx);
-		
-		
-		
 		List<TagDTO> tagListResult = new ArrayList<TagDTO>();
 		List<TagAreaDTO> tagAreaListResult = new ArrayList<TagAreaDTO>();
 
@@ -141,8 +136,6 @@ public class MainService {
 		resp.setTags(tagList);
 		resp.setTag_name(tagListResult);
 		resp.setTag_name_area(tagAreaListResult);
-		resp.setLikeList(likeList);
-		resp.setStarList(starList);
 		
 		return resp;
 

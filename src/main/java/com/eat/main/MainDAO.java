@@ -51,8 +51,6 @@ public interface MainDAO {
 	List<TagAreaDTO> course_list_tags_area(int idx);
 	RestaurantDTO getRestaurantByIdx(int rIdx);
 	PhotoDTO getPhotoByImgIdx(int img_idx);
-	List<LikedDTO> getLikesByPost(@Param("post_idx") int post_idx, @Param("isClass") String isClass);
-	List<StarDTO> getStarsByPost(@Param("post_idx") int post_idx);
 	
 	
 	//코스 검색
