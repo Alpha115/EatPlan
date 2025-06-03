@@ -71,9 +71,16 @@ public interface MainDAO {
 	String fileInfo(String new_filename);
 	
 	// 좋아요
-	int like(LikedDTO params);
+	Boolean checkPostLike(LikedDTO params);
+	int insertPostLike(LikedDTO params);
+	int updatePostLike(LikedDTO params);
+	Boolean checkCmtLike(LikedDTO params);
+	int insertCmtLike(LikedDTO params);
+	int updateCmtLike(LikedDTO params);
 	
 	// 별점
 	int star(StarDTO params);
+
+
 	
 }

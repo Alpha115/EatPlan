@@ -205,8 +205,32 @@ public class MainService {
 
 	// 좋아요 누르기
 	public boolean like(LikedDTO params) {
-		int row = dao.like(params);
-		return row>0;
+		
+		String isClass = params.getIsClass(); // 코스인지 댓글인지		
+		Boolean exist;
+		int row = 0;
+		
+		if (isClass.equals("course")) {
+			exist = dao.checkPostLike(params);  // 게시글 좋아요 한적 있는지
+			if (exist == null ) {
+				params.setLiked(true);
+				return dao.insertPostLike(params) > 0; // 게시글 새 좋아요 추가
+			} else {
+				params.setLiked(!exist);
+				return dao.updatePostLike(params) > 0; // 게시글 좋아요 상태 변경
+			}
+		} else if (isClass.equals("comment")) {
+			exist = dao.checkCmtLike(params);  // 댓글 좋아요 한적 있는지
+			if (exist == null) {
+				params.setLiked(true);
+				return dao.insertCmtLike(params) > 0; // 댓글 새 좋아요 추가
+			} else {
+				params.setLiked(!exist);
+				return dao.updateCmtLike(params) > 0; // 댓글 좋아요 상태 변경
+			}
+		}
+		
+		return false;
 	}
 
 	// 별점 주기

@@ -318,10 +318,41 @@
 	</select>
 	
 	<!-- 좋아요 -->
-	<insert id="like" parameterType="com.eat.dto.LikedDTO">
-		INSERT INTO liked (user_id, class, cmt_idx, liked, post_idx)
-		VALUES (#{user_id}, #{isClass}, #{cmt_idx}, #{liked}, #{post_idx})
+	<!-- 게시글 좋아요 -->
+	<select id="checkPostLike" resultType="Boolean">
+	  SELECT liked FROM liked
+	  WHERE user_id = #{user_id}
+	    AND class = 'course'
+	    AND post_idx = #{post_idx}
+	</select>
+	
+	<insert id="insertPostLike">
+	  INSERT INTO liked (user_id, class, post_idx, liked)
+	  VALUES (#{user_id}, 'course', #{post_idx}, #{liked})
 	</insert>
+	
+	<update id="updatePostLike">
+	  UPDATE liked SET liked = #{liked}
+	  WHERE user_id = #{user_id} AND class = 'course' AND post_idx = #{post_idx}
+	</update>
+	
+	<!-- 댓글 좋아요 -->
+	<select id="checkCmtLike" resultType="Boolean">
+	  SELECT liked FROM liked
+	  WHERE user_id = #{user_id}
+	    AND class = 'comment'
+	    AND cmt_idx = #{cmt_idx}
+	</select>
+	
+	<insert id="insertCmtLike">
+	  INSERT INTO liked (user_id, class, cmt_idx, liked, post_idx)
+	  VALUES (#{user_id}, 'comment', #{cmt_idx}, #{liked}, #{post_idx})
+	</insert>
+	
+	<update id="updateCmtLike">
+	  UPDATE liked SET liked = #{liked}
+	  WHERE user_id = #{user_id} AND class = 'comment' AND cmt_idx = #{cmt_idx}
+	</update>
 	
 	<!-- 별점 -->
 	<insert id="star" parameterType="com.eat.dto.StarDTO">
