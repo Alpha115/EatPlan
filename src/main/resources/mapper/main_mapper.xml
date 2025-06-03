@@ -195,7 +195,31 @@
 		SELECT tag_name FROM tag_area
 		WHERE area_tag_idx = #{area_tag_idx}
 	</select>
+	
+	<!-- 코스 상세 - 좋아요 정보 조회 -->
+	<select id="getLikesByPost" parameterType="map"
+		resultType="com.eat.dto.LikedDTO">
+		 SELECT
+            user_id,
+            `class` AS isClass,
+            cmt_idx,
+            liked,
+            post_idx
+        FROM liked
+        WHERE post_idx = #{post_idx}
+          AND `class`   = #{isClass}
+	</select>
 
+	<!-- 코스 상세 - 별점 정보 조회 -->
+	<select id="getStarsByPost" parameterType="int"
+	resultType="com.eat.dto.StarDTO">
+	 SELECT
+            user_id,
+            post_idx,
+            star
+        FROM star
+        WHERE post_idx = #{post_idx}
+	</select>
 
 
 	<!-- 코스 검색 --><!-- % : 0개 이상의 임의 문자 %abd% -> abc를 포함하는 모든 문자열 검색 가능 -->

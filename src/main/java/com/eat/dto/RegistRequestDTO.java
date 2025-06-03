@@ -15,7 +15,23 @@ public class RegistRequestDTO {
     private List<CourseTagDTO> tags;
     private List<TagDTO> tag_name;
     private List<TagAreaDTO> tag_name_area;
+    private List<LikedDTO> likeList;
+    private List<StarDTO> starList;
     
+    
+   
+	public List<LikedDTO> getLikeList() {
+		return likeList;
+	}
+	public void setLikeList(List<LikedDTO> likeList) {
+		this.likeList = likeList;
+	}
+	public List<StarDTO> getStarList() {
+		return starList;
+	}
+	public void setStarList(List<StarDTO> starList) {
+		this.starList = starList;
+	}
 	public MemberDTO getNickname() {
 		return nickname;
 	}
@@ -64,5 +80,6 @@ public class RegistRequestDTO {
 	public void setTags(List<CourseTagDTO> tags) {
 		this.tags = tags;
 	}
+
 	
 }

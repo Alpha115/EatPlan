@@ -79,7 +79,7 @@ public class MainService {
 
 	// 코스 상세보기
 	@Transactional
-	public RegistRequestDTO courseDetail(int post_idx) {
+	public RegistRequestDTO courseDetail(int post_idx, String isClass) {
 
 		List<DetailRestaDTO> restaList = dao.getDetailRestaList(post_idx);
 
@@ -103,6 +103,10 @@ public class MainService {
 		TimelineDTO timeline = dao.getTimelineDTO(post_idx);
 		List<DetailCmtDTO> cmtList = dao.getCmtDTOList(post_idx);
 		List<CourseTagDTO> tagList = dao.getCourseList(post_idx);
+		
+		List<LikedDTO> likeList = dao.getLikesByPost(post_idx, isClass);
+		List<StarDTO> starList = dao.getStarsByPost(post_idx);
+		
 		
 		
 		List<TagDTO> tagListResult = new ArrayList<TagDTO>();
@@ -137,7 +141,9 @@ public class MainService {
 		resp.setTags(tagList);
 		resp.setTag_name(tagListResult);
 		resp.setTag_name_area(tagAreaListResult);
-
+		resp.setLikeList(likeList);
+		resp.setStarList(starList);
+		
 		return resp;
 
 	}

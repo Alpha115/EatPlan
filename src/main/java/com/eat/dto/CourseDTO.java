@@ -24,6 +24,10 @@ public class CourseDTO {
 	private String nickname;
 	private String thumbnail;
 	
+	private List<LikedDTO> likeList;
+	private List<StarDTO> starList;
+	private List<PhotoDTO> photos;
+	
 	
 	
 
@@ -31,7 +35,20 @@ public class CourseDTO {
 	private int total_comment_count; // 댓글 수
 	private double star_average; // 별점 평균
 	
-	public List<PhotoDTO> photos;
+	public List<LikedDTO> getLikeList() {
+		return likeList;
+	}
+
+	public void setLikeList(List<LikedDTO> likeList) {
+		this.likeList = likeList;
+	}
+	
+	public List<StarDTO> getStarList() {
+		return starList;
+	}
+	public void setStarList(List<StarDTO> starList) {
+		this.starList = starList;
+	}
 	
 	 public String getNickname() {
 			return nickname;
