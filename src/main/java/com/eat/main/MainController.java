@@ -95,6 +95,29 @@ public class MainController {
 		return resp;
 	}
 	
+	// 좋아요 상태 확인
+	@GetMapping(value="/like_check")
+	public Map<String, Object> likeCheck (
+			@RequestParam String user_id,
+		    @RequestParam(required = false) Integer post_idx,
+		    @RequestParam(required = false) Integer cmt_idx,
+			@RequestParam String isClass) {
+		resp = new HashMap<String, Object>();
+		
+		boolean liked = false;
+		
+		if (isClass.equals("course") && post_idx != null) {
+			liked = service.likeCheck(user_id, post_idx, "course");
+		} else if (isClass.equals("comment") && cmt_idx != null) {
+			liked = service.likeCheck(user_id, cmt_idx, "comment");
+		}
+		
+		resp.put("liked", liked);
+		
+		return resp;
+		
+	}
+	
 	// 별점 주기
 	@PostMapping(value="/star")
 	public Map<String, Object> star (

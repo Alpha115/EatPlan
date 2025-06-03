@@ -77,10 +77,9 @@ public interface MainDAO {
 	Boolean checkCmtLike(LikedDTO params);
 	int insertCmtLike(LikedDTO params);
 	int updateCmtLike(LikedDTO params);
+	Boolean likeCheck(String user_id, int idx, String type);
 	
 	// 별점
 	int star(StarDTO params);
-
-
 	
 }

@@ -39,8 +39,7 @@
 		SELECT
 		IFNULL(COUNT(like_idx), 0) AS like_cnt
 		FROM liked
-		WHERE post_idx =
-		#{param1}
+		WHERE post_idx = #{param1} AND class = 'course'
 	</select>
 
 	<!-- 코스 리스트 별점 평균 -->
@@ -212,7 +211,7 @@
 			p.tmp,
 	
 			-- 좋아요 수
-			IFNULL((SELECT COUNT(*) FROM liked l WHERE l.post_idx = p.post_idx), 0) AS total_like_count,
+			IFNULL((SELECT COUNT(*) FROM liked l WHERE l.post_idx = p.post_idx AND l.class = 'course'), 0) AS total_like_count,
 			-- 댓글 수
 			IFNULL((SELECT COUNT(*) FROM comment c WHERE c.post_idx = p.post_idx), 0) AS total_comment_count,
 			-- 별점 평균
@@ -353,6 +352,22 @@
 	  UPDATE liked SET liked = #{liked}
 	  WHERE user_id = #{user_id} AND class = 'comment' AND cmt_idx = #{cmt_idx}
 	</update>
+	
+	<!-- 좋아요 체크 -->
+	<select id="checkLike" resultType="Boolean">
+	  SELECT liked FROM liked
+	  WHERE user_id = #{user_Id}
+	    AND class = #{type}
+	    AND
+	    <choose>
+	      <when test="type == 'post'">
+	        post_idx = #{idx}
+	      </when>
+	      <otherwise>
+	        cmt_idx = #{idx}
+	      </otherwise>
+	    </choose>
+	</select>
 	
 	<!-- 별점 -->
 	<insert id="star" parameterType="com.eat.dto.StarDTO">

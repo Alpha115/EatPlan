@@ -229,8 +229,18 @@ public class MainService {
 				return dao.updateCmtLike(params) > 0; // 댓글 좋아요 상태 변경
 			}
 		}
-		
 		return false;
+	}
+	
+	// 좋아요 체크
+	public boolean likeCheck(String user_id, int idx, String type) {
+		Boolean liked = dao.likeCheck(user_id, idx, type);
+		
+		if (liked == null) {
+			liked = false;
+		}
+		
+		return liked;
 	}
 
 	// 별점 주기
@@ -238,5 +248,7 @@ public class MainService {
 		int row = dao.star(params);
 		return row > 0;
 	}
+
+
 
 }
