@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eat.admin.ManageTagDAO">
+
+<insert id="addTag">
+	INSERT INTO tag (class, tag_name, cate_idx)
+		VALUES (#{param2}, #{param3}, #{param1})
+</insert>
+
+<select id="overlayTag">
+	SELECT COUNT(tag_idx) FROM tag
+	WHERE tag_name=#{param2} and class=#{param1}
+</select>
+
+<delete id="deleteTag">
+	DELETE FROM tag
+	WHERE class=#{param1} AND tag_name=#{param2}
+</delete>
+	
+
+</mapper>
