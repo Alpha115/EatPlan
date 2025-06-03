@@ -378,13 +378,13 @@
 	</update>
 	
 	<!-- 좋아요 체크 -->
-	<select id="checkLike" resultType="Boolean">
+	<select id="likeCheck" resultType="Boolean">
 	  SELECT liked FROM liked
-	  WHERE user_id = #{user_Id}
+	  WHERE user_id = #{user_id}
 	    AND class = #{type}
 	    AND
 	    <choose>
-	      <when test="type == 'post'">
+	      <when test="type == 'course'">
 	        post_idx = #{idx}
 	      </when>
 	      <otherwise>
