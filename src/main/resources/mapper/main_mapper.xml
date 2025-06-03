@@ -39,7 +39,8 @@
 		SELECT
 		IFNULL(COUNT(post_idx), 0) AS like_cnt
 		FROM liked
-		WHERE post_idx = #{param1} AND class = 'course'
+		WHERE post_idx =
+		#{param1} AND class = 'course'
 	</select>
 
 	<!-- 코스 리스트 별점 평균 -->
@@ -106,44 +107,59 @@
 	<!-- 코스 상세보기 -->
 	<!-- 코스 상세보기 조회수올리기 -->
 	<update id="setB_hit">
-		UPDATE post SET b_hit = b_hit+1 WHERE post_idx=#{post_idx}
+		UPDATE post SET b_hit = b_hit+1 WHERE
+		post_idx=#{post_idx}
 	</update>
-	
+
 	<!-- 코스 상세 - 메인 -->
 	<select id="getCourseDTO" resultType="com.eat.dto.CourseDTO">
-		SELECT 
+		SELECT
 		p.post_idx,
 		p.user_id,
+		m.nickname AS nickname,   <!-- member 테이블의 nickname -->
 		p.subject,
 		p.b_hit,
 		p.reg_date,
 		p.`public`,
 		p.blind,
 		p.tmp,
-		  <!-- 댓글 수를 계산해서 total_comment_count에 매핑 -->
-    IFNULL((
-      SELECT COUNT(*)
-        FROM comment c
-       WHERE c.post_idx = p.post_idx
-    ), 0) AS total_comment_count,
+		p.post_cmt,
 
-    	<!-- 좋아요 수를 계산해서 total_like_count에 매핑 -->
-    IFNULL((
-      SELECT COUNT(*)
-        FROM liked l
-       WHERE l.post_idx = p.post_idx
-         AND l.`class` = 'course'
-    ), 0) AS total_like_count,
+		p.post_cmt,
 
-    <!-- 별점 평균을 계산해서 star_average에 매핑 -->
-    IFNULL((
-      SELECT ROUND(AVG(s.star), 1)
-        FROM star s
-       WHERE s.post_idx = p.post_idx
-    ), 0) AS star_average
-		
-		 FROM post p WHERE
-		p.post_idx = #{post_idx}
+		<!-- 댓글 수를 계산해서 total_comment_count에 매핑 -->
+		 IFNULL(
+      (
+        SELECT COUNT(*)
+          FROM comment c
+         WHERE c.post_idx = p.post_idx
+      ), 0
+    ) AS total_comment_count,
+
+		<!-- 좋아요 수를 계산해서 total_like_count에 매핑 -->
+		IFNULL(
+      (
+        SELECT COUNT(*)
+          FROM liked l
+         WHERE l.post_idx = p.post_idx
+           AND l.`class` = 'course'
+      ), 0
+    ) AS total_like_count,
+
+		<!-- 별점 평균을 계산해서 star_average에 매핑 -->
+		 IFNULL(
+      (
+        SELECT ROUND(AVG(s.star), 1)
+          FROM star s
+         WHERE s.post_idx = p.post_idx
+      ), 0
+    ) AS star_average
+	
+	 FROM post p
+  LEFT JOIN member m
+    ON p.user_id = m.user_id
+  WHERE p.post_idx = #{post_idx}
+	
 	</select>
 
 	<!-- 코스 상세 - 타임라인 -->
@@ -151,7 +167,7 @@
 		SELECT * FROM timeline
 		WHERE post_idx = #{post_idx}
 	</select>
-	
+
 	<!-- 코스 상세 - 닉네임 -->
 	<select id="getNickname" resultType="com.eat.dto.MemberDTO">
 		SELECT nickname FROM member
@@ -165,39 +181,41 @@
 		#{post_idx} ORDER BY start
 		ASC
 	</select>
-	
-	<!-- 사진 가져오기  -->
-	<select id="getRestaurantByIdx" parameterType="int" resultType="com.eat.dto.RestaurantDTO">
-	SELECT
-	resta_idx,
-	img_idx,
-	area_tag_idx,
-	address,
-	resta_name,
-	url,
-	lat,
-	lng,
-	resta_bio
-	FROM restaurant
-	WHERE resta_idx = #{resta_idx}
+
+	<!-- 사진 가져오기 -->
+	<select id="getRestaurantByIdx" parameterType="int"
+		resultType="com.eat.dto.RestaurantDTO">
+		SELECT
+		resta_idx,
+		img_idx,
+		area_tag_idx,
+		address,
+		resta_name,
+		url,
+		lat,
+		lng,
+		resta_bio
+		FROM restaurant
+		WHERE resta_idx = #{resta_idx}
 	</select>
-	
+
 	<resultMap id="PhotoResultMap" type="com.eat.dto.PhotoDTO">
-  	<id     column="img_idx"       property="img_idx"      />
-  	<result column="`class`"       property="photo_class" />
-  	<result column="new_filename"  property="new_filename" />
+		<id column="img_idx" property="img_idx" />
+		<result column="`class`" property="photo_class" />
+		<result column="new_filename" property="new_filename" />
 	</resultMap>
-	
-	<select id="getPhotoByImgIdx" parameterType="int" resultMap="PhotoResultMap">
-  	SELECT
-   	img_idx,
-    `class` AS photoClass,
-    COALESCE(new_filename, 'no_image.jpg') AS new_filename
- 	 FROM photo
- 	 WHERE img_idx = #{imgIdx}
-</select>
-	
-	
+
+	<select id="getPhotoByImgIdx" parameterType="int"
+		resultMap="PhotoResultMap">
+		SELECT
+		img_idx,
+		`class` AS photoClass,
+		COALESCE(new_filename, 'no_image.jpg') AS new_filename
+		FROM photo
+		WHERE img_idx = #{imgIdx}
+	</select>
+
+
 	<!-- 코스 상세 - 상세 일정 (코멘트) -->
 	<select id="getCmtDTOList" resultType="com.eat.dto.DetailCmtDTO">
 		SELECT * FROM
@@ -206,12 +224,12 @@
 
 	<!-- 코스 상세 - 태그 -->
 	<select id="getCourseList" resultType="com.eat.dto.CourseTagDTO">
-	SELECT
-    idx,
-    `class`    AS isClass,
-    post_idx
-  FROM tag_course
-  WHERE post_idx = #{post_idx}
+		SELECT
+		idx,
+		`class` AS isClass,
+		post_idx
+		FROM tag_course
+		WHERE post_idx = #{post_idx}
 	</select>
 
 	<!-- 코스 상세 - 일반 태그 정보 조회 -->
@@ -224,194 +242,206 @@
 	<select id="course_list_tags_area"
 		resultType="com.eat.tags.TagAreaDTO">
 		SELECT tag_name FROM tag_area
-		WHERE area_tag_idx = #{area_tag_idx}
+		WHERE area_tag_idx =
+		#{area_tag_idx}
 	</select>
 
 
 	<!-- 코스 검색 --><!-- % : 0개 이상의 임의 문자 %abd% -> abc를 포함하는 모든 문자열 검색 가능 -->
 	<select id="search_course" resultType="com.eat.dto.CourseDTO">
 		SELECT p.post_idx,
-			m.nickname AS nickname,
-			p.subject,
-			p.b_hit AS b_hit,
-			p.reg_date,
-			p.post_cmt,
-			p.`public` AS isPublic,
-			p.blind,
-			p.tmp,
-	
-			-- 좋아요 수
-			IFNULL((SELECT COUNT(*) FROM liked l WHERE l.post_idx = p.post_idx AND l.class = 'course'), 0) AS total_like_count,
-			-- 댓글 수
-			IFNULL((SELECT COUNT(*) FROM comment c WHERE c.post_idx = p.post_idx), 0) AS total_comment_count,
-			-- 별점 평균
-			IFNULL((SELECT ROUND(AVG(s.star), 0) FROM star s WHERE s.post_idx = p.post_idx), 0) AS star_average
-	
+		m.nickname AS nickname,
+		p.subject,
+		p.b_hit AS b_hit,
+		p.reg_date,
+		p.post_cmt,
+		p.`public` AS isPublic,
+		p.blind,
+		p.tmp,
+
+		-- 좋아요 수
+		IFNULL((SELECT COUNT(*) FROM liked l WHERE l.post_idx = p.post_idx AND l.class =
+		'course'), 0) AS total_like_count,
+		-- 댓글 수
+		IFNULL((SELECT COUNT(*) FROM comment c WHERE c.post_idx = p.post_idx), 0) AS
+		total_comment_count,
+		-- 별점 평균
+		IFNULL((SELECT ROUND(AVG(s.star), 0) FROM star s WHERE s.post_idx = p.post_idx), 0)
+		AS star_average
+
 		FROM post p
 		LEFT JOIN member m ON p.user_id = m.user_id
-	
+
 		<where>
-	
+
 			<!-- 제목 또는 닉네임이 있을 경우 조건 추가 -->
-			<if test="(subject != null and subject != '') or (nickname != null and nickname != '')">
+			<if
+				test="(subject != null and subject != '') or (nickname != null and nickname != '')">
 				(
-					<if test="subject != null and subject != ''">
-						p.subject LIKE CONCAT('%', #{subject}, '%')
-					</if>
-					<if test="subject != null and subject != '' and nickname != null and nickname != ''">
-						OR
-					</if>
-					<if test="nickname != null and nickname != ''">
-						m.nickname LIKE CONCAT('%', #{nickname}, '%')
-					</if>
+				<if test="subject != null and subject != ''">
+					p.subject LIKE CONCAT('%', #{subject}, '%')
+				</if>
+				<if
+					test="subject != null and subject != '' and nickname != null and nickname != ''">
+					OR
+				</if>
+				<if test="nickname != null and nickname != ''">
+					m.nickname LIKE CONCAT('%', #{nickname}, '%')
+				</if>
 				)
 			</if>
-	
+
 			<!-- 태그 조건 -->
 			<if test="tag != null and tag != ''">
 				AND EXISTS (
-					SELECT 1
-					FROM tag_course tc
-					LEFT JOIN tag t ON tc.idx = t.tag_idx AND tc.`class` = 'tag'
-					LEFT JOIN tag_area ta ON tc.idx = ta.area_tag_idx AND tc.`class` = 'area_tag'
-					WHERE tc.post_idx = p.post_idx
-					AND (
-						t.tag_name LIKE CONCAT('%', #{tag}, '%')
-						OR ta.tag_name LIKE CONCAT('%', #{tag}, '%')
-					)
+				SELECT 1
+				FROM tag_course tc
+				LEFT JOIN tag t ON tc.idx = t.tag_idx AND tc.`class` = 'tag'
+				LEFT JOIN tag_area ta ON tc.idx = ta.area_tag_idx AND tc.`class` =
+				'area_tag'
+				WHERE tc.post_idx = p.post_idx
+				AND (
+				t.tag_name LIKE CONCAT('%', #{tag}, '%')
+				OR ta.tag_name LIKE CONCAT('%', #{tag}, '%')
+				)
 				)
 			</if>
-	
+
 			<!-- 모든 검색 조건이 null일 경우: 결과 없음 -->
-			<if test="(subject == null or subject == '') 
+			<if
+				test="(subject == null or subject == '') 
 				and (nickname == null or nickname == '') 
 				and (tag == null or tag == '')">
 				AND 1 = 0
 			</if>
-	
+
 		</where>
 	</select>
 
 	<!-- Photo 조회 -->
 	<select id="getPhotosByPostIdx"
-	resultType="com.eat.dto.PhotoDTO">
-	SELECT
-    p.img_idx,
-    p.class        AS photo_class,
-    p.new_filename
-  FROM detail_restaurant dr
-  JOIN restaurant    r ON dr.resta_idx = r.resta_idx
-  JOIN photo         p ON r.img_idx    = p.img_idx
-  WHERE dr.post_idx = #{post_idx}
-</select>
+		resultType="com.eat.dto.PhotoDTO">
+		SELECT
+		p.img_idx,
+		p.class AS photo_class,
+		p.new_filename
+		FROM detail_restaurant dr
+		JOIN restaurant r ON dr.resta_idx = r.resta_idx
+		JOIN photo p ON r.img_idx = p.img_idx
+		WHERE dr.post_idx = #{post_idx}
+	</select>
 
 	<!-- 태그 검색 -->
 	<select id="getTags" resultType="com.eat.dto.CourseTagDTO">
-		SELECT idx, class AS isClass, post_idx FROM tag_course WHERE post_idx =
+		SELECT idx, class AS isClass,
+		post_idx FROM tag_course WHERE post_idx =
 		#{post_idx}
 	</select>
 
 	<select id="searchTags" resultType="com.eat.tags.TagDTO">
-		SELECT * FROM tag WHERE tag_idx = #{idx}
+		SELECT * FROM tag WHERE
+		tag_idx = #{idx}
 	</select>
 
 	<select id="searchTagsArea" resultType="com.eat.tags.TagAreaDTO">
-		SELECT * FROM tag_area WHERE area_tag_idx = #{idx}
+		SELECT * FROM tag_area
+		WHERE area_tag_idx = #{idx}
 	</select>
 
 	<!-- 한 장짜리 썸네일 조회 -->
 	<select id="courseListImg" resultType="String">
-   SELECT COALESCE(
-    (
-      SELECT p.new_filename
-        FROM detail_restaurant dr
-        JOIN restaurant    r ON dr.resta_idx = r.resta_idx
-        JOIN photo         p ON r.img_idx    = p.img_idx
-                           AND p.class      = 'restaurant'
-       WHERE dr.post_idx = #{post_idx}
-       ORDER BY dr.detail_idx, r.resta_idx
-       LIMIT 1
-    ),
-    'no_image.jpg'
-  ) AS thumbnail
-  </select>
-  
-  <!-- 코스 전체 리스트 불러오기 (전체) -->
-  <select id="course_list_all">
-  	SELECT * FROM post
-  </select>
-
-  <select id="fileInfo">
-		SELECT new_filename 
-			FROM photo WHERE new_filename=#{param1}
+		SELECT COALESCE(
+		(
+		SELECT p.new_filename
+		FROM detail_restaurant dr
+		JOIN restaurant r ON dr.resta_idx = r.resta_idx
+		JOIN photo p ON r.img_idx = p.img_idx
+		AND p.class = 'restaurant'
+		WHERE dr.post_idx = #{post_idx}
+		ORDER BY dr.detail_idx, r.resta_idx
+		LIMIT 1
+		),
+		'no_image.jpg'
+		) AS thumbnail
 	</select>
-	
+
+	<!-- 코스 전체 리스트 불러오기 (전체) -->
+	<select id="course_list_all">
+		SELECT * FROM post
+	</select>
+
+	<select id="fileInfo">
+		SELECT new_filename
+		FROM photo WHERE new_filename=#{param1}
+	</select>
+
 	<!-- 좋아요 -->
 	<!-- 게시글 좋아요 -->
 	<select id="checkPostLike" resultType="Boolean">
-	  SELECT liked FROM liked
-	  WHERE user_id = #{user_id}
-	    AND class = 'course'
-	    AND post_idx = #{post_idx}
+		SELECT liked FROM liked
+		WHERE user_id = #{user_id}
+		AND class = 'course'
+		AND post_idx = #{post_idx}
 	</select>
-	
+
 	<insert id="insertPostLike">
-	  INSERT INTO liked (user_id, class, post_idx, liked)
-	  VALUES (#{user_id}, 'course', #{post_idx}, #{liked})
+		INSERT INTO liked (user_id, class, post_idx, liked)
+		VALUES (#{user_id}, 'course', #{post_idx}, #{liked})
 	</insert>
-	
+
 	<update id="updatePostLike">
-	  UPDATE liked SET liked = #{liked}
-	  WHERE user_id = #{user_id} AND class = 'course' AND post_idx = #{post_idx}
+		UPDATE liked SET liked = #{liked}
+		WHERE user_id = #{user_id} AND class = 'course' AND post_idx = #{post_idx}
 	</update>
-	
+
 	<!-- 댓글 좋아요 -->
 	<select id="checkCmtLike" resultType="Boolean">
-	  SELECT liked FROM liked
-	  WHERE user_id = #{user_id}
-	    AND class = 'comment'
-	    AND cmt_idx = #{cmt_idx}
+		SELECT liked FROM liked
+		WHERE user_id = #{user_id}
+		AND class = 'comment'
+		AND cmt_idx = #{cmt_idx}
 	</select>
-	
+
 	<insert id="insertCmtLike">
-	  INSERT INTO liked (user_id, class, cmt_idx, liked, post_idx)
-	  VALUES (#{user_id}, 'comment', #{cmt_idx}, #{liked}, #{post_idx})
+		INSERT INTO liked (user_id, class, cmt_idx, liked, post_idx)
+		VALUES (#{user_id}, 'comment', #{cmt_idx}, #{liked}, #{post_idx})
 	</insert>
-	
+
 	<update id="updateCmtLike">
-	  UPDATE liked SET liked = #{liked}
-	  WHERE user_id = #{user_id} AND class = 'comment' AND cmt_idx = #{cmt_idx}
+		UPDATE liked SET liked = #{liked}
+		WHERE user_id = #{user_id} AND class = 'comment' AND cmt_idx = #{cmt_idx}
 	</update>
-	
+
 	<!-- 좋아요 체크 -->
 	<select id="checkLike" resultType="Boolean">
-	  SELECT liked FROM liked
-	  WHERE user_id = #{user_Id}
-	    AND class = #{type}
-	    AND
-	    <choose>
-	      <when test="type == 'post'">
-	        post_idx = #{idx}
-	      </when>
-	      <otherwise>
-	        cmt_idx = #{idx}
-	      </otherwise>
-	    </choose>
+		SELECT liked FROM liked
+		WHERE user_id = #{user_Id}
+		AND class = #{type}
+		AND
+		<choose>
+			<when test="type == 'post'">
+				post_idx = #{idx}
+			</when>
+			<otherwise>
+				cmt_idx = #{idx}
+			</otherwise>
+		</choose>
 	</select>
-	
+
 	<!-- 별점 -->
 	<insert id="star" parameterType="com.eat.dto.StarDTO">
-	    INSERT INTO star (user_id, post_idx, star)
-	    VALUES (#{user_id}, #{post_idx}, #{star})
-	    ON DUPLICATE KEY UPDATE
-        star = #{star}
+		INSERT INTO star (user_id, post_idx, star)
+		VALUES (#{user_id}, #{post_idx}, #{star})
+		ON DUPLICATE KEY UPDATE
+		star = #{star}
 	</insert>
-	
-	
-	<!--  filename return -->
+
+
+	<!-- filename return -->
 	<select id="findFileName" resultType="string">
-		SELECT new_filename FROM photo WHERE img_idx=#{param1}
+		SELECT new_filename FROM
+		photo WHERE img_idx=#{param1}
 	</select>
-	
-	
+
+
 </mapper>
