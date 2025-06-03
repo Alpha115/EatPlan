@@ -403,7 +403,7 @@
 	
 	
 	<!--  filename return -->
-	<select id="fileFileName" resultType="string">
+	<select id="findFileName" resultType="string">
 		SELECT new_filename FROM photo WHERE img_idx=#{param1}
 	</select>
 	
