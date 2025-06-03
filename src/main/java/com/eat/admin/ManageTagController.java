@@ -21,21 +21,11 @@ public class ManageTagController {
 	// ------------일반 태그 추가 ---------------//
 	@PostMapping("/addTag")
 	public Map<String, Object> addTag(@RequestBody DefaultTag tag){
-		resp=new HashMap<String, Object>();
-		boolean success=service.addTag(tag);
-		resp.put("success", success);
+//		resp=new HashMap<String, Object>();
+		resp=service.addTag(tag);
 		return resp;
 	}
-	
-	// ----------일반태그중복확인------------//
-	@PostMapping("/overlayTag")
-	public Map<String, Object> overlayTag(@RequestBody Map<String, String> param){
-		resp=new HashMap<String, Object>();
-		boolean usable=service.overlayTag(param.get("isClass"), param.get("tag_name"));
-		resp.put("usable", usable);
-		return resp;
-	}
-	
+		
 	// -----------일반태그삭제, idx or tag_name으로 받기---------------//
 	@GetMapping("/delTag/{isClass}/{tag_idx}")
 	public Map<String, Object> deleteTag(@PathVariable String isClass, @PathVariable String tag_name){
