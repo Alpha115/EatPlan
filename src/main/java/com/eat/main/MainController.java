@@ -111,6 +111,7 @@ public class MainController {
 			@RequestParam String isClass) {
 		resp = new HashMap<String, Object>();
 		
+		log.info("받아온 좋아요상태 파람 : "+user_id + post_idx + cmt_idx + isClass);
 		boolean liked = false;
 		
 		if (isClass.equals("course") && post_idx != null) {

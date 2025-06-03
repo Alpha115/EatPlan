@@ -125,7 +125,7 @@
 		p.tmp,
 		p.post_cmt,
 
-		p.post_cmt,
+		
 
 		<!-- 댓글 수를 계산해서 total_comment_count에 매핑 -->
 		 IFNULL(
