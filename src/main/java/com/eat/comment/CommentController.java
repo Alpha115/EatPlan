@@ -48,12 +48,14 @@ public class CommentController {
 		resp = new HashMap<String, Object>();
 
 		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+		
 		if (loginId.equals(params.get("user_id"))) {
 			boolean success = service.comment_insert(params);
 			resp.put("success", success);
 		} else {
 			resp.put("success", false);
 		}
+		
 		return resp;
 	}
 
@@ -83,10 +85,12 @@ public class CommentController {
 
 		// user_id 어디감?
 		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+		
 		if (!loginId.equals("")) {
 			boolean success = service.comment_del(comment_idx);
 			resp.put("success", success);
 		}
+
 
 		return resp;
 	}
