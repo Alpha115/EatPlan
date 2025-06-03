@@ -208,6 +208,15 @@ public class MainService {
 		// resource, header,status
 		return new ResponseEntity<Resource>(res, headers, HttpStatus.OK);
 	}
+	
+	
+	// ---------------- 사진요청오버로드--------------------//
+	public ResponseEntity<Resource> getFile(int img_idx){
+		String fileName=dao.findFileName(img_idx);
+		return getFile(fileName, "photo");
+	}
+	
+	
 
 	// 좋아요 누르기
 	public boolean like(LikedDTO params) {

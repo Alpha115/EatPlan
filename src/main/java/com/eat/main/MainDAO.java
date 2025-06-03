@@ -72,6 +72,7 @@ public interface MainDAO {
 
 	// 사진
 	String fileInfo(String new_filename);
+	String findFileName(int img_idx);
 	
 	// 좋아요
 	Boolean checkPostLike(LikedDTO params);
@@ -84,6 +85,8 @@ public interface MainDAO {
 	
 	// 별점
 	int star(StarDTO params);
+	
+	//
 	
 	
 	

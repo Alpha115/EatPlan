@@ -400,5 +400,12 @@
 	    ON DUPLICATE KEY UPDATE
         star = #{star}
 	</insert>
-
+	
+	
+	<!--  filename return -->
+	<select id="fileFileName" resultType="string">
+		SELECT new_filename FROM photo WHERE img_idx=#{param1}
+	</select>
+	
+	
 </mapper>

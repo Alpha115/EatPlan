@@ -84,6 +84,12 @@ public class MainController {
 		return service.getFile(new_filename,"photo");
 	}
 	
+	// ------------------ 사진요청(idx) -------------------- //
+	@GetMapping("/image/{img_idx}")
+	public ResponseEntity<Resource> getImageByIdx(@PathVariable int img_idx){
+		return service.getFile(img_idx);
+	}
+	
 	// 좋아요 누르기
 	@PostMapping(value="/like")
 	public Map<String, Object> like (
