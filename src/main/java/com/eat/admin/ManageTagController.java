@@ -27,10 +27,10 @@ public class ManageTagController {
 	}
 		
 	// -----------일반태그삭제, idx or tag_name으로 받기---------------//
-	@GetMapping("/delTag/{isClass}/{tag_idx}")
-	public Map<String, Object> deleteTag(@PathVariable String isClass, @PathVariable String tag_name){
+	@PostMapping("/delTag")
+	public Map<String, Object> deleteTag(@RequestBody Map<String, String> params){
 		resp=new HashMap<String, Object>();
-		boolean success=service.deleteTag(isClass, tag_name);
+		boolean success=service.deleteTag(params.get("isClass"), params.get("tag_name"));
 		resp.put("success", success);
 		return resp;
 	}
