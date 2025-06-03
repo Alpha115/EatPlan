@@ -53,4 +53,8 @@ public class CommentService {
 		return resp;
 	}
 
+	public int comment_total_count(int post_idx) {
+		return dao.comment_total_count(post_idx);
+	}
+
 }

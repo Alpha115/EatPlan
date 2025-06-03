@@ -25,6 +25,8 @@ public interface CommentDAO {
 			@Param("post_idx") int post_idx, 
 			@Param("offset") int offset, 
 			@Param("comment_count") int comment_count);
+
+	int comment_total_count(int post_idx);
 	
 
 }

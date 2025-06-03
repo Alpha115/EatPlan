@@ -36,7 +36,10 @@ public class CommentController {
 	public Map<String, Object> comment_list(@RequestParam int post_idx, @RequestParam(defaultValue = "1") int page) {
 		resp = new HashMap<String, Object>();
 
+		int totalCount = service.comment_total_count(post_idx);
+		
 		resp.put("list", service.comment_list(post_idx, page));
+		resp.put("totalCount", totalCount);
 
 		return resp;
 	}

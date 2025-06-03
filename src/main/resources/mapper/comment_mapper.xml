@@ -19,6 +19,12 @@
   LIMIT #{comment_count} OFFSET #{offset}
 	</select>
 	
+	<!-- 댓글 총 갯수 -->
+	<select id="comment_total_count" resultType="int">
+	    SELECT COUNT(*) FROM comment
+	    WHERE post_idx = #{post_idx}
+	</select>
+	
 	<!-- 댓글 작성 -->
 	<insert id="comment_insert" parameterType="map">
 	INSERT INTO
