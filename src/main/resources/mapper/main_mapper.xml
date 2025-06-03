@@ -37,7 +37,7 @@
 	<!-- 코스 리스트 좋아요 수 -->
 	<select id="course_list_like_cnt" resultType="int">
 		SELECT
-		IFNULL(COUNT(like_idx), 0) AS like_cnt
+		IFNULL(COUNT(post_idx), 0) AS like_cnt
 		FROM liked
 		WHERE post_idx = #{param1} AND class = 'course'
 	</select>
