@@ -52,11 +52,12 @@ public class MainController {
 
 	// 코스 상세보기
 	@GetMapping(value = "/courseDetail")
-	public Map<String, Object> courseDetail(@RequestParam int post_idx) {
+	public Map<String, Object> courseDetail(@RequestParam int post_idx,
+			@RequestParam(defaultValue = "tag") String isClass) {
 
 		resp = new HashMap<String, Object>();
 
-		RegistRequestDTO dto = service.courseDetail(post_idx);
+		RegistRequestDTO dto = service.courseDetail(post_idx, isClass);
 		resp.put("detail", dto); // detail로 수정
 
 		return resp;
