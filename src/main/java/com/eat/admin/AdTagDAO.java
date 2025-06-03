@@ -34,5 +34,7 @@ public interface AdTagDAO {
 	int adtag_del_area(int area_tag_idx); // 지역 태그 삭제
 	int adtag_del(int tag_idx); // 태그 삭제
 
+	int adtag_ovaerlay(String tag_name);	
+
 
 }

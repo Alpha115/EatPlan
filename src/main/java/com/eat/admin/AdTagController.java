@@ -88,6 +88,15 @@ public class AdTagController {
 
 		return resp;
 	}
+	
+//	// 태그중복확인
+//	@GetMapping("/adtag_overlay/{tag_name}")
+//	public Map<String, Object> adtag_overlay(@PathVariable String tag_name){
+//		resp=new HashMap<String, Object>();
+//		boolean usable=service.adtag_overlay(tag_name);
+//		resp.put("usable", usable);
+//		return resp;
+//	}
 
 	// 태그 삭제
 	@DeleteMapping("/adtag_del")

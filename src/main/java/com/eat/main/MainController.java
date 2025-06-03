@@ -85,7 +85,7 @@ public class MainController {
 	}
 	
 	// ------------------ 사진요청(idx) -------------------- //
-	@GetMapping("/image/{img_idx}")
+	@GetMapping("/imageIdx/{img_idx}")
 	public ResponseEntity<Resource> getImageByIdx(@PathVariable int img_idx){
 		return service.getFile(img_idx);
 	}
