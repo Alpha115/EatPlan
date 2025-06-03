@@ -50,11 +50,8 @@ public class AdTagController {
 	// 태그 카테고리 추가
 	@PostMapping("/adtag_cate")
 	public Map<String, Object> adtag_cate(@RequestBody TagCateDTO dto) {
-
 		resp = new HashMap<String, Object>();
-
 		boolean success = service.adtag_cate(dto);
-
 		resp.put("success", success);
 
 		return resp;
@@ -63,13 +60,9 @@ public class AdTagController {
 	// 태그 카테고리 삭제
 	@DeleteMapping("/adtag_cate_del")
 	public Map<String, Object> adtag_cate_del(@RequestBody TagCateDTO dto) {
-
 		resp = new HashMap<String, Object>();
-
 		boolean success = service.adtag_cate_del(dto);
-
 		resp.put("success", success);
-
 		return resp;
 	}
 
