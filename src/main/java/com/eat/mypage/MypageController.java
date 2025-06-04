@@ -143,5 +143,18 @@ public class MypageController {
 		return resp;
 	}
 	
+	// 마이페이지 비밀번호 변경 (기존 비밀번호, 새 비밀번호)
+	@PutMapping(value="/mypage_updatePassword")
+	public Map<String, Object> mypage_updatePassword(@RequestBody Map<String, String> params) {
+		String user_id = params.get("user_id");
+	    String existing_pass = params.get("existing_pass");
+	    String new_pass = params.get("new_pass");
+	    
+	    Map<String, Object> resp = new HashMap<String, Object>();
+	    boolean success = service.mypage_updatePassword(user_id, existing_pass, new_pass);
+	    resp.put("success", success);
+		return resp;
+	}
+	
 }
 	

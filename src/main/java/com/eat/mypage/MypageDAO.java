@@ -63,4 +63,7 @@ public interface MypageDAO {
 	// 이메일 중복 체크
 	int overlayEmail(String email);
 
+	// 마이페이지 비밀번호 변경 (기존 비밀번호, 새 비밀번호)
+	int mypage_updatePassword(String user_id, String existing_pass, String new_pass);
+
 }

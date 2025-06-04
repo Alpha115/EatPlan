@@ -134,5 +134,26 @@
 		WHERE email = #{param1}
 	</select>
 	
+	<!-- 마이페이지 비밀번호 변경 (기존 비밀번호, 새 비밀번호) -->
+	<update id="mypage_updatePassword">
+		UPDATE member
+    		SET pass = #{new_pass}
+    		WHERE user_id = #{user_id}
+      	AND pass = #{existing_pass}
+	</update>
+	
 	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

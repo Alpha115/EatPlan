@@ -244,4 +244,10 @@ public class MypageService {
 		return cnt == 0 ? true : false;
 	}
 
+	// 마이페이지 비밀번호 변경 (기존 비밀번호, 새 비밀번호)
+	public boolean mypage_updatePassword(String user_id, String existing_pass, String new_pass) {
+		int row = dao.mypage_updatePassword(user_id, existing_pass, new_pass);
+		return row > 0;
+	}
+
 }
