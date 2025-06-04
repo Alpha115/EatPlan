@@ -36,6 +36,15 @@ public class AdTagController {
 		resp.put("restaList", restaList);
 		return resp;
 	}
+	
+	//--------------해당식당의 태그들을 가져오는 함수입니다. -------------//
+	@GetMapping("/listRestaTags/{resta_name}")
+	public Map<String, Object> listRestaTags(@PathVariable String resta_name){
+		resp=new HashMap<String, Object>();
+		resp.put("tags", service.listRestaTags(resta_name));
+		return resp;
+	}
+	
 
 	// (관리자 페이지) 식당에 식당 태그/지역 태그를 추가합니다.
 	// 지역 태그는 FK로, insert가 아닌 update가 이루어져야 합니다.

@@ -34,7 +34,13 @@ public interface AdTagDAO {
 	int adtag_del_area(int area_tag_idx); // 지역 태그 삭제
 	int adtag_del(int tag_idx); // 태그 삭제
 
-	int adtag_ovaerlay(String tag_name);	
+	int adtag_ovaerlay(String tag_name);
+
+	// 식당의 일반 태그를 불러오는 함수
+	ArrayList<String> getDefaultTags(String resta_name);
+
+	// 식당의 지역 태그를 불러오는 함수(지역태그의 정보 전부를 불러와야 하면 String이 아니라 DTO로 반환
+	String getAreaTag(String resta_name);	
 	
 	
 
