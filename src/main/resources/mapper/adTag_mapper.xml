@@ -4,7 +4,18 @@
 <mapper namespace="com.eat.admin.AdTagDAO">
 
 <select id="restaList" resultType="com.eat.dto.RestaurantDTO">
-	SELECT * FROM restaurant ORDER BY resta_idx DESC
+	SELECT * FROM restaurant
+	<choose>
+		<when test="param3=='resta_name'">
+			ORDER BY resta_name
+		</when>
+		<when test="param3=='address'">
+			ORDER BY address
+		</when>
+		<otherwise>
+			ORDER BY resta_idx
+		</otherwise>
+	</choose>
 		LIMIT #{param2} OFFSET #{param1}
 </select>
 

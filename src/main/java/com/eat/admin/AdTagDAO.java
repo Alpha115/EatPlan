@@ -13,7 +13,7 @@ import com.eat.tags.TagDTO;
 @Mapper
 public interface AdTagDAO {
 
-	ArrayList<RestaurantDTO> restaList(int offset, int limit);
+	ArrayList<RestaurantDTO> restaList(int offset, int limit, String sort);
 
 	int pages(int limit);
 

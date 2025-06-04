@@ -28,11 +28,11 @@ public class AdTagController {
 	Map<String, Object> resp = null;
 
 	// (관리자 페이지)식당의 리스트를 불러와 페이징처리하는 함수입니다.
-	@GetMapping("/adtag_restaList/{page}")
-	public Map<String, Object> restaList(@PathVariable String page) {
+	@GetMapping("/adtag_restaList/{page}/{sort}")
+	public Map<String, Object> restaList(@PathVariable String page, @PathVariable String sort) {
 		resp = new HashMap<String, Object>();
 
-		Map<String, Object> restaList = service.restaList(page);
+		Map<String, Object> restaList = service.restaList(page, sort);
 		resp.put("restaList", restaList);
 		return resp;
 	}
