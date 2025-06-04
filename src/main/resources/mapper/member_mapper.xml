@@ -30,7 +30,7 @@
 	<!-- 회원가입/태그입력 -->
 	<!-- foreach문 쓰면 될듯 -->
 	<insert id="joinTag" parameterType="com.eat.dto.TagPreferDTO">
-		INSERT INTO tag_prefer (idx, class, user_id) VALUES
+		INSERT INTO tag_prefer (idx, isClass, user_id) VALUES
 		<foreach collection="tags" item="tag" separator=",">
 			 (#{tag.idx}, #{tag.isClass}, #{tag.user_id})
 		</foreach>
