@@ -106,24 +106,37 @@ public class MainController {
 	@GetMapping(value="/like_check")
 	public Map<String, Object> likeCheck (
 			@RequestParam String user_id,
-		    @RequestParam(required = false) Integer post_idx,
-		    @RequestParam(required = false) Integer cmt_idx,
-			@RequestParam String isClass) {
+		    @RequestParam Integer post_idx) {
 		resp = new HashMap<String, Object>();
 		
-		log.info("받아온 좋아요상태 파람 : "+user_id + post_idx + cmt_idx + isClass);
+		log.info("받아온 좋아요상태 파람 : "+user_id + post_idx);
 		boolean liked = false;
 		
-		if (isClass.equals("course") && post_idx != null) {
-			liked = service.likeCheck(user_id, post_idx, "course");
-		} else if (isClass.equals("comment") && cmt_idx != null) {
-			liked = service.likeCheck(user_id, cmt_idx, "comment");
-		}
-		
+		liked = service.likeCheck(user_id, post_idx);
+
 		resp.put("liked", liked);
 		
 		return resp;
 		
+	}
+	
+	// 좋아요 상태 확인 댓글
+	@PostMapping (value="/like_check_cmt")
+	public Map<String, Object> likeCheckCmt (
+			@RequestBody Map<String, Object> body) {
+		
+		resp = new HashMap<String, Object>();
+		log.info("받아온 좋아요 상태 댓글 파람 : "+body);
+	    String user_id = (String) body.get("user_id");
+	    List<Integer> cmtIdxList = (List<Integer>) body.get("cmt_idx_list");
+		
+	    Map<String, Object> likeCheckCmt = service.likeCheckCmt(user_id, cmtIdxList);
+	    
+	    resp.put("likeCheckCmt", likeCheckCmt);
+	    
+	    log.info("likeCheckCmt"+likeCheckCmt);
+	    
+		return resp;
 	}
 	
 	// 별점 주기

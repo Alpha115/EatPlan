@@ -2,7 +2,9 @@ package com.eat.main;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -81,9 +83,12 @@ public interface MainDAO {
 	int updateCmtLike(LikedDTO params);
 	
 	// 좋아요 체크
-	Boolean likeCheck(String user_id, int idx, String type);
+	Boolean likeCheck(String user_id, int post_idx);
 	
 	// 별점
 	int star(StarDTO params);
+	
+	// 좋아요 체크 댓글
+	Map<String, Object> likeCheckCmt(@Param("user_id") String user_id, @Param("list") List<Integer> cmtIdxList);
 	
 }

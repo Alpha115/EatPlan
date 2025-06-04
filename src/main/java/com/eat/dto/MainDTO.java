@@ -21,7 +21,14 @@ public class MainDTO {
 		//comment
 		private int comment_idx;
 		private String content;
+		private int cmt_like_cnt;
 		
+	public int getCmt_like_cnt() {
+		return cmt_like_cnt;
+	}
+	public void setCmt_like_cnt(int cmt_like_cnt) {
+		this.cmt_like_cnt = cmt_like_cnt;
+	}
 	public String getNickname() {
 		return nickname;
 	}

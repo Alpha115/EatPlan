@@ -10,7 +10,13 @@
     c.content,
     c.user_id,
     m.nickname,
-    c.reg_date
+    c.reg_date,
+    IFNULL(
+    (
+      SELECT COUNT(*)
+      FROM liked l
+      WHERE l.cmt_idx = c.comment_idx AND liked = true
+    ) , 0) AS cmt_like_cnt
   FROM comment c
   JOIN member m
     ON c.user_id = m.user_id

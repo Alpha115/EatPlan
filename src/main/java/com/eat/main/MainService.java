@@ -241,8 +241,8 @@ public class MainService {
 	}
 	
 	// 좋아요 체크
-	public boolean likeCheck(String user_id, int idx, String type) {
-		Boolean liked = dao.likeCheck(user_id, idx, type);
+	public boolean likeCheck(String user_id, int post_idx) {
+		Boolean liked = dao.likeCheck(user_id, post_idx);
 		
 		if (liked == null) {
 			liked = false;
@@ -256,6 +256,14 @@ public class MainService {
 		int row = dao.star(params);
 		return row > 0;
 	}
+
+	// 좋아요 체크 댓글
+	public Map<String, Object> likeCheckCmt(String user_id, List<Integer> cmtIdxList) {
+		return dao.likeCheckCmt(user_id, cmtIdxList);
+	}
+
+
+
 
 
 

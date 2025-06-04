@@ -417,16 +417,20 @@
 	<select id="likeCheck" resultType="Boolean">
 		SELECT liked FROM liked
 		WHERE user_id = #{user_id}
-		AND class = #{type}
-		AND
-		<choose>
-			<when test="type == 'course'">
-				post_idx = #{idx}
-			</when>
-			<otherwise>
-				cmt_idx = #{idx}
-			</otherwise>
-		</choose>
+		AND class = 'course'
+		AND post_idx = #{post_idx}
+	</select>
+	
+	<!-- 좋아요 체크 댓글 -->
+	<select id="likeCheckCmt" resultType="map">
+	  SELECT cmt_idx, liked
+	  FROM liked
+	  WHERE user_id = #{user_id}
+	    AND class = 'comment'
+	    AND cmt_idx IN
+	    <foreach item="idx" collection="list" open="(" separator="," close=")">
+	      #{idx}
+	    </foreach>
 	</select>
 
 	<!-- 별점 -->
