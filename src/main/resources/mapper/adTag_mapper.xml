@@ -4,7 +4,7 @@
 <mapper namespace="com.eat.admin.AdTagDAO">
 
 <select id="restaList" resultType="com.eat.dto.RestaurantDTO">
-	SELECT * FROM restaurant ORDER BY #{param3} DESC
+	SELECT * FROM restaurant ORDER BY #{param3} 
 		LIMIT #{param2} OFFSET #{param1}
 </select>
 
