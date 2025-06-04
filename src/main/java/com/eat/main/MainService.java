@@ -42,13 +42,13 @@ public class MainService {
 	private int limit = 10, page = 0; // 1페이지당 뜨는 코스 게시물의 갯수입니다.
 
 	// 코스 리스트 불러오기
-	public Map<String, Object> course_list(int page) {
+	public Map<String, Object> course_list(int page, String sort) {
 
 		Map<String, Object> resp = new HashMap<String, Object>();
 		this.page = page;
 		resp.put("page", this.page);
 		int offset = (this.page - 1) * limit;
-		List<CourseDTO> list = dao.course_list(offset, limit);
+		List<CourseDTO> list = dao.course_list(offset, limit, sort);
 
 		List<Map<String, Object>> result_list = new ArrayList<Map<String, Object>>();
 

@@ -24,7 +24,7 @@ import com.eat.tags.TagDTO;
 public interface MainDAO {
 
 	// 코스 리스트 불러오기
-	List<CourseDTO> course_list(int offset, int limit);  // 코스 리스트 몸통
+	List<CourseDTO> course_list(int offset, int limit, String sort);  // 코스 리스트 몸통
 	String course_list_nick(String user_id); // 코스 리스트 닉네임
 	int course_list_cmt_cnt(int post_idx); // 코스 리스트 댓글 수
 	int course_list_like_cnt(int post_idx); // 코스 리스트 좋아요 수

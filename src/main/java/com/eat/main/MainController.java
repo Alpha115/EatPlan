@@ -33,10 +33,10 @@ public class MainController {
 	MainService service;
 
 	// 코스 리스트 불러오기
-	@GetMapping(value = "/course_list/{page}")
-	public Map<String, Object> course_list(@PathVariable int page) {
+	@GetMapping(value = "/course_list/{page}/{sort}")
+	public Map<String, Object> course_list(@PathVariable int page, @PathVariable String sort) {
 		resp = new HashMap<String, Object>();
-		resp = service.course_list(page);
+		resp = service.course_list(page, sort);
 
 		return resp;
 	}
