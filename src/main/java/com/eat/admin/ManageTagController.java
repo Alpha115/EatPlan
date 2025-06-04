@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +24,7 @@ public class ManageTagController {
 		return resp;
 	}
 		
-	// -----------일반태그삭제, idx or tag_name으로 받기---------------//
+	// -----------일반태그삭제, tag_name으로 받기---------------//
 	@PostMapping("/delTag")
 	public Map<String, Object> deleteTag(@RequestBody Map<String, String> params){
 		resp=new HashMap<String, Object>();
@@ -35,8 +33,9 @@ public class ManageTagController {
 		return resp;
 	}
 	
-	
 	// -------------지역 태그 추가 ------------------//
+	
+	
 	
 	
 	
@@ -45,7 +44,7 @@ public class ManageTagController {
 
 
 
-// ------------ 일반 태그 ------------- //
+// ------------ 일반 태그 클래스------------- //
 class DefaultTag{
 	private int cate_idx;
 	private String isClass;
