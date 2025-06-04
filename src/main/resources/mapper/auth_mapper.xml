@@ -3,8 +3,14 @@
 
 <mapper namespace="com.eat.admin.AdminMapper">
 
-<select id="authorization">
-	SELECT COUNT(user_id) FROM member WHERE admin=true AND user_id=#{param1}
-</select>
+	<select id="authorization">
+		SELECT COUNT(user_id) FROM member WHERE admin=true AND user_id=#{param1}
+	</select>
+
+	<update id="changePw">
+		UPDATE member
+		SET pass=#{param1}
+		WHERE user_id = #{param2}
+	</update>
 
 </mapper>
