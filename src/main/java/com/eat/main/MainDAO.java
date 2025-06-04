@@ -89,6 +89,6 @@ public interface MainDAO {
 	int star(StarDTO params);
 	
 	// 좋아요 체크 댓글
-	Map<String, Object> likeCheckCmt(@Param("user_id") String user_id, @Param("list") List<Integer> cmtIdxList);
+	 List<Map<String, Object>> likeCheckCmt(@Param("user_id") String user_id, @Param("list") List<Integer> cmtIdxList);
 	
 }

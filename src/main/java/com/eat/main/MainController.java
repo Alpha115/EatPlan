@@ -127,10 +127,11 @@ public class MainController {
 		
 		resp = new HashMap<String, Object>();
 		log.info("받아온 좋아요 상태 댓글 파람 : "+body);
+		
 	    String user_id = (String) body.get("user_id");
 	    List<Integer> cmtIdxList = (List<Integer>) body.get("cmt_idx_list");
 		
-	    Map<String, Object> likeCheckCmt = service.likeCheckCmt(user_id, cmtIdxList);
+	    List<Map<String, Object>> likeCheckCmt = service.likeCheckCmt(user_id, cmtIdxList);
 	    
 	    resp.put("likeCheckCmt", likeCheckCmt);
 	    

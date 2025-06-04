@@ -258,7 +258,7 @@ public class MainService {
 	}
 
 	// 좋아요 체크 댓글
-	public Map<String, Object> likeCheckCmt(String user_id, List<Integer> cmtIdxList) {
+	public  List<Map<String, Object>> likeCheckCmt(String user_id, List<Integer> cmtIdxList) {
 		return dao.likeCheckCmt(user_id, cmtIdxList);
 	}
 
