@@ -47,7 +47,6 @@ public class MypageService {
 
 	// 회원정보 수정
 	public boolean member_update(MypageDTO dto) {
-
 		return dao.member_update(dto);
 	}
 	

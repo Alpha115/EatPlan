@@ -37,7 +37,6 @@ public class MainController {
 	public Map<String, Object> course_list(@PathVariable int page, @PathVariable String sort) {
 		resp = new HashMap<String, Object>();
 		resp = service.course_list(page, sort);
-
 		return resp;
 	}
 	
