@@ -67,7 +67,7 @@ public class CommentController {
 	public Map<String, Object> comment_update(@RequestBody Map<String, String> params,
 			@RequestHeader Map<String, String> header) {
 		resp = new HashMap<String, Object>();
-
+		
 		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
 		if (loginId.equals(params.get("user_id"))) {
 			boolean success = service.comment_update(params);
@@ -75,6 +75,7 @@ public class CommentController {
 		} else {
 			resp.put("success", false);
 		}
+
 		return resp;
 	}
 

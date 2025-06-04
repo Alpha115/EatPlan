@@ -1,5 +1,6 @@
 package com.eat.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,6 +108,15 @@ public class AdTagService {
 		}
 
 		return row > 0;
+	}
+
+	
+	// --------------------해당 식당의 태그정보를 가져오는 함수입니다. ----------//
+	public ArrayList<String> listRestaTags(String resta_name) {
+		ArrayList<String> tags=dao.getDefaultTags(resta_name);
+		String areaTag=dao.getAreaTag(resta_name);
+		tags.add(areaTag);
+		return tags;
 	}
 }
 
