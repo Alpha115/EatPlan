@@ -31,7 +31,6 @@ public class AdTagController {
 	@GetMapping("/adtag_restaList/{page}/{sort}")
 	public Map<String, Object> restaList(@PathVariable String page, @PathVariable String sort) {
 		resp = new HashMap<String, Object>();
-
 		Map<String, Object> restaList = service.restaList(page, sort);
 		resp.put("restaList", restaList);
 		return resp;
@@ -62,7 +61,6 @@ public class AdTagController {
 		resp = new HashMap<String, Object>();
 		boolean success = service.adtag_cate(dto);
 		resp.put("success", success);
-
 		return resp;
 	}
 
@@ -103,17 +101,16 @@ public class AdTagController {
 	// 태그 삭제
 	@DeleteMapping("/adtag_del")
 	public Map<String, Object> adtag_del(@RequestBody Map<String, Integer> params) {
-
 		resp = new HashMap<String, Object>();
-
 		boolean success = service.adtag_del(params);
-
 		resp.put("success", success);
-
 		return resp;
 	}
 
 }
+
+
+
 
 class Tags {
 

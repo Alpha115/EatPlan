@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,11 +21,18 @@ public class ManageTagController {
 	// ------------일반 태그 추가 ---------------//
 	@PostMapping("/addTag")
 	public Map<String, Object> addTag(@RequestBody DefaultTag tag){
-//		resp=new HashMap<String, Object>();
 		resp=service.addTag(tag);
 		return resp;
 	}
-		
+	
+	// -------------지역 태그 추가 ------------------//
+	@PostMapping("/addAreaTag")
+	public Map<String, Object> addAreaTag(@RequestBody Map<String, String> tag){
+		// keys : city, dist, tag_name
+		resp=service.addAreaTag(tag);
+		return resp;
+	}
+	
 	// -----------일반태그삭제, tag_name으로 받기---------------//
 	@PostMapping("/delTag")
 	public Map<String, Object> deleteTag(@RequestBody Map<String, String> params){
@@ -33,13 +42,20 @@ public class ManageTagController {
 		return resp;
 	}
 	
-	// -------------지역 태그 추가 ------------------//
-	
-	
-	
+	// -------------지역태그삭제----------------//
+	@GetMapping("/delAreaTag/{tag}")
+	public Map<String, Object> deleteAreaTag(@PathVariable String tag){
+		resp=new HashMap<String, Object>();
+		boolean success=service.deleteAreaTag(tag);
+		resp.put("success", success);
+		return resp;
+	}
 	
 	
 }
+
+
+
 
 
 

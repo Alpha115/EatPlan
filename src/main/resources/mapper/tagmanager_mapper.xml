@@ -8,14 +8,29 @@
 		VALUES (#{param2}, #{param3}, #{param1})
 </insert>
 
-<select id="overlayTag">
+<insert id="addAreaTag" parameterType="map">
+	INSERT INTO tag_area (city, dist, tag_name, cate_idx)
+	VALUES (#{city}, #{dist}, #{tag_name}, 1)
+</insert>
+
+<select id="overlayTag" resultType="Integer">
 	SELECT COUNT(tag_idx) FROM tag
-	WHERE tag_name=#{param2} and class=#{param1}
+	WHERE tag_name=#{param2} AND class=#{param1}
+</select>
+
+<select id="overlayAreaTag" resultType="Integer">
+	SELECT COUNT(area_tag_idx) FROM tag_area
+	WHERE tag_name=#{param1}
 </select>
 
 <delete id="deleteTag">
 	DELETE FROM tag
 	WHERE class=#{param1} AND tag_name=#{param2}
+</delete>
+
+<delete id="deleteAreaTag">
+	DELETE FROM tag_area
+	WHERE tag_name=#{param1}
 </delete>
 	
 
