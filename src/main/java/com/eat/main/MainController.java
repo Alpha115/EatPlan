@@ -40,12 +40,19 @@ public class MainController {
 		return resp;
 	}
 	
-	// 코스 전체 리스트 불러오기 (전체)
-	@GetMapping(value = "/course_list_all")
-	public Map<String, Object> course_list_all() {
+	// 좋아요 높은 순서대로 코스 리스트 불러오기 (주간)
+	@GetMapping(value = "/weekly_best_list")
+	public Map<String, Object> weekly_best_list() {
 		resp = new HashMap<String, Object>();
-		List<MainDTO> list = service.course_list_all();
-		resp.put("list", list);
+		resp = service.weekly_best_list();
+		return resp;
+	}
+	
+	// 좋아요 높은 순서대로 코스 리스트 불러오기 (월간)
+	@GetMapping(value="/monthly_best_list")
+	public Map<String, Object> monthly_best_list() {
+		resp = new HashMap<String, Object>();
+		resp = service.monthly_best_list();
 		return resp;
 	}
 

@@ -60,6 +60,18 @@ public class MainService {
 	        case "hit_asc":
 	            orderBy = "b_hit ASC";
 	            break;
+	        case "like_cnt_desc":
+	            orderBy = "like_cnt DESC";
+	            break;
+	        case "like_cnt_asc":
+	            orderBy = "like_cnt ASC";
+	            break;
+	        case "star_avg_desc":
+	            orderBy = "star_avg DESC";
+	            break;
+	        case "star_avg_asc":
+	            orderBy = "star_avg ASC";
+	            break;
 	        case "date_desc":
 	        default:
 	            orderBy = "reg_date DESC";
@@ -279,6 +291,60 @@ public class MainService {
 	// 좋아요 체크 댓글
 	public  List<Map<String, Object>> likeCheckCmt(String user_id, List<Integer> cmtIdxList) {
 		return dao.likeCheckCmt(user_id, cmtIdxList);
+	}
+
+	// 좋아요 높은 순서대로 코스 리스트 불러오기 (주간)
+	public Map<String, Object> weekly_best_list() {
+		Map<String, Object> resp = new HashMap<String, Object>();
+		List<CourseDTO> list = dao.weekly_best_list();
+		List<Map<String, Object>> result_list = new ArrayList<Map<String, Object>>();
+		if (list != null) {
+			for (CourseDTO content : list) {
+				Map<String, Object> course_data = new HashMap<String, Object>();
+				course_data.put("course", content);
+				course_data.put("nickname", dao.course_list_nick(content.getUser_id()));
+				course_data.put("cmt_cnt", dao.course_list_cmt_cnt(content.getPost_idx()));
+				course_data.put("like_cnt", dao.course_list_like_cnt(content.getPost_idx()));
+				course_data.put("star_avg", dao.course_list_star_avg(content.getPost_idx()));
+				course_data.put("course_tag", dao.course_list_tag(content.getPost_idx()));
+				course_data.put("course_tag_area", dao.course_list_tag_area(content.getPost_idx()));
+				List<DetailRestaDTO> detail = dao.detail(content.getPost_idx());
+				if (detail != null && !detail.isEmpty()) {
+					DetailRestaDTO first_detail = detail.get(0);
+					course_data.put("course_img", dao.course_list_img(first_detail.getDetail_idx()));
+				}
+				result_list.add(course_data);
+			}
+		}
+		resp.put("list", result_list);
+		return resp;
+	}
+
+	// 좋아요 높은 순서대로 코스 리스트 불러오기 (월간)
+	public Map<String, Object> monthly_best_list() {
+		Map<String, Object> resp = new HashMap<String, Object>();
+		List<CourseDTO> list = dao.monthly_best_list();
+		List<Map<String, Object>> result_list = new ArrayList<Map<String, Object>>();
+		if (list != null) {
+			for (CourseDTO content : list) {
+				Map<String, Object> course_data = new HashMap<String, Object>();
+				course_data.put("course", content);
+				course_data.put("nickname", dao.course_list_nick(content.getUser_id()));
+				course_data.put("cmt_cnt", dao.course_list_cmt_cnt(content.getPost_idx()));
+				course_data.put("like_cnt", dao.course_list_like_cnt(content.getPost_idx()));
+				course_data.put("star_avg", dao.course_list_star_avg(content.getPost_idx()));
+				course_data.put("course_tag", dao.course_list_tag(content.getPost_idx()));
+				course_data.put("course_tag_area", dao.course_list_tag_area(content.getPost_idx()));
+				List<DetailRestaDTO> detail = dao.detail(content.getPost_idx());
+				if (detail != null && !detail.isEmpty()) {
+					DetailRestaDTO first_detail = detail.get(0);
+					course_data.put("course_img", dao.course_list_img(first_detail.getDetail_idx()));
+				}
+				result_list.add(course_data);
+			}
+		}
+		resp.put("list", result_list);
+		return resp;
 	}
 
 

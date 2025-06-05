@@ -92,5 +92,11 @@ public interface MainDAO {
 	// 좋아요 체크 댓글
 	 List<Map<String, Object>> likeCheckCmt(@Param("user_id") String user_id, @Param("list") List<Integer> cmtIdxList);
 	
+	// 좋아요 높은 순서대로 코스 리스트 불러오기 (주간) - 좋아요 별점 등등은 위에 있음
+	 List<CourseDTO> weekly_best_list();
+	 
+	// 좋아요 높은 순서대로 코스 리스트 불러오기 (월간) - 좋아요 별점 등등은 위에 있음
+	List<CourseDTO> monthly_best_list();
+	
 	
 }
