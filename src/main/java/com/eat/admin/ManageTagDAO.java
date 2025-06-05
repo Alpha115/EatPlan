@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.eat.dto.RestaurantDTO;
 import com.eat.tags.TagDTO;
+import com.eat.tags.TagRestDTO;
 
 @Mapper
 public interface ManageTagDAO {
@@ -23,6 +24,8 @@ public interface ManageTagDAO {
 	
 	RestaurantDTO restaDetail(String resta_idx);
 	ArrayList<TagDTO> restaTags(String resta_idx);
+	
+	int addTagToResta(TagRestDTO tag_rest);
 	
 	
 

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eat.dto.RestaurantDTO;
 import com.eat.tags.TagDTO;
+import com.eat.tags.TagRestDTO;
 
 @Service
 public class ManageTagService {
@@ -86,6 +87,11 @@ public class ManageTagService {
 	public boolean delRestaTag(String resta_idx, String tag_idx) {
 		int row = dao.deleteRestaTag(resta_idx, tag_idx);
 		return row > 0;
+	}
+
+	public boolean addTagToResta(TagRestDTO tag_rest) {
+		int row=dao.addTagToResta(tag_rest);
+		return row>0;
 	}
 
 

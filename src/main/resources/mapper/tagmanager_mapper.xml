@@ -46,6 +46,11 @@
 	SELECT * FROM tag WHERE tag_idx IN
 	(SELECT tag_idx FROM tag_rest WHERE resta_idx =#{param1})
 </select>
+
+<insert id="addTagToResta" parameterType="com.eat.tags.TagRestDTO">
+ 	INSERT INTO tag_rest (tag_idx, resta_idx)
+ 	VALUES (#{tag_idx}, #{resta_idx})
+</insert>
 	
 
 </mapper>
