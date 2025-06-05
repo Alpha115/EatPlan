@@ -82,8 +82,11 @@ public class ManageTagService {
 	public ArrayList<TagDTO> restaTags(String resta_idx) {
 		return dao.restaTags(resta_idx);
 	}
-	
-	// 식당정보 불러오기
-	
+
+	public boolean delRestaTag(String resta_idx, String tag_idx) {
+		int row = dao.deleteRestaTag(resta_idx, tag_idx);
+		return row > 0;
+	}
+
 
 }

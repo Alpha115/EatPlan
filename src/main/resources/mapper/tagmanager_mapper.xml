@@ -33,6 +33,11 @@
 	WHERE tag_name=#{param1}
 </delete>
 
+<delete id="deleteRestaTag">
+	DELETE FROM tag_rest
+	WHERE resta_idx=#{param1} AND tag_idx=#{param2}
+</delete>
+
 <select id="restaDetail" resultType="com.eat.dto.RestaurantDTO">
 	SELECT * from restaurant WHERE resta_idx=#{param1}
 </select>

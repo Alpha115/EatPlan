@@ -19,9 +19,11 @@ public interface ManageTagDAO {
 
 	int deleteTag(String isClass, String tag_name);
 	int deleteAreaTag(String tag);
+	int deleteRestaTag(String resta_idx, String tag_idx);
 	
 	RestaurantDTO restaDetail(String resta_idx);
 	ArrayList<TagDTO> restaTags(String resta_idx);
+	
 	
 
 }

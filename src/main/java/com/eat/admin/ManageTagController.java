@@ -63,6 +63,20 @@ public class ManageTagController {
 		return resp;
 	}
 	
+	// -------------식당으로부터 태그 제거(tag_idx)---------------//
+	@GetMapping("/restaTagDel/{resta_idx}/{tag_idx}")
+	public Map<String, Object> delRestaTag(@PathVariable String resta_idx, @PathVariable String tag_idx){
+		resp=new HashMap<String, Object>();
+		boolean success=service.delRestaTag(resta_idx, tag_idx);
+		resp.put("success", success);
+		return resp;
+		
+	}
+	
+	// ---------------------- 식당에 태그 추가 ----------------- //
+	
+	
+	 
 }
 
 
