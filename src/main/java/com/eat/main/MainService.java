@@ -48,7 +48,25 @@ public class MainService {
 		this.page = page;
 		resp.put("page", this.page);
 		int offset = (this.page - 1) * limit;
-		List<CourseDTO> list = dao.course_list(offset, limit, sort);
+		
+		String orderBy;
+	    switch (sort) {
+	        case "date_asc":
+	            orderBy = "reg_date ASC";
+	            break;
+	        case "hit_desc":
+	            orderBy = "b_hit DESC";
+	            break;
+	        case "hit_asc":
+	            orderBy = "b_hit ASC";
+	            break;
+	        case "date_desc":
+	        default:
+	            orderBy = "reg_date DESC";
+	            break;
+	    }
+		
+		List<CourseDTO> list = dao.course_list(offset, limit, orderBy);
 
 		List<Map<String, Object>> result_list = new ArrayList<Map<String, Object>>();
 

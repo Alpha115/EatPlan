@@ -15,7 +15,7 @@
 		,p.tmp
 		FROM post p
 		ORDER
-		BY #{param3}
+		BY ${param3}
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
 
