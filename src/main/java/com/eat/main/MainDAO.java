@@ -35,8 +35,9 @@ public interface MainDAO {
 	List<TagAreaDTO> course_list_tag_area(int post_idx); // 코스 리스트 지역태그
 	List<DetailRestaDTO> detail(int post_idx); // 코스 리스트 세부일정 idx
 	String course_list_img(int detail_idx); // 코스 리스트 이미지
+	int totalCount(); // 전체 페이지 수
 	
-	// 코스 리스트 페이지 처리 
+	// 코스 리스트 페이지 처리
 	int pages(int limit);
 
 
@@ -90,5 +91,6 @@ public interface MainDAO {
 	
 	// 좋아요 체크 댓글
 	 List<Map<String, Object>> likeCheckCmt(@Param("user_id") String user_id, @Param("list") List<Integer> cmtIdxList);
+	
 	
 }

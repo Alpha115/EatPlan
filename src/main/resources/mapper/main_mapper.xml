@@ -18,6 +18,12 @@
 		BY ${param3}
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
+	
+	<!-- 전체 페이지 수 -->
+	<select id="totalCount" resultType="int">
+		SELECT COUNT(*) FROM post
+    		WHERE public = true
+	</select>
 
 	<!-- 코스 리스트 닉네임 -->
 	<select id="course_list_nick" resultType="String">

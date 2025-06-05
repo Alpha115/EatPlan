@@ -92,6 +92,7 @@ public class MainService {
 		resp.put("list", result_list);
 		resp.put("page", this.page);
 		resp.put("pages", dao.pages(limit));
+		resp.put("totalCount", dao.totalCount());
 		return resp;
 	}
 
