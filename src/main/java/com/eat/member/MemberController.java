@@ -33,7 +33,21 @@ public class MemberController {
 
 	Map<String, Object> resp = new HashMap<String, Object>();
 	Logger log = LoggerFactory.getLogger(getClass());
-
+	
+	//user_id -> nickname으로 보이게 하는것
+		@GetMapping("value=/{user_id}")
+		public Map<String, Object> getMemberId(@PathVariable String user_id) {
+			
+			Map<String, Object> resp = new HashMap<String, Object>();
+			MemberDTO member = service.getMemberId(user_id);
+			
+			resp.put(user_id, member.getUser_id());
+			resp.put("nickname", member.getNickname());
+			
+			return resp;
+		}
+	
+	
 	// 로그인
 	@PostMapping(value = "/login")
 	public Map<String, Object> login(@RequestBody Map<String, String> params) {
@@ -147,4 +161,10 @@ class Register {
 		this.tags = tags;
 	}
 
+	
+	
+	
+	
+	
+	
 }

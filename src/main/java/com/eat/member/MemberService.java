@@ -21,6 +21,11 @@ public class MemberService {
 
 	Logger log = LoggerFactory.getLogger(getClass());
 
+	//user_id -> nickname으로 보이게 하는것
+	public MemberDTO getMemberId(String user_id) {
+		return dao.getMemberId(user_id);
+	}
+	
 	// 로그인
 	public boolean login(Map<String, String> params) {
 		int cnt = dao.login(params);
@@ -95,5 +100,7 @@ public class MemberService {
 		
 		return null;
 	}
+
+	
 
 }

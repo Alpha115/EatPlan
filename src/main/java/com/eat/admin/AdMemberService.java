@@ -48,6 +48,9 @@ public class AdMemberService {
 
 	// 회원 리스트 불러오기
 	public List<MemberDTO> admember_list(String align, String filter) {
+		if(filter.equals("banned")) {
+			return dao.adBanMember_list(align);
+		}
 		return dao.admember_list(align, filter);
 	}
 	
