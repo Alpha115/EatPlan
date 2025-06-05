@@ -5,18 +5,21 @@
 
 <!-- 신고목록 불러오기 -->
 <select id="report_list" resultType="com.eat.dto.ReportDTO">
-	SELECT 
-		report_idx
-		,reporter_id
-		,suspect_id
-		,subject
-		,`class` AS isClass
-		,report_date
-		,done
-		,`public` AS isPublic
-		,img_idx
-	FROM report
-	LIMIT #{param2} OFFSET #{param1}
+	 SELECT
+            r.report_idx,
+            r.reporter_id,
+            r.suspect_id,
+            m.nickname AS suspect_nickname,  <!-- 닉네임 컬럼 추가 -->
+            r.subject,
+            r.`class`   AS isClass,
+            r.report_date,
+            r.done,
+            r.`public`  AS isPublic,
+            r.img_idx
+        FROM report r
+        LEFT JOIN member m
+            ON r.suspect_id = m.user_id
+        LIMIT #{param2} OFFSET #{param1}
 </select>
 
 <!-- 신고 글 쓰기 -->
@@ -52,16 +55,19 @@
 
 <!-- 신고 상세보기 몸통-->
 <select id="report_detail" resultType="com.eat.dto.ReportDTO">
-	SELECT
-		suspect_id
-		,subject
-		,content
-		,reported_idx
-		,reporter_id
-		,`class` AS isClass
-		,done
-	FROM report
-	WHERE report_idx = #{param1}
+	 SELECT
+            r.suspect_id,
+            m.nickname AS suspect_nickname,  <!-- 닉네임 추가 -->
+            r.subject,
+            r.content,
+            r.reported_idx,
+            r.reporter_id,
+            r.`class` AS isClass,
+            r.done
+        FROM report r
+        LEFT JOIN member m
+            ON r.suspect_id = m.user_id
+        WHERE r.report_idx = #{param1}
 </select>
 
 <!-- 신고 상세보기 - 신고된 코스 정보 -->
@@ -136,7 +142,7 @@
 
 <!-- 신고 목록 총 페이지 -->
 <select id="report_pages" resultType="int">
-	SELECT CEIL(COUNT(report_idx)/#{param1}) AS pages FROM report_history
+	SELECT CEIL(COUNT(report_idx)/#{param1}) AS pages FROM report
 </select>
 
 <select id="countReports" resultType="int">

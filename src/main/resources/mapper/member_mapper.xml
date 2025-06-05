@@ -10,7 +10,18 @@
 		WHERE user_id = #{user_id} AND pass =
 		#{pass}
 	</select>
-
+	
+	<!-- user_id -> nickname으로 보이게 하는것 -->
+	 <select id="getMemberId"
+            parameterType="String"
+            resultType="com.eat.dto.MemberDTO">
+        SELECT
+            user_id,
+            nickname
+        FROM member
+        WHERE user_id = #{user_id}
+    </select>
+	
 
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.eat.dto.MemberDTO">
