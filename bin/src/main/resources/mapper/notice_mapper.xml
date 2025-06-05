@@ -4,8 +4,19 @@
 <mapper namespace="com.eat.notice.NoticeDAO">
 
 <select id="list" resultType="com.eat.dto.NoticeDTO">
-	SELECT * FROM notice ORDER BY notice_idx DESC
-	LIMIT #{param2} OFFSET #{param1}
+	SELECT 
+      notice_idx,
+      user_id,
+      subject,
+      content,
+      reg_date,
+      b_Hit,
+      highlight
+    FROM notice
+    ORDER BY 
+      highlight DESC,       <!-- highlight=true인 것들(필독)이 먼저 -->
+      reg_date DESC         <!-- 같은 highlight 그룹 내에선 최신순 -->
+    LIMIT #{param2} OFFSET #{param1}
 </select>
 
 <select id="pages" resultType="int">

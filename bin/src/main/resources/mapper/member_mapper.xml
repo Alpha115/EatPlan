@@ -10,7 +10,18 @@
 		WHERE user_id = #{user_id} AND pass =
 		#{pass}
 	</select>
-
+	
+	<!-- user_id -> nickname으로 보이게 하는것 -->
+	 <select id="getMemberId"
+            parameterType="String"
+            resultType="com.eat.dto.MemberDTO">
+        SELECT
+            user_id,
+            nickname
+        FROM member
+        WHERE user_id = #{user_id}
+    </select>
+	
 
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.eat.dto.MemberDTO">
@@ -30,7 +41,7 @@
 	<!-- 회원가입/태그입력 -->
 	<!-- foreach문 쓰면 될듯 -->
 	<insert id="joinTag" parameterType="com.eat.dto.TagPreferDTO">
-		INSERT INTO tag_prefer (idx, class, user_id) VALUES
+		INSERT INTO tag_prefer (idx, isClass, user_id) VALUES
 		<foreach collection="tags" item="tag" separator=",">
 			 (#{tag.idx}, #{tag.isClass}, #{tag.user_id})
 		</foreach>
@@ -50,11 +61,20 @@
 	</select>
 
 	<!-- 비밀번호 찾기 - 아이디 / 이메일 확인 -->
-	<select id="findPass" resultType="int">
-		SELECT COUNT(*) FROM users
-		WHERE user_id = #{user_id} AND email = #{email}
+	 <select id="findPassword" resultType="int">
+    SELECT COUNT(*) FROM member
+    WHERE user_id = #{user_id}
+      AND email = #{email}
 	</select>
-
+	
+	<!-- 비밀번호 찾기 - 비밀번호 변경 -->
+	<update id="updatePassword">
+		UPDATE member
+		SET pass = #{pass}
+		WHERE user_id = #{user_id}
+	</update>
+  
+  
 	<!-- 프로필 변경 -->
 	<insert id="fileSave" parameterType="String"
 	useGeneratedKeys="true" keyProperty="img_idx"> 

@@ -4,7 +4,18 @@
 <mapper namespace="com.eat.admin.AdTagDAO">
 
 <select id="restaList" resultType="com.eat.dto.RestaurantDTO">
-	SELECT * FROM restaurant ORDER BY resta_idx DESC
+	SELECT * FROM restaurant
+	<choose>
+		<when test="param3=='resta_name'">
+			ORDER BY resta_name
+		</when>
+		<when test="param3=='address'">
+			ORDER BY address
+		</when>
+		<otherwise>
+			ORDER BY resta_idx
+		</otherwise>
+	</choose>
 		LIMIT #{param2} OFFSET #{param1}
 </select>
 
@@ -12,11 +23,32 @@
 	SELECT CEIL(COUNT(resta_idx)/#{param1}) AS pages FROM restaurant
 </select>
 
-<!-- 아직 테스트 안함 쿼리문은 정상임 -->
-<insert id="restaTag" parameterType="map">
-	INSERT INTO tag_rest(tag_idx, resta_idx)
- 		VALUES ((SELECT tag_idx FROM tag WHERE tag_name=#{tag_name}), #{resta_idx});
+<insert id="addTags">
+	INSERT INTO tag_rest (resta_idx, tag_idx)
+		VALUES
+		<foreach collection="tag_idx" item="tag" separator=",">
+			(#{resta_idx}, #{tag})
+		</foreach>
 </insert>
+
+<update id="addAreaTag">
+	UPDATE restaurant SET area_tag_idx=#{param2}
+		WHERE resta_idx=#{param1}
+</update>
+
+
+<!-- 식당별태그불러오기 -->
+<select id="getDefaultTags" resultType="string">
+	SELECT tag_name FROM tag 
+	WHERE tag_idx in (SELECT tag_idx FROM tag_rest
+	WHERE resta_idx in(SELECT resta_idx FROM restaurant WHERE resta_name = #{param1}))
+</select>
+
+<select id="getAreaTag" resultType="string">
+	SELECT tag_name FROM tag_area 
+	WHERE area_tag_idx IN (SELECT area_tag_idx FROM restaurant WHERE resta_name=#{param1})
+</select>
+
 
 <!-- 태그 카테고리 추가 -->
 <insert id="adtag_cate" parameterType="com.eat.tags.TagCateDTO"

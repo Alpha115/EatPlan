@@ -6,9 +6,22 @@
 
 	<!-- 관리자: 유저에게 관리자 권한을 부여하거나, 삭제하는 기능 -->
 	<update id="addAdmin">
-		UPDATE member SET admin=!admin WHERE user_id
-		=#{param1}
+		UPDATE member SET admin = NOT admin WHERE user_id	=#{param1}
 	</update>
+	
+	<!-- 정지회원리스트 -->
+	
+	<select id="adBanMember_list" resultType="com.eat.dto.MemberDTO">
+		SELECT * FROM member WHERE user_id IN
+		(SELECT user_id FROM ban_peri WHERE NOW() &gt; start AND NOW() &lt; end)
+		ORDER BY
+		 <choose>
+		      <when test="param1 == 'user_id'">user_id</when>
+		      <when test="param1 == 'nickname'">nickname</when>
+		      <when test="param1 == 'email'">email</when>
+		      <otherwise>reg_date</otherwise>
+		    </choose>
+	</select>
 
 	<!-- 회원 조회 / 정지 -->
 	<insert id="suspendUser"
@@ -17,6 +30,8 @@
 		VALUES
 		(#{user_id}, #{start}, #{end})
 	</insert>
+	
+
 
 	<select id="findUser" parameterType="String"
 		resultType="com.eat.dto.UserDTO">
@@ -33,6 +48,24 @@
 		
 	]]>
 	</select>
-
+	
+	<!-- 회원 리스트 불러오기 -->
+	<select id="admember_list" resultType="com.eat.dto.MemberDTO">
+		SELECT user_id, nickname, email, reg_date, admin
+  			FROM member
+  			WHERE
+		    <choose>
+		     <when test="param2=='admin'">admin = true</when>
+		     <when test="param2=='default'">admin = false</when>
+		     <otherwise>user_id != ''</otherwise>
+		    </choose>
+  			ORDER BY
+		    <choose>
+		      <when test="param1 == 'user_id'">user_id</when>
+		      <when test="param1 == 'nickname'">nickname</when>
+		      <when test="param1 == 'email'">email</when>
+		      <otherwise>reg_date</otherwise>
+		    </choose>
+	</select>
 
 </mapper>

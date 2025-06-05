@@ -4,11 +4,31 @@
 <mapper namespace="com.eat.comment.CommentDAO">
 	<!-- 댓글 리스트 -->
 	<select id="comment_list" resultType="com.eat.dto.MainDTO">
-	SELECT comment_idx, post_idx, content, reg_date
-	FROM comment
-	WHERE post_idx = #{post_idx}
-	ORDER BY reg_date DESC
-	LIMIT #{comment_count} OFFSET #{offset};
+	  SELECT
+    c.comment_idx,
+    c.post_idx,
+    c.content,
+    c.user_id,
+    m.nickname,
+    c.reg_date,
+    IFNULL(
+    (
+      SELECT COUNT(*)
+      FROM liked l
+      WHERE l.cmt_idx = c.comment_idx AND liked = true
+    ) , 0) AS cmt_like_cnt
+  FROM comment c
+  JOIN member m
+    ON c.user_id = m.user_id
+  WHERE c.post_idx = #{post_idx}
+  ORDER BY c.reg_date DESC
+  LIMIT #{comment_count} OFFSET #{offset}
+	</select>
+	
+	<!-- 댓글 총 갯수 -->
+	<select id="comment_total_count" resultType="int">
+	    SELECT COUNT(*) FROM comment
+	    WHERE post_idx = #{post_idx}
 	</select>
 	
 	<!-- 댓글 작성 -->

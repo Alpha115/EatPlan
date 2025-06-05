@@ -5,25 +5,45 @@
 
 <!-- 신고목록 불러오기 -->
 <select id="report_list" resultType="com.eat.dto.ReportDTO">
-	SELECT 
-		report_idx
-		,reporter_id
-		,suspect_id
-		,subject
-		,class
-		,report_date
-		,done
-		,public
-		,img_idx
-	FROM report
-	LIMIT #{param2} OFFSET #{param1}
+	 SELECT
+            r.report_idx,
+            r.reporter_id,
+            r.suspect_id,
+            m.nickname AS suspect_nickname,  <!-- 닉네임 컬럼 추가 -->
+            r.subject,
+            r.`class`   AS isClass,
+            r.report_date,
+            r.done,
+            r.`public`  AS isPublic,
+            r.img_idx
+        FROM report r
+        LEFT JOIN member m
+            ON r.suspect_id = m.user_id
+        LIMIT #{param2} OFFSET #{param1}
 </select>
 
 <!-- 신고 글 쓰기 -->
 <insert id="report_write" parameterType="com.eat.dto.ReportDTO"
 	useGeneratedKeys="true" keyColumn="report_idx" keyProperty="report_idx">
-	INSERT INTO report (suspect_id, reporter_id, img_idx, subject, content, class, public)
-	VALUES (#{suspect_id}, #{reporter_id}, #{img_idx}, #{subject}, #{content}, #{isClass}, #{isPublic})
+	INSERT INTO report 
+	(suspect_id, 
+	reporter_id,
+	 <if test = "img_idx  !=null">
+	 img_idx,</if> 
+	 subject, 
+	 content, 
+	 `class`, 
+	 `public`)
+	VALUES 
+	(#{suspect_id}, 
+	#{reporter_id}, 
+	<if test = "img_idx  !=null">
+	#{img_idx}
+	,</if> 
+	#{subject}, 
+	#{content}, 
+	#{isClass}, 
+	#{isPublic})
 </insert>
 
 <!-- 신고 사진 저장 -->
@@ -34,17 +54,22 @@
 </insert>
 
 <!-- 신고 상세보기 몸통-->
-<select id="report_detail" resultType="com.eat.dto.ReportDTO" resultMap="reportMap">
-	SELECT
-		suspect_id
-		,subject
-		,content
-		,reported_idx
-		,class
-		,done
-	FROM report
-	WHERE report_idx = #{param1}
+<select id="report_detail" resultType="com.eat.dto.ReportDTO">
+	 SELECT
+            r.suspect_id,
+            m.nickname AS suspect_nickname,  <!-- 닉네임 추가 -->
+            r.subject,
+            r.content,
+            r.reported_idx,
+            r.reporter_id,
+            r.`class` AS isClass,
+            r.done
+        FROM report r
+        LEFT JOIN member m
+            ON r.suspect_id = m.user_id
+        WHERE r.report_idx = #{param1}
 </select>
+
 <!-- 신고 상세보기 - 신고된 코스 정보 -->
 <select id="report_course" resultType="com.eat.dto.CourseDTO">
 	SELECT
@@ -56,6 +81,7 @@
 	FROM post
 	WHERE post_idx = #{param1}
 </select>
+
 <!-- 신고 상세보기 - 신고된 쪽지 정보 -->
 <select id="report_msg" resultType="com.eat.dto.MsgDTO">
 	SELECT
@@ -67,6 +93,7 @@
 	FROM message
 	WHERE msg_idx = #{param1}
 </select>
+
 <!-- 신고 상세보기 - 신고된 댓글 정보 -->
 <select id="report_cmt" resultType="com.eat.dto.MainDTO">
 	SELECT
@@ -77,6 +104,7 @@
 	FROM comment
 	WHERE comment_idx = #{param1}
 </select>
+
 <!-- 신고 상세보기 -이미지 -->
 <select id="photo" resultType="com.eat.dto.PhotoDTO">
 	SELECT
@@ -114,7 +142,11 @@
 
 <!-- 신고 목록 총 페이지 -->
 <select id="report_pages" resultType="int">
-	SELECT CEIL(COUNT(report_idx)/#{param1}) AS pages FROM report_history
+	SELECT CEIL(COUNT(report_idx)/#{param1}) AS pages FROM report
+</select>
+
+<select id="countReports" resultType="int">
+  SELECT COUNT(*) FROM report
 </select>
 
 <resultMap id="reportMap" type="com.eat.dto.ReportDTO">
