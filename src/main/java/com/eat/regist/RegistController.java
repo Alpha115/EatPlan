@@ -3,6 +3,7 @@ package com.eat.regist;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,7 +93,9 @@ public class RegistController {
 	    List<CourseTagDTO> tags = req.getTags();
 	    List<CourseTagDTO> tags_del = req.getTags();
 	    TimelineDTO time = req.getTime();
-		
+	    log.info("삭제할 태그: " + tags_del.stream()
+	    .map(tag -> String.format("isClass=%s, idx=%d", tag.getIsClass(), tag.getIdx()))
+	    .collect(Collectors.joining(" | ")));
 		boolean success = service.update(
 				content,
 				content_detail_resta,

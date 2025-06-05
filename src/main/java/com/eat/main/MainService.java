@@ -141,20 +141,25 @@ public class MainService {
 		
 
 		if (tagList != null && !tagList.isEmpty()) {
-			for (CourseTagDTO tag_info : tagList) {
-				String cls = tag_info.getIsClass();
+			for (CourseTagDTO tag : tagList) {
+			    int idx = tag.getIdx();
+			    String cls = tag.getIsClass();
 
-				if ("tag".equals(cls)) {
-					List<TagDTO> tags = dao.course_tags(tag_info.getIdx());
-					if (tags != null && !tags.isEmpty()) {
-						tagListResult.addAll(tags);
-					}
-				} else if ("areaTag".equals(cls)) {
-					List<TagAreaDTO> areaTags = dao.course_list_tags_area(tag_info.getIdx());
-					if (areaTags != null && !areaTags.isEmpty()) {
-						tagAreaListResult.addAll(areaTags);
-					}
-				}
+			    if ("tag".equals(cls)) {
+			        for (TagDTO t : tagListResult) {
+			            if (t.getTag_idx() == idx) {
+			                tag.setTag_name(t.getTag_name());
+			                break;
+			            }
+			        }
+			    } else if ("area_tag".equals(cls)) {
+			        for (TagAreaDTO t : tagAreaListResult) {
+			            if (t.getArea_tag_idx() == idx) {
+			                tag.setTag_name(t.getTag_name());
+			                break;
+			            }
+			        }
+			    }
 			}
 		}
 		RegistRequestDTO resp = new RegistRequestDTO();
@@ -165,8 +170,6 @@ public class MainService {
 		resp.setContent_detail_resta(restaList);
 		resp.setContent_detail_cmt(cmtList);
 		resp.setTags(tagList);
-		resp.setTag_name(tagListResult);
-		resp.setTag_name_area(tagAreaListResult);
 		
 		return resp;
 
