@@ -27,6 +27,9 @@ public interface AdMemberDAO {
 	// 회원 리스트 불러오기
 	List<MemberDTO> admember_list(String align, String filter);
 
+	// 정지회원리스트
+	List<MemberDTO> adBanMember_list(String align);
+
 	
 	
 
