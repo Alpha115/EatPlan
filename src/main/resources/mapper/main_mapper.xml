@@ -474,16 +474,29 @@
 	
 	<!-- 좋아요 높은 순서대로 코스 리스트 불러오기 (주간) -->
 	<select id="weekly_best_list" resultType="com.eat.dto.CourseDTO">
-		 SELECT p.*, IFNULL(l.like_cnt, 0) AS like_cnt
+		 SELECT p.*, IFNULL(l.liked, 0) AS like_cnt
 			FROM post p
 			LEFT JOIN (
-			    SELECT post_idx, COUNT(*) AS like_cnt
+			    SELECT post_idx, SUM(liked) AS liked
 			    FROM liked
-			    WHERE class = 'course'
+			    GROUP BY post_idx
+			) l ON p.post_idx = l.post_idx
+			WHERE YEARWEEK(p.reg_date, 1) = YEARWEEK(CURDATE(), 1)
+			ORDER BY l.liked DESC
+			LIMIT 6
+	</select>
+	
+	<!-- 좋아요 높은 순서대로 코스 리스트 불러오기 (월간) -->
+	<select id="monthly_best_list" resultType="com.eat.dto.CourseDTO">
+		SELECT p.*, IFNULL(l.liked, 0) AS like_cnt
+			FROM post p
+			LEFT JOIN (
+			    SELECT post_idx, SUM(liked) AS liked
+			    FROM liked
 			    GROUP BY post_idx
 			) l ON p.post_idx = l.post_idx
 			WHERE DATE_FORMAT(p.reg_date, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
-			ORDER BY like_cnt DESC
+			ORDER BY l.liked DESC
 			LIMIT 6
 	</select>
 
