@@ -23,6 +23,7 @@
 		tag_name,
 		cate_idx
 		FROM tag
+		ORDER BY tag_name
 	</select>
 	
 	<!-- 지역 전체를 불러옵니다. -->

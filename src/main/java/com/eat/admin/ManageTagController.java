@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eat.tags.TagRestDTO;
+
 @CrossOrigin
 @RestController
 public class ManageTagController {
@@ -63,7 +65,27 @@ public class ManageTagController {
 		return resp;
 	}
 	
+	// -------------식당으로부터 태그 제거(tag_idx)---------------//
+	@GetMapping("/restaTagDel/{resta_idx}/{tag_idx}")
+	public Map<String, Object> delRestaTag(@PathVariable String resta_idx, @PathVariable String tag_idx){
+		resp=new HashMap<String, Object>();
+		boolean success=service.delRestaTag(resta_idx, tag_idx);
+		resp.put("success", success);
+		return resp;
+		
+	}
+	
+	// ---------------------- 식당에 태그 추가 ----------------- //
+	@PostMapping("/addTagtoResta")
+	public Map<String, Object> addTagToResta(@RequestBody TagRestDTO tag_rest){
+		resp=new HashMap<String, Object>();
+		boolean success=service.addTagToResta(tag_rest);
+		resp.put("success", success);
+		return resp;
+	}
+	
 }
+
 
 
 
