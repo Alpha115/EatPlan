@@ -51,12 +51,19 @@ public class ManageTagController {
 		return resp;
 	}
 	
+	// ------------- resta_idx로 식당정보 가져오기 ------------//
+	@GetMapping("/restaDetail/{resta_idx}")
+	public Map<String, Object> restaDetail(@PathVariable String resta_idx){
+		resp=new HashMap<String, Object>();
+		
+		// {"resta": "디테일 정보 dto", "tags": "tag_Resta dto"}
+		resp.put("detail", service.restaDetail(resta_idx));
+		resp.put("tags", service.restaTags(resta_idx));
+		
+		return resp;
+	}
 	
 }
-
-
-
-
 
 
 

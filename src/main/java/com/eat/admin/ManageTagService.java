@@ -1,11 +1,15 @@
 package com.eat.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.eat.dto.RestaurantDTO;
+import com.eat.tags.TagDTO;
 
 @Service
 public class ManageTagService {
@@ -70,5 +74,16 @@ public class ManageTagService {
 		int row = dao.deleteAreaTag(tag);
 		return row > 0;
 	}
+
+	public RestaurantDTO restaDetail(String resta_idx) {
+		return dao.restaDetail(resta_idx);
+	}
+
+	public ArrayList<TagDTO> restaTags(String resta_idx) {
+		return dao.restaTags(resta_idx);
+	}
+	
+	// 식당정보 불러오기
+	
 
 }

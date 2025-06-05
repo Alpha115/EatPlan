@@ -32,6 +32,15 @@
 	DELETE FROM tag_area
 	WHERE tag_name=#{param1}
 </delete>
+
+<select id="restaDetail" resultType="com.eat.dto.RestaurantDTO">
+	SELECT * from restaurant WHERE resta_idx=#{param1}
+</select>
+
+<select id="restaTags" resultType="com.eat.tags.TagDTO">
+	SELECT * FROM tag WHERE tag_idx IN
+	(SELECT tag_idx FROM tag_rest WHERE resta_idx =#{param1})
+</select>
 	
 
 </mapper>
