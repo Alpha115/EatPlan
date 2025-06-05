@@ -35,7 +35,7 @@ public class MemberController {
 	Logger log = LoggerFactory.getLogger(getClass());
 	
 	//user_id -> nickname으로 보이게 하는것
-		@GetMapping("value=/{user_id}")
+		@GetMapping("/{user_id}")
 		public Map<String, Object> getMemberId(@PathVariable String user_id) {
 			
 			Map<String, Object> resp = new HashMap<String, Object>();
