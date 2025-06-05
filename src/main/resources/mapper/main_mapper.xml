@@ -473,7 +473,7 @@
 	</select>
 	
 	<!-- 좋아요 높은 순서대로 코스 리스트 불러오기 (주간) -->
-	<select id="weekly_best_list" resultType="com.eat.dto.CourseDTO">
+	<select id="weekly_best_list" resultType="map">
 		 SELECT p.*, IFNULL(l.liked, 0) AS like_cnt
 			FROM post p
 			LEFT JOIN (
@@ -487,7 +487,7 @@
 	</select>
 	
 	<!-- 좋아요 높은 순서대로 코스 리스트 불러오기 (월간) -->
-	<select id="monthly_best_list" resultType="com.eat.dto.CourseDTO">
+	<select id="monthly_best_list" resultType="map">
 		SELECT p.*, IFNULL(l.liked, 0) AS like_cnt
 			FROM post p
 			LEFT JOIN (
@@ -498,6 +498,85 @@
 			WHERE DATE_FORMAT(p.reg_date, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
 			ORDER BY l.liked DESC
 			LIMIT 6
+	</select>
+	
+	<!-- 코스 리스트 닉네임 (베스트 코스) -->
+	<select id="best_course_list_nick" resultType="String">
+		SELECT nickname FROM
+		member WHERE user_id =#{param1}
+	</select>
+
+	<!-- 코스 리스트 댓글 수 (베스트 코스) -->
+	<select id="best_course_list_cmt_cnt" resultType="int">
+		SELECT
+		IFNULL(COUNT(comment_idx), 0) AS comment_cnt
+		FROM comment
+		WHERE post_idx
+		= #{param1}
+	</select>
+
+	<!-- 코스 리스트 좋아요 수 (베스트 코스) -->
+	<select id="best_course_list_like_cnt" resultType="int">
+		SELECT
+		IFNULL(COUNT(post_idx), 0) AS like_cnt
+		FROM liked
+		WHERE post_idx =
+		#{param1} AND class = 'course'
+	</select>
+
+	<!-- 코스 리스트 별점 평균 (베스트 코스) -->
+	<select id="best_course_list_star_avg" resultType="int">
+		SELECT
+		IFNULL(FLOOR(AVG(star)), 0) AS star_avg
+		FROM star
+		WHERE post_idx =
+		#{param1}
+	</select>
+
+	<!-- 코스 리스트 일반 태그 (베스트 코스) -->
+	<select id="best_course_list_tag" resultType="String">
+		SELECT tag_name
+		FROM tag
+		WHERE tag_idx IN (SELECT idx FROM tag_course WHERE post_idx =
+		#{param1}) AND class='course'
+	</select>
+
+	<!-- 코스 리스트 지역 태그 (베스트 코스) -->
+	<select id="best_course_list_tag_area" resultType="String">
+		SELECT tag_name
+		FROM tag_area
+		WHERE area_tag_idx in (SELECT idx FROM tag_course WHERE
+		post_idx = #{param1} AND class='area_tag')
+	</select>
+
+	<!-- 코스 리스트 세부일정 idx (베스트 코스) -->
+	<select id="best_detail" resultType="com.eat.dto.DetailRestaDTO">
+		SELECT detail_idx
+		FROM
+		detail_restaurant
+		WHERE post_idx = #{param1}
+		ORDER BY detail_idx
+	</select>
+
+	<!-- 코스 리스트 이미지 불러오기 (베스트 코스) -->
+	<select id="best_course_list_img" resultType="String">
+		SELECT
+		COALESCE(
+		(
+		SELECT
+		p.new_filename
+		FROM detail_restaurant dr
+		JOIN restaurant r ON
+		dr.resta_idx = r.resta_idx
+		LEFT JOIN photo p ON r.img_idx = p.img_idx
+		AND p.class = 'restaurant'
+		WHERE dr.detail_idx = #{param1}
+		ORDER BY
+		dr.detail_idx, r.resta_idx
+		LIMIT 1
+		),
+		'no_image.jpg'
+		) AS new_filename
 	</select>
 
 

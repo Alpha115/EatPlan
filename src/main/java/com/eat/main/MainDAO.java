@@ -93,10 +93,19 @@ public interface MainDAO {
 	 List<Map<String, Object>> likeCheckCmt(@Param("user_id") String user_id, @Param("list") List<Integer> cmtIdxList);
 	
 	// 좋아요 높은 순서대로 코스 리스트 불러오기 (주간) - 좋아요 별점 등등은 위에 있음
-	 List<CourseDTO> weekly_best_list();
+	 List<Map<String, Object>> weekly_best_list();
 	 
 	// 좋아요 높은 순서대로 코스 리스트 불러오기 (월간) - 좋아요 별점 등등은 위에 있음
-	List<CourseDTO> monthly_best_list();
+	 List<Map<String, Object>> monthly_best_list();
+	 
+	String best_course_list_nick(String user_id);
+	int best_course_list_cmt_cnt(int post_idx);
+	int best_course_list_like_cnt(int post_idx);
+	int best_course_list_star_avg(int post_idx);
+	List<String> best_course_list_tag(int post_idx);
+	List<TagAreaDTO> best_course_list_tag_area(int post_idx);
+	List<DetailRestaDTO> best_detail(int post_idx);
+	String best_course_list_img(int detail_idx);
 	
 	
 }

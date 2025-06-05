@@ -296,22 +296,22 @@ public class MainService {
 	// 좋아요 높은 순서대로 코스 리스트 불러오기 (주간)
 	public Map<String, Object> weekly_best_list() {
 		Map<String, Object> resp = new HashMap<String, Object>();
-		List<CourseDTO> list = dao.weekly_best_list();
+		List<Map<String, Object>> list = dao.weekly_best_list();
 		List<Map<String, Object>> result_list = new ArrayList<Map<String, Object>>();
 		if (list != null) {
-			for (CourseDTO content : list) {
+			for (Map<String, Object> content : list) {
 				Map<String, Object> course_data = new HashMap<String, Object>();
 				course_data.put("course", content);
-				course_data.put("nickname", dao.course_list_nick(content.getUser_id()));
-				course_data.put("cmt_cnt", dao.course_list_cmt_cnt(content.getPost_idx()));
-				course_data.put("like_cnt", dao.course_list_like_cnt(content.getPost_idx()));
-				course_data.put("star_avg", dao.course_list_star_avg(content.getPost_idx()));
-				course_data.put("course_tag", dao.course_list_tag(content.getPost_idx()));
-				course_data.put("course_tag_area", dao.course_list_tag_area(content.getPost_idx()));
-				List<DetailRestaDTO> detail = dao.detail(content.getPost_idx());
+				course_data.put("nickname", dao.best_course_list_nick((String) content.get("user_id")));
+				course_data.put("cmt_cnt", dao.best_course_list_cmt_cnt((int) content.get("post_idx")));
+				course_data.put("like_cnt", dao.best_course_list_like_cnt((int) content.get("post_idx")));
+				course_data.put("star_avg", dao.best_course_list_star_avg((int) content.get("post_idx")));
+				course_data.put("course_tag", dao.best_course_list_tag((int) content.get("post_idx")));
+				course_data.put("course_tag_area", dao.best_course_list_tag_area((int) content.get("post_idx")));
+				List<DetailRestaDTO> detail = dao.best_detail((int) content.get("post_idx"));
 				if (detail != null && !detail.isEmpty()) {
 					DetailRestaDTO first_detail = detail.get(0);
-					course_data.put("course_img", dao.course_list_img(first_detail.getDetail_idx()));
+					course_data.put("course_img", dao.best_course_list_img(first_detail.getDetail_idx()));
 				}
 				result_list.add(course_data);
 			}
@@ -323,22 +323,22 @@ public class MainService {
 	// 좋아요 높은 순서대로 코스 리스트 불러오기 (월간)
 	public Map<String, Object> monthly_best_list() {
 		Map<String, Object> resp = new HashMap<String, Object>();
-		List<CourseDTO> list = dao.monthly_best_list();
+		List<Map<String, Object>> list = dao.monthly_best_list();
 		List<Map<String, Object>> result_list = new ArrayList<Map<String, Object>>();
 		if (list != null) {
-			for (CourseDTO content : list) {
+			for (Map<String, Object> content : list) {
 				Map<String, Object> course_data = new HashMap<String, Object>();
 				course_data.put("course", content);
-				course_data.put("nickname", dao.course_list_nick(content.getUser_id()));
-				course_data.put("cmt_cnt", dao.course_list_cmt_cnt(content.getPost_idx()));
-				course_data.put("like_cnt", dao.course_list_like_cnt(content.getPost_idx()));
-				course_data.put("star_avg", dao.course_list_star_avg(content.getPost_idx()));
-				course_data.put("course_tag", dao.course_list_tag(content.getPost_idx()));
-				course_data.put("course_tag_area", dao.course_list_tag_area(content.getPost_idx()));
-				List<DetailRestaDTO> detail = dao.detail(content.getPost_idx());
+				course_data.put("nickname", dao.best_course_list_nick((String) content.get("user_id")));
+				course_data.put("cmt_cnt", dao.best_course_list_cmt_cnt((int) content.get("post_idx")));
+				course_data.put("like_cnt", dao.best_course_list_like_cnt((int) content.get("post_idx")));
+				course_data.put("star_avg", dao.best_course_list_star_avg((int) content.get("post_idx")));
+				course_data.put("course_tag", dao.best_course_list_tag((int) content.get("post_idx")));
+				course_data.put("course_tag_area", dao.best_course_list_tag_area((int) content.get("post_idx")));
+				List<DetailRestaDTO> detail = dao.best_detail((int) content.get("post_idx"));
 				if (detail != null && !detail.isEmpty()) {
 					DetailRestaDTO first_detail = detail.get(0);
-					course_data.put("course_img", dao.course_list_img(first_detail.getDetail_idx()));
+					course_data.put("course_img", dao.best_course_list_img(first_detail.getDetail_idx()));
 				}
 				result_list.add(course_data);
 			}
