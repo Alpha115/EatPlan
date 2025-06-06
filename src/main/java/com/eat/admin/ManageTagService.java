@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eat.dto.RestaurantDTO;
+import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagDTO;
 import com.eat.tags.TagRestDTO;
 
@@ -36,14 +37,17 @@ public class ManageTagService {
 		return result;
 	}
 
+	
+	/* area_tag_idx, city, dist, tag_name, cate_idx(1) */
+	
 	@Transactional
-	public Map<String, Object> addAreaTag(Map<String, String> tag) {
+	public Map<String, Object> addAreaTag(TagAreaDTO params) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		int row = 0;
-		boolean usable = overlayTag(tag.get("tag_name"));
+		boolean usable = overlayTag(params.getTag_name());
 		result.put("usable", usable);
 		if (usable) {
-			row = dao.addAreaTag(tag);
+			row = dao.addAreaTag(params);
 		}
 		if (row > 0) {
 			result.put("success", true);
@@ -90,9 +94,10 @@ public class ManageTagService {
 	}
 
 	public boolean addTagToResta(TagRestDTO tag_rest) {
-		int row=dao.addTagToResta(tag_rest);
-		return row>0;
+		int row = dao.addTagToResta(tag_rest);
+		return row > 0;
 	}
 
+	
 
 }
