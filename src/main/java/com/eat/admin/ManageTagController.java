@@ -38,12 +38,12 @@ public class ManageTagController {
 		return resp;
 	}
 	
-	// -------------- 지역태그추가(in process) -------------//
+	// --------------일반 지역태그추가(in process) -------------//
 	@PostMapping("/addAreaTag")
 	public Map<String, Object> addAreaTag(@RequestBody TagAreaDTO params){
 		resp=new HashMap<String, Object>();
-		boolean success=service.addAreaTag(params);
-		resp.put("success", success);
+		Map<String, Object> result=service.addAreaTag(params);
+		resp.put("result", result);
 		return resp;
 	}
 	
@@ -69,7 +69,7 @@ public class ManageTagController {
 		return resp;
 	}
 	
-	// -------------식당으로부터 태그 제거(tag_idx)---------------//
+	// -------------식당으로부터 태그 제거---------------//
 	@GetMapping("/restaTagDel/{resta_idx}/{tag_idx}")
 	public Map<String, Object> delRestaTag(@PathVariable String resta_idx, @PathVariable String tag_idx){
 		resp=new HashMap<String, Object>();
