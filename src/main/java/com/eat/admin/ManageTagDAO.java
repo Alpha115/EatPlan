@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.eat.dto.RestaurantDTO;
+import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagDTO;
 import com.eat.tags.TagRestDTO;
 
@@ -13,7 +14,7 @@ import com.eat.tags.TagRestDTO;
 public interface ManageTagDAO {
 
 	int addTag(int cate_idx, String isClass, String tag_name);
-	int addAreaTag(Map<String, String> tag);
+	int addAreaTag(TagAreaDTO params);
 
 	int overlayTag(String isClass, String tag_name);
 	int overlayAreaTag(String tag_name);
