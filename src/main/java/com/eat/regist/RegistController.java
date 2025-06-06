@@ -87,20 +87,13 @@ public class RegistController {
 		
 		CourseDTO content = req.getContent();
 	    List<DetailRestaDTO> content_detail_resta  = req.getContent_detail_resta();
-	    List<DetailRestaDTO> content_detail_resta_del  = req.getContent_detail_resta();
+	    List<DetailRestaDTO> content_detail_resta_del  = req.getContent_detail_resta_del();
 	    List<DetailCmtDTO> content_detail_cmt = req.getContent_detail_cmt();
-	    List<DetailCmtDTO> content_detail_cmt_del = req.getContent_detail_cmt();
+	    List<DetailCmtDTO> content_detail_cmt_del = req.getContent_detail_cmt_del();
 	    List<CourseTagDTO> tags = req.getTags();
 	    List<CourseTagDTO> tags_del = req.getTags_del();
 	    TimelineDTO time = req.getTime();
-	    
-	    log.info("삭제할 태그: " + tags_del.stream()
-	    .map(tag -> String.format("isClass=%s, idx=%d", tag.getIsClass(), tag.getIdx()))
-	    .collect(Collectors.joining(" | ")));
-	    log.info("태그: " + tags.stream()
-	    .map(tag -> String.format("isClass=%s, idx=%d", tag.getIsClass(), tag.getIdx()))
-	    .collect(Collectors.joining(" | ")));
-	    
+
 		boolean success = service.update(
 				content,
 				content_detail_resta,

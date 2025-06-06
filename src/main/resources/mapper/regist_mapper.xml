@@ -168,7 +168,7 @@
 
 	<!-- 코스 수정 세부일정-코멘트 삭제 -->
 	<delete id="delete_detail_cmt">
-		DELETE FROM detail_cmt WHERE detail_idx = #{param1}
+		DELETE FROM detail_comment WHERE detail_idx = #{param1}
 	</delete>
 
 	<!-- 코스 수정 코스태그 새로생성 -->
