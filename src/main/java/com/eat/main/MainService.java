@@ -134,34 +134,7 @@ public class MainService {
 		TimelineDTO timeline = dao.getTimelineDTO(post_idx);
 		List<DetailCmtDTO> cmtList = dao.getCmtDTOList(post_idx);
 		List<CourseTagDTO> tagList = dao.getCourseList(post_idx);
-		
-		List<TagDTO> tagListResult = new ArrayList<TagDTO>();
-		List<TagAreaDTO> tagAreaListResult = new ArrayList<TagAreaDTO>();
 
-		
-
-		if (tagList != null && !tagList.isEmpty()) {
-			for (CourseTagDTO tag : tagList) {
-			    int idx = tag.getIdx();
-			    String cls = tag.getIsClass();
-
-			    if ("tag".equals(cls)) {
-			        for (TagDTO t : tagListResult) {
-			            if (t.getTag_idx() == idx) {
-			                tag.setTag_name(t.getTag_name());
-			                break;
-			            }
-			        }
-			    } else if ("area_tag".equals(cls)) {
-			        for (TagAreaDTO t : tagAreaListResult) {
-			            if (t.getArea_tag_idx() == idx) {
-			                tag.setTag_name(t.getTag_name());
-			                break;
-			            }
-			        }
-			    }
-			}
-		}
 		RegistRequestDTO resp = new RegistRequestDTO();
 		
 		resp.setContent(course);
