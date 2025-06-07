@@ -1,6 +1,7 @@
 package com.eat.member;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -63,16 +64,23 @@ public class MemberService {
 	//프로필 업로드
 	@Transactional
 	public boolean profileUpload(MultipartFile files[], MemberDTO dto) {
+		int row = dao.profileUpload(dto);
 		if (files != null && files.length > 0) {
 			for (MultipartFile file : files) {
 				String fileSaved = fileSave(file);
 				if(fileSaved == null) return false;
 				
-				int newImgIdx = dao.saveProfileImg(fileSaved); // 사진 DB에 저장
+				//여기부터
+				Map<String, Object> param = new HashMap<>();
+				param.put("class", "profile");
+				param.put("new_filename", fileSaved);
+
+				int newImgIdx = dao.saveProfileImg(param);
+				//여기까지
 				dto.setImg_idx(newImgIdx);
 			}
 		}
-		return dao.profileUpload(dto);
+		return row > 0;
 	}
 
 	private String fileSave(MultipartFile file) {

@@ -34,10 +34,10 @@ public interface MemberDAO {
 	int updatePassword(@Param("pass")String pass, @Param("user_id") String user_id);
 
 	//프로필 설정
-	boolean profileUpload(MemberDTO dto);
+	int profileUpload(MemberDTO dto);
 	
 	//프로필 db저장
-	int saveProfileImg(String fileSaved);
+	int saveProfileImg(Map<String, Object> param);
 	
 	//user_id -> nickname으로 보이게 하는것
 	MemberDTO getMemberId(@Param("user_id") String user_id);

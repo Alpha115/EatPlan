@@ -83,8 +83,8 @@
 	<!-- 프로필 변경 -->
 	<insert id="saveProfileImg" parameterType="String"
 	useGeneratedKeys="true" keyProperty="img_idx"> 
-			INSERT INTO profile_img(file_name, upload_date)
-			VALUES (#{fileSaved}, NOW())
+			INSERT INTO photo (new_filename, class)
+    		VALUES (#{new_filename}, #{class})
 	</insert>
 	
 	<!-- 프로필 db저장 -->
