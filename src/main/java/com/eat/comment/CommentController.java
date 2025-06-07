@@ -52,7 +52,7 @@ public class CommentController {
 
 		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
 		
-		if (loginId.equals(params.get("user_id"))) {
+		if (loginId != null && !loginId.equals("") && loginId.equals(params.get("user_id"))) {
 			boolean success = service.comment_insert(params);
 			resp.put("success", success);
 		} else {
@@ -69,7 +69,7 @@ public class CommentController {
 		resp = new HashMap<String, Object>();
 		
 		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
-		if (loginId.equals(params.get("user_id"))) {
+		if (loginId != null && !loginId.equals("") && loginId.equals(params.get("user_id"))) {
 			boolean success = service.comment_update(params);
 			resp.put("success", success);
 		} else {
@@ -90,7 +90,7 @@ public class CommentController {
 		// user_id 어디감?
 		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
 		
-		if (!loginId.equals("")) {
+		if (loginId != null && !loginId.equals("")) {
 			boolean success = service.comment_del(comment_idx);
 			resp.put("success", success);
 		}

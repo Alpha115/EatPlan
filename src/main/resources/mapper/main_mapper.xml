@@ -272,6 +272,7 @@
 	<select id="search_course" resultType="com.eat.dto.CourseDTO">
 		SELECT p.post_idx,
 		m.nickname AS nickname,
+		p.user_id,
 		p.subject,
 		p.b_hit AS b_hit,
 		p.reg_date,
