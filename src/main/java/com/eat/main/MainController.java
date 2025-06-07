@@ -1,5 +1,6 @@
 package com.eat.main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +24,7 @@ import com.eat.dto.LikedDTO;
 import com.eat.dto.MainDTO;
 import com.eat.dto.RegistRequestDTO;
 import com.eat.dto.StarDTO;
+import com.eat.utils.JwtUtil;
 
 @CrossOrigin
 @RestController
@@ -99,12 +102,18 @@ public class MainController {
 	// 좋아요 누르기
 	@PostMapping(value="/like")
 	public Map<String, Object> like (
-			@RequestBody LikedDTO params){
+			@RequestBody LikedDTO params,
+			@RequestHeader Map<String, String> header){
 		resp = new HashMap<String, Object>();
 		
-		boolean success = service.like(params);
+		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+		boolean success = false;
 		
+		if (loginId !=null && !loginId.equals("") && loginId.equals(params.getUser_id())) {
+			success = service.like(params);
+		}
 		resp.put("success", success);
+		
 		return resp;
 	}
 	
@@ -116,12 +125,15 @@ public class MainController {
 		resp = new HashMap<String, Object>();
 		
 		log.info("받아온 좋아요상태 파람 : "+user_id + post_idx);
+		
 		boolean liked = false;
-		
-		liked = service.likeCheck(user_id, post_idx);
 
-		resp.put("liked", liked);
+		if (user_id != null && !user_id.equals("")) {
+			liked = service.likeCheck(user_id, post_idx);
+		}
 		
+		resp.put("liked", liked);
+
 		return resp;
 		
 	}
@@ -136,8 +148,12 @@ public class MainController {
 		
 	    String user_id = (String) body.get("user_id");
 	    List<Integer> cmtIdxList = (List<Integer>) body.get("cmt_idx_list");
-		
-	    List<Map<String, Object>> likeCheckCmt = service.likeCheckCmt(user_id, cmtIdxList);
+	    List<Map<String, Object>> likeCheckCmt = new ArrayList<>();
+	    
+	    if (user_id != null && !user_id.equals("")) {
+	    	likeCheckCmt = service.likeCheckCmt(user_id, cmtIdxList);
+		}
+
 	    
 	    resp.put("likeCheckCmt", likeCheckCmt);
 	    
@@ -149,12 +165,19 @@ public class MainController {
 	// 별점 주기
 	@PostMapping(value="/star")
 	public Map<String, Object> star (
-			@RequestBody StarDTO params){
+			@RequestBody StarDTO params,
+			@RequestHeader Map<String, String> header){
 		resp = new HashMap<String, Object>();
 		
-		boolean success = service.star(params);
+		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+		boolean success = false;
+		
+		if (loginId !=null && !loginId.equals("") && loginId.equals(params.getUser_id())) {
+			success = service.star(params);
+		}
 		
 		resp.put("success", success);
+		
 		return resp;
 	}
 

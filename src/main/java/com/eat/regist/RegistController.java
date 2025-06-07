@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +25,7 @@ import com.eat.dto.DetailCmtDTO;
 import com.eat.dto.DetailRestaDTO;
 import com.eat.dto.RegistRequestDTO;
 import com.eat.dto.TimelineDTO;
+import com.eat.utils.JwtUtil;
 
 @CrossOrigin
 @RestController
@@ -62,28 +64,17 @@ public class RegistController {
 		
 		return resp;
 	}
-	
-	  // 코스 수정 할 게시글 불러오기
-	  @GetMapping(value="/regist_update_content")
-	  public Map<String, Object> regist_update_content(
-			  @RequestParam int post_idx){
-	  
-	  resp = new HashMap<String, Object>();
-	  
-	  RegistRequestDTO content = service.regist_update_content(post_idx);
-	  
-	  resp.put("content", content);
-	  
-	  return resp;
-	  }
 	  
 	// 코스 수정
 	@PutMapping(value="/update/{post_idx}")
 	public Map<String, Object> course_update(
 			@PathVariable String post_idx,
-			@RequestBody RegistRequestDTO req){
+			@RequestBody RegistRequestDTO req,
+			@RequestHeader Map<String, String> header){
 		
 		resp = new HashMap<String, Object>();
+		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+		boolean success = false;
 		
 		CourseDTO content = req.getContent();
 	    List<DetailRestaDTO> content_detail_resta  = req.getContent_detail_resta();
@@ -94,14 +85,17 @@ public class RegistController {
 	    List<CourseTagDTO> tags_del = req.getTags_del();
 	    TimelineDTO time = req.getTime();
 
-		boolean success = service.update(
-				content,
-				content_detail_resta,
-				content_detail_resta_del,
-				content_detail_cmt,
-				content_detail_cmt_del,
-				tags, tags_del, time,
-				Integer.parseInt(post_idx));
+	    if (loginId != null && !loginId.equals("") && loginId.equals(content.getUser_id())) {
+			success = service.update(
+					content,
+					content_detail_resta,
+					content_detail_resta_del,
+					content_detail_cmt,
+					content_detail_cmt_del,
+					tags, tags_del, time,
+					Integer.parseInt(post_idx));
+		}
+
 		resp.put("success", success);
 		
 		return resp;
@@ -110,10 +104,16 @@ public class RegistController {
 	// 코스 삭제
 	@DeleteMapping (value="/delete")
 	public Map<String, Object> delete(
-			@RequestBody List<CourseDTO> del_idx){
+			@RequestBody List<CourseDTO> del_idx,
+			@RequestHeader Map<String, String> header){
 		
 		resp = new HashMap<String, Object>();
-		boolean success = service.delete(del_idx);
+		String loginId = (String) JwtUtil.readToken(header.get("authorization")).get("user_id");
+		boolean success = false;
+		
+		if (!loginId.equals("")) {
+			success = service.delete(del_idx);
+		}
 		resp.put("success", success);
 		return resp;
 	}

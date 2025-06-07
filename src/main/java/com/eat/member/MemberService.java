@@ -76,29 +76,29 @@ public class MemberService {
 	}
 
 	private String fileSave(MultipartFile file) {
-		String ori_fileName = file.getOriginalFilename();
-		String ext = "";
-		if (ori_fileName != null && ori_fileName.contains(".")) {
-			ext = ori_fileName.substring(ori_fileName.lastIndexOf("."));
-		}
-		
-		String new_fileName = UUID.randomUUID().toString()+ext;
-		
-		String imgDir = "c:/upload/";
-		File profilePath = new File(imgDir);
-		
-		if (!profilePath.exists()) {
-			profilePath.mkdirs(); //파일 경로 없다면~ 만들라
-		}
-		
-		try {
-			new File(profilePath, new_fileName);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		
-		return null;
+	    String ori_fileName = file.getOriginalFilename();
+	    String ext = "";
+	    if (ori_fileName != null && ori_fileName.contains(".")) {
+	        ext = ori_fileName.substring(ori_fileName.lastIndexOf("."));
+	    }
+
+	    String new_fileName = UUID.randomUUID().toString() + ext;
+	    String imgDir = "c:/upload/";
+	    File profilePath = new File(imgDir);
+
+	    if (!profilePath.exists()) {
+	        profilePath.mkdirs(); // 폴더가 없으면 생성
+	    }
+
+	    try {
+	        // 파일 저장
+	        File targetFile = new File(profilePath, new_fileName);
+	        file.transferTo(targetFile); // 실제 파일 저장
+	        return new_fileName;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 
 	

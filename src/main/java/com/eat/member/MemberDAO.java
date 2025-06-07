@@ -13,7 +13,10 @@ public interface MemberDAO {
 	
 	// 로그인
 	int login(Map<String, String> params);
-
+	
+	//관리자 계정여s
+	int authorization(String user_id);
+	
 	// 회원가입
 	int join(MemberDTO dto);
 	int joinTag(TagPreferDTO[] tags);

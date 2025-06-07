@@ -11,6 +11,11 @@
 		#{pass}
 	</select>
 	
+	<!-- 관리자 계정여 -->
+	<select id="authorization" parameterType="string" resultType="int">
+    SELECT admin FROM member WHERE user_id = #{user_id}
+</select>
+
 	<!-- user_id -> nickname으로 보이게 하는것 -->
 	 <select id="getMemberId"
             parameterType="String"
@@ -76,7 +81,7 @@
   
   
 	<!-- 프로필 변경 -->
-	<insert id="fileSave" parameterType="String"
+	<insert id="saveProfileImg" parameterType="String"
 	useGeneratedKeys="true" keyProperty="img_idx"> 
 			INSERT INTO profile_img(file_name, upload_date)
 			VALUES (#{fileSaved}, NOW())
