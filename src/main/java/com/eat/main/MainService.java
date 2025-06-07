@@ -100,7 +100,7 @@ public class MainService {
 				result_list.add(course_data);
 			}
 		}
-
+		
 		resp.put("list", result_list);
 		resp.put("page", this.page);
 		resp.put("pages", dao.pages(limit));

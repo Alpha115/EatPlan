@@ -5,7 +5,7 @@
 
 	<!-- 코스 불러오기 몸통 -->
 	<select id="course_list" resultType="com.eat.dto.CourseDTO">
-		<!-- SELECT p.post_idx
+		SELECT p.post_idx
 		,p.user_id
 		,p.subject
 		,p.b_hit
@@ -16,25 +16,25 @@
 		FROM post p
 		ORDER
 		BY ${param3}
+		LIMIT #{param2} OFFSET #{param1}
+		<!-- SELECT p.*,
+       IFNULL(l.like_cnt, 0) AS like_cnt,
+       IFNULL(s.star_avg, 0) AS star_avg
+		FROM post p
+		LEFT JOIN (
+		  SELECT post_idx, SUM(CAST(liked AS UNSIGNED)) AS like_cnt
+		  FROM liked
+		  WHERE class = 'course'
+		  GROUP BY post_idx
+		) l ON p.post_idx = l.post_idx
+		LEFT JOIN (
+		  SELECT post_idx, FLOOR(AVG(star)) AS star_avg
+		  FROM star
+		  GROUP BY post_idx
+		) s ON p.post_idx = s.post_idx
+		ORDER BY
+		  ${param3}
 		LIMIT #{param2} OFFSET #{param1} -->
-		SELECT p.*,
-         IFNULL(l.like_cnt, 0) AS like_cnt,
-         IFNULL(s.star_avg, 0) AS star_avg
-		  FROM post p
-		  LEFT JOIN (
-		    SELECT post_idx, COUNT(*) AS like_cnt
-		    FROM liked
-		    WHERE class = 'course'
-		    GROUP BY post_idx
-		  ) l ON p.post_idx = l.post_idx
-		  LEFT JOIN (
-		    SELECT post_idx, FLOOR(AVG(star)) AS star_avg
-		    FROM star
-		    GROUP BY post_idx
-		  ) s ON p.post_idx = s.post_idx
-		  ORDER BY
-		    ${param3}
-		  LIMIT #{param2} OFFSET #{param1}
 	</select>
 	
 	<!-- 전체 페이지 수 -->
