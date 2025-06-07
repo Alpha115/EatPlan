@@ -83,43 +83,6 @@ public class RegistService {
 		resp.put("pages", dao.pages(limit));
 		return resp;
 	}
-
-	
-	// 코스 수정 할 게시글 불러오기 
-	public RegistRequestDTO regist_update_content(int post_idx) {
-		
-		RegistRequestDTO resp = new RegistRequestDTO();
-		CourseDTO course = dao.course_content(post_idx);
-		TimelineDTO timeline = dao.course_timeline(post_idx);
-		List<DetailRestaDTO> restaList = dao.course_detail_resta(post_idx);
-		List<DetailCmtDTO> cmtList = dao.course_detail_cmt(post_idx);
-		List<CourseTagDTO> tagList = dao.course_tag_idx(post_idx);
-		List<TagDTO> tagListResult = new ArrayList<>();
-		List<TagAreaDTO> tagAreaListResult = new ArrayList<>();
-		
-		if (tagList != null && tagList.size() > 0) {
-			for (CourseTagDTO tag_info : tagList) {
-			    String isClass = tag_info.getIsClass();
-
-			    if ("area_tag".equals(isClass)) {
-			        tagAreaListResult.addAll(dao.course_tag_area(tag_info.getIdx()));
-			    } else if ("tag".equals(isClass)) {
-			        tagListResult.addAll(dao.course_tag(tag_info.getIdx()));
-			    }
-			}
-		}
-		
-		resp.setContent(course);
-		resp.setTime(timeline);
-		resp.setContent_detail_resta(restaList);
-		resp.setContent_detail_cmt(cmtList);
-		resp.setTags(tagList);
-		resp.setTag_name(tagListResult);
-		resp.setTag_name_area(tagAreaListResult);
-		
-		return resp;
-	}
-	 
 	
 	// 코스 수정
 	@Transactional

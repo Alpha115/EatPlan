@@ -26,15 +26,6 @@ public interface RegistDAO {
 	List<CourseDTO> regist_tmp_list(String user_id, int offset, int limit);
 	int regist_tmp_cnt(String user_id); // 코스 작성 임시저장 게시물 수
 	int pages(int limit); // 코스 작성 임시저장 불러오기 페이지
-
-	// 코스 수정 할 게시글 불러오기
-	CourseDTO course_content(int post_idx);
-	TimelineDTO course_timeline(int post_idx);
-	List<DetailRestaDTO> course_detail_resta(int post_idx);
-	List<DetailCmtDTO> course_detail_cmt(int post_idx);
-	List<CourseTagDTO> course_tag_idx(int post_idx);
-	List<TagAreaDTO> course_tag_area(int idx);
-	List<TagDTO> course_tag(int idx);
 	
 	// 코스 수정
 	int update(CourseDTO content, int post_idx); // 코스 수정 몸통

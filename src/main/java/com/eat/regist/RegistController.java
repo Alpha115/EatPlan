@@ -64,20 +64,6 @@ public class RegistController {
 		
 		return resp;
 	}
-	
-	  // 코스 수정 할 게시글 불러오기
-	  @GetMapping(value="/regist_update_content")
-	  public Map<String, Object> regist_update_content(
-			  @RequestParam int post_idx){
-	  
-	  resp = new HashMap<String, Object>();
-	  
-	  RegistRequestDTO content = service.regist_update_content(post_idx);
-	  
-	  resp.put("content", content);
-	  
-	  return resp;
-	  }
 	  
 	// 코스 수정
 	@PutMapping(value="/update/{post_idx}")
