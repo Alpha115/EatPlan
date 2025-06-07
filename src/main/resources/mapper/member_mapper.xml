@@ -81,7 +81,7 @@
   
   
 	<!-- 프로필 변경 -->
-	<insert id="fileSave" parameterType="String"
+	<insert id="saveProfileImg" parameterType="String"
 	useGeneratedKeys="true" keyProperty="img_idx"> 
 			INSERT INTO profile_img(file_name, upload_date)
 			VALUES (#{fileSaved}, NOW())
