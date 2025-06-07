@@ -10,16 +10,35 @@ public class RegistRequestDTO {
 	private CourseDTO content;
 	private TimelineDTO time;
 	private MemberDTO nickname;
-    private List<DetailRestaDTO> content_detail_resta;     
+    private List<DetailRestaDTO> content_detail_resta;
+    private List<DetailRestaDTO> content_detail_resta_del;
     private List<DetailCmtDTO> content_detail_cmt;
+    private List<DetailCmtDTO> content_detail_cmt_del;
     private List<CourseTagDTO> tags;
+    private List<CourseTagDTO> tags_del;
     private List<TagDTO> tag_name;
     private List<TagAreaDTO> tag_name_area;
     private List<LikedDTO> likeList;
     private List<StarDTO> starList;
     
-    
-   
+	public List<DetailRestaDTO> getContent_detail_resta_del() {
+		return content_detail_resta_del;
+	}
+	public void setContent_detail_resta_del(List<DetailRestaDTO> content_detail_resta_del) {
+		this.content_detail_resta_del = content_detail_resta_del;
+	}
+	public List<DetailCmtDTO> getContent_detail_cmt_del() {
+		return content_detail_cmt_del;
+	}
+	public void setContent_detail_cmt_del(List<DetailCmtDTO> content_detail_cmt_del) {
+		this.content_detail_cmt_del = content_detail_cmt_del;
+	}
+	public List<CourseTagDTO> getTags_del() {
+		return tags_del;
+	}
+	public void setTags_del(List<CourseTagDTO> tags_del) {
+		this.tags_del = tags_del;
+	}
 	public List<LikedDTO> getLikeList() {
 		return likeList;
 	}

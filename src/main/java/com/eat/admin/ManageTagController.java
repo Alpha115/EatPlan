@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eat.tags.TagAreaDTO;
 import com.eat.tags.TagRestDTO;
 
 @CrossOrigin
@@ -27,13 +28,6 @@ public class ManageTagController {
 		return resp;
 	}
 	
-	// -------------지역 태그 추가 ------------------//
-	@PostMapping("/addAreaTag")
-	public Map<String, Object> addAreaTag(@RequestBody Map<String, String> tag){
-		// keys : city, dist, tag_name
-		resp=service.addAreaTag(tag);
-		return resp;
-	}
 	
 	// -----------일반태그삭제, tag_name으로 받기---------------//
 	@PostMapping("/delTag")
@@ -43,6 +37,16 @@ public class ManageTagController {
 		resp.put("success", success);
 		return resp;
 	}
+	
+	// --------------일반 지역태그추가(in process) -------------//
+	@PostMapping("/addAreaTag")
+	public Map<String, Object> addAreaTag(@RequestBody TagAreaDTO params){
+		resp=new HashMap<String, Object>();
+		Map<String, Object> result=service.addAreaTag(params);
+		resp.put("result", result);
+		return resp;
+	}
+	
 	
 	// -------------지역태그삭제----------------//
 	@GetMapping("/delAreaTag/{tag}")
@@ -65,7 +69,7 @@ public class ManageTagController {
 		return resp;
 	}
 	
-	// -------------식당으로부터 태그 제거(tag_idx)---------------//
+	// -------------식당으로부터 태그 제거---------------//
 	@GetMapping("/restaTagDel/{resta_idx}/{tag_idx}")
 	public Map<String, Object> delRestaTag(@PathVariable String resta_idx, @PathVariable String tag_idx){
 		resp=new HashMap<String, Object>();

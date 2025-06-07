@@ -50,8 +50,6 @@ public interface MainDAO {
 	public List<DetailRestaDTO> getDetailRestaList(int post_idx);
 	public List<DetailCmtDTO> getCmtDTOList(int post_idx);
 	public List<CourseTagDTO> getCourseList(int post_idx);
-	List<TagDTO> course_tags(int idx);
-	List<TagAreaDTO> course_list_tags_area(int idx);
 	RestaurantDTO getRestaurantByIdx(int rIdx);
 	PhotoDTO getPhotoByImgIdx(int img_idx);
 	

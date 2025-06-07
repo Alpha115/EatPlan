@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
@@ -121,6 +122,7 @@ public class RegistService {
 	 
 	
 	// 코스 수정
+	@Transactional
 	public boolean update(
 			CourseDTO content,
 			List<DetailRestaDTO> content_detail_resta,
@@ -132,53 +134,51 @@ public class RegistService {
 			TimelineDTO time,
 			int post_idx) {
 		
-		int row = dao.update(content, post_idx);
-		row += dao.update_time(time, post_idx);
-		
+		int row = 0;
 		int d_row = 0;
 		int t_row = 0;
-        boolean success = false;
-        int detail_idx = 0;
+		boolean success = false;
+		
+		row += dao.update(content, post_idx);
+		row += dao.update_time(time, post_idx);
         
 		// 1) 세부일정-식당 삭제
-        if (detail_idx >0) {
+        if (content_detail_resta_del != null && !content_detail_resta_del.isEmpty()) {
             for (DetailRestaDTO d_resta : content_detail_resta_del) {
-            	detail_idx = d_resta.getDetail_idx();
-                dao.delete_detail_resta(detail_idx);
-    		}
-		}
+                d_row += dao.delete_detail_resta(d_resta.getDetail_idx());
+            }
+        }
         // 1) 세부일정-식당 새로 작성
         for (DetailRestaDTO d_resta : content_detail_resta) {
-            d_row += dao.update_detail_resta(d_resta, post_idx);
+        	d_row += dao.update_detail_resta(d_resta, post_idx);
         }
 
         // 2) 세부일정-코멘트 삭제
-        if (detail_idx>0) {
+        if (content_detail_cmt_del != null && !content_detail_cmt_del.isEmpty()) {
             for (DetailCmtDTO d_cmt : content_detail_cmt_del) {
-            	detail_idx = d_cmt.getDetail_idx();
-                dao.delete_detail_cmt(detail_idx);
-    		}
-		}
+            	d_row += dao.delete_detail_cmt(d_cmt.getDetail_idx());
+            }
+        }
         // 2) 세부일정-코멘트 새로 작성
         for (DetailCmtDTO d_cmt : content_detail_cmt) {
-            d_row += dao.update_detail_cmt(d_cmt, post_idx);
+        	d_row += dao.update_detail_cmt(d_cmt, post_idx);
         }
+        
         // 3) 코스태그 삭제
         if (tags_del != null) {
             for (CourseTagDTO t : tags_del) {
-                dao.delete_tags(t, post_idx);
+            	t_row += dao.delete_tags(t, post_idx);
             }
 		}
-        
         // 3) 코스태그 새로 작성
         for (CourseTagDTO t : tags) {
-            t_row += dao.update_tags(t, post_idx);
+        	t_row += dao.update_tags(t, post_idx);
         }
 
-        if (row > 1 && d_row > 0 && t_row >0) {
+        if (row + d_row + t_row >0) {
 			success = true;
 		}
-
+        
 		return success;
 		
 	}

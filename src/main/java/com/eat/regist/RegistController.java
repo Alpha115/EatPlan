@@ -3,6 +3,7 @@ package com.eat.regist;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,13 +87,13 @@ public class RegistController {
 		
 		CourseDTO content = req.getContent();
 	    List<DetailRestaDTO> content_detail_resta  = req.getContent_detail_resta();
-	    List<DetailRestaDTO> content_detail_resta_del  = req.getContent_detail_resta();
+	    List<DetailRestaDTO> content_detail_resta_del  = req.getContent_detail_resta_del();
 	    List<DetailCmtDTO> content_detail_cmt = req.getContent_detail_cmt();
-	    List<DetailCmtDTO> content_detail_cmt_del = req.getContent_detail_cmt();
+	    List<DetailCmtDTO> content_detail_cmt_del = req.getContent_detail_cmt_del();
 	    List<CourseTagDTO> tags = req.getTags();
-	    List<CourseTagDTO> tags_del = req.getTags();
+	    List<CourseTagDTO> tags_del = req.getTags_del();
 	    TimelineDTO time = req.getTime();
-		
+
 		boolean success = service.update(
 				content,
 				content_detail_resta,
