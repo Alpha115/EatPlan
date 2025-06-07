@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.eat.dto.CourseDTO;
 import com.eat.dto.CourseTagDTO;
@@ -130,6 +131,9 @@ public class MainService {
 
 		dao.setB_hit(post_idx);
 		CourseDTO course = dao.getCourseDTO(post_idx);
+		if (course == null) {
+		    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 post_idx 입니다: " + post_idx);
+		}
 		MemberDTO nickname = dao.getNickname(course.getUser_id());
 		TimelineDTO timeline = dao.getTimelineDTO(post_idx);
 		List<DetailCmtDTO> cmtList = dao.getCmtDTOList(post_idx);
