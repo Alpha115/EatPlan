@@ -43,13 +43,25 @@ public class MypageController {
 	}
 	
 	// 태그 불러오기
-	@PostMapping(value="/member_tag_list")
-	public Map<String, Object> member_tag_list(@RequestBody TagPreferDTO tagdto) {
-		resp = new HashMap<String, Object>();
-		List<TagPreferDTO> taglist = service.member_tag_list(tagdto.getUser_id());
-		resp.put("taglist", taglist);
-		return resp;
-	}
+//	@PostMapping(value="/member_tag_list")
+//	public Map<String, Object> member_tag_list(@RequestBody TagPreferDTO tagdto) {
+//		resp = new HashMap<String, Object>();
+//		List<TagPreferDTO> taglist = service.member_tag_list(tagdto.getUser_id());
+//		resp.put("taglist", taglist);
+//		return resp;
+//	}
+	@PostMapping("/member_tag_list")
+    public Map<String, Object> getMemberTagList(@RequestBody TagPreferDTO dto) {
+        Map<String, Object> resp = new HashMap<>();
+
+        List<TagPreferDTO> tagIdxList = service.member_tag_idx(dto.getUser_id());
+        resp.put("tagList", tagIdxList);
+
+        List<String> tagNames = service.member_tag_name(dto.getUser_id());
+        resp.put("tagnames", tagNames);
+
+        return resp;
+    }
 
 	// 회원정보 수정
 	@PutMapping(value = "/member_update")

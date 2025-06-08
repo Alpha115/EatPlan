@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -248,5 +249,42 @@ public class MypageService {
 		int row = dao.mypage_updatePassword(user_id, existing_pass, new_pass);
 		return row > 0;
 	}
+
+	// 유저가 선택한 태그 이름 조회 (아래 두 개)
+	public List<TagPreferDTO> member_tag_idx(String user_id) {
+		return dao.member_tag_idx(user_id);
+	}
+
+	public List<String> member_tag_name(String user_id) {
+	    List<TagPreferDTO> tagPreferList = dao.member_tag_idx(user_id);
+
+	    if (tagPreferList == null || tagPreferList.isEmpty()) {
+	        return new ArrayList<>();
+	    }
+
+	    // int 타입 idx를 기반으로 리스트 생성
+	    List<Integer> areaTagIdxs = new ArrayList<>();
+	    List<Integer> generalTagIdxs = new ArrayList<>();
+
+	    for (TagPreferDTO tag : tagPreferList) {
+	        if ("지역".equals(tag.getIsClass())) {
+	            areaTagIdxs.add(tag.getIdx()); // getIdx()는 int 반환
+	        } else {
+	            generalTagIdxs.add(tag.getIdx());
+	        }
+	    }
+
+	    List<String> result = new ArrayList<>();
+
+	    if (!areaTagIdxs.isEmpty()) {
+	        result.addAll(dao.getTagNamesFromTagArea(areaTagIdxs));
+	    }
+	    if (!generalTagIdxs.isEmpty()) {
+	        result.addAll(dao.getTagNamesFromTag(generalTagIdxs));
+	    }
+
+	    return result;
+	}
+
 
 }

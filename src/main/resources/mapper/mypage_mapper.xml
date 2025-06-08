@@ -12,8 +12,8 @@
 			,email
 			,bio
 			,location
-			,withdraw
-		FROM member m WHERE user_id = #{user_id} and withdraw = false
+			,img_idx
+		FROM member m WHERE user_id = #{user_id}
 	</select>
 	
 	<!-- 태그 불러오기 -->
@@ -141,6 +141,46 @@
     		WHERE user_id = #{user_id}
       	AND pass = #{existing_pass}
 	</update>
+	
+	<!-- 유저가 선택한 태그 이름 조회 (아래 세 개) -->
+	<select id="member_tag_idx" resultType="com.eat.dto.TagPreferDTO">
+		SELECT idx, isClass, user_id FROM tag_prefer tp 
+			WHERE user_id = #{user_id}
+	</select>
+	
+	<!-- <select id="member_tag_name" resultType="string">
+		<choose>
+    <when test="isClass == '지역'">
+      SELECT tag_area_name FROM tag_area WHERE area_tag_idx IN
+      <foreach collection="tagIdxList" item="idx" open="(" separator="," close=")">
+        #{idx}
+      </foreach>
+    </when>
+    <otherwise>
+      SELECT tag_name FROM tag WHERE tag_idx IN
+      <foreach collection="tagIdxList" item="idx" open="(" separator="," close=")">
+        #{idx}
+      </foreach>
+    </otherwise>
+  </choose>
+	</select> -->
+	
+	<select id="getTagNamesFromTagArea" resultType="string" parameterType="list">
+	    SELECT tag_name FROM tag_area
+	    WHERE area_tag_idx IN
+	    <foreach collection="list" item="idx" open="(" separator="," close=")">
+	        #{idx}
+	    </foreach>
+	</select>
+	
+	<select id="getTagNamesFromTag" resultType="string" parameterType="list">
+	    SELECT tag_name FROM tag
+	    WHERE tag_idx IN
+	    <foreach collection="list" item="idx" open="(" separator="," close=")">
+	        #{idx}
+	    </foreach>
+	</select>
+
 	
 	
 </mapper>
