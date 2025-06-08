@@ -118,12 +118,31 @@ public class MypageController {
 		return service.getPhoto(img_idx, "photo");
 	}
 	
-	// 태그 수정
+	// 태그 수정 (안 쓸 것 같아요)
 	@PostMapping(value = "/member_tag_prefer_update")
 	public Map<String, Object> member_tag_prefer_update(@RequestBody Map<String, List<String>> params,
 			@RequestParam String user_id) {
 		resp = new HashMap<String, Object>();
 		boolean success = service.member_tag_prefer_update(params, user_id);
+		resp.put("success", success);
+		return resp;
+	}
+	
+	// 마이페이지 태그 삭제
+	@DeleteMapping(value = "/member_tag_prefer_delete")
+	public Map<String, Object> member_tag_prefer_delete(@RequestBody MypageDTO dto) {
+	    String user_id = dto.getUser_id();
+	    boolean success = service.member_tag_prefer_delete(user_id);
+	    Map<String, Object> resp = new HashMap<>();
+	    resp.put("success", success);
+	    return resp;
+	}
+	
+	// 마이페이지 태그 추가
+	@PostMapping(value = "/member_tag_prefer_insert")
+	public Map<String, Object> member_tag_prefer_insert(@RequestBody Register dto) {
+		resp = new HashMap<String, Object>();
+		boolean success = service.member_tag_prefer_insert(dto);
 		resp.put("success", success);
 		return resp;
 	}
@@ -167,6 +186,28 @@ public class MypageController {
 	    resp.put("success", success);
 		return resp;
 	}
+	
+}
+
+//멤버와 태그목록을 동시에받는거
+class Register {
+	
+	private TagPreferDTO[] tags; // 3개 배열로 받음
+
+
+	public TagPreferDTO[] getTags() {
+		return tags;
+	}
+
+	public void setTags(TagPreferDTO[] tags) {
+		this.tags = tags;
+	}
+
+	
+	
+	
+	
+	
 	
 }
 	

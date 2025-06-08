@@ -285,6 +285,18 @@ public class MypageService {
 
 	    return result;
 	}
+	
+	// 마이페이지 태그 추가
+	public boolean member_tag_prefer_insert(Register dto) {
+		int row = dao.member_tag_prefer_insert(dto);
+		return row > 0 ? true : false;
+	}
+	
+	// 마이페이지 태그 삭제
+	public boolean member_tag_prefer_delete(String user_id) {
+		int row = dao.member_tag_prefer_delete(user_id);
+		return row > 0 ? true : false;
+	}
 
 
 }
