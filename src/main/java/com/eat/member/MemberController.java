@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -122,6 +123,19 @@ public class MemberController {
 		resp.put("success", success);
 
 		return resp;
+	}
+	
+	// 회원가입 + 이미지 저장 한 번에
+	@PostMapping("/joinWithImage")
+	public Map<String, Object> joinWithImage(
+	    @RequestPart(value = "files", required = false) MultipartFile[] files,
+	    @RequestPart("dto") MemberDTO dto,
+	    @RequestPart("tags") TagPreferDTO[] tags
+	) {
+	    resp = new HashMap<>();
+	    boolean success = service.joinWithImage(dto, tags, files);
+	    resp.put("success", success);
+	    return resp;
 	}
 
 }

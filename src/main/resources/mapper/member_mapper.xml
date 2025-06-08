@@ -31,7 +31,7 @@
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.eat.dto.MemberDTO">
 		INSERT INTO member (
-		user_id, pass, nickname, email, bio, location, admin
+		user_id, pass, nickname, email, bio, location, admin, img_idx
 		)VALUES(
 		#{user_id}
 		,#{pass}
@@ -40,6 +40,7 @@
 		,#{bio}
 		,#{location}
 		,false
+		,#{img_idx}
 		)
 	</insert>
 	
@@ -82,7 +83,7 @@
   
 	<!-- 프로필 변경 -->
 	<insert id="saveProfileImg" parameterType="String"
-	useGeneratedKeys="true" keyProperty="img_idx"> 
+	useGeneratedKeys="true" keyProperty="img_idx" keyColumn="img_idx"> 
 			INSERT INTO photo (new_filename, class)
     		VALUES (#{new_filename}, #{class})
 	</insert>

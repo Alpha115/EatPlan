@@ -1,6 +1,7 @@
 package com.eat.member;
 
 import java.io.File;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eat.dto.MemberDTO;
+import com.eat.dto.TagPreferDTO;
 
 @Service
 public class MemberService {
@@ -69,14 +71,10 @@ public class MemberService {
 			for (MultipartFile file : files) {
 				String fileSaved = fileSave(file);
 				if(fileSaved == null) return false;
-				
-				//여기부터
 				Map<String, Object> param = new HashMap<>();
 				param.put("class", "profile");
 				param.put("new_filename", fileSaved);
-
 				int newImgIdx = dao.saveProfileImg(param);
-				//여기까지
 				dto.setImg_idx(newImgIdx);
 			}
 		}
@@ -107,6 +105,48 @@ public class MemberService {
 	        e.printStackTrace();
 	        return null;
 	    }
+	}
+
+	public boolean joinWithImage(MemberDTO dto, TagPreferDTO[] tags, MultipartFile[] files) {
+		// 1. 이미지 먼저 저장 (img_idx 확보)
+	    if (files != null && files.length > 0) {
+	        for (MultipartFile file : files) {
+	            String savedFile = fileSave(file);
+	            if (savedFile == null) return false;
+
+	            Map<String, Object> param = new HashMap<>();
+	            param.put("class", "profile");
+	            param.put("new_filename", savedFile);
+	            dao.saveProfileImg(param);
+	            
+	            Object rawImgIdx = param.get("img_idx");
+	            log.info(">>>> img_idx value: {}", rawImgIdx);
+	            log.info(">>>> img_idx type: {}", rawImgIdx.getClass().getName());
+
+	            if (rawImgIdx instanceof BigInteger) {
+	                dto.setImg_idx(((BigInteger) rawImgIdx).intValue());
+	            } else if (rawImgIdx instanceof Integer) {
+	                dto.setImg_idx((Integer) rawImgIdx);
+	            } else if (rawImgIdx instanceof Long) {
+	                dto.setImg_idx(((Long) rawImgIdx).intValue());
+	            } else {
+	                throw new IllegalArgumentException("지원되지 않는 img_idx 타입: " + rawImgIdx.getClass());
+	            }
+	            
+//	            Integer imgIdx = (Integer) param.get("img_idx");
+//	            if (imgIdx == null) return false;
+//
+//	            dto.setImg_idx(imgIdx);
+	        }
+	    }
+
+	    // 2. 회원 저장 (img_idx 포함)
+	    int row = dao.join(dto);
+
+	    // 3. 태그 저장
+	    row += dao.joinTag(tags);
+
+	    return row > tags.length;
 	}
 
 	
