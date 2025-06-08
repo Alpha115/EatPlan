@@ -60,6 +60,20 @@
 		</foreach>
 	</insert>
 	
+	<!-- 마이페이지 태그 추가 (사용 중) -->
+	<insert id="member_tag_prefer_insert" parameterType="com.eat.dto.TagPreferDTO">
+		INSERT INTO tag_prefer (idx, isClass, user_id) VALUES
+		<foreach collection="tags" item="tag" separator=",">
+			 (#{tag.idx}, #{tag.isClass}, #{tag.user_id})
+		</foreach>
+	</insert>
+	
+	<!-- 마이페이지 태그 삭제 (사용 중) -->
+	<delete id="member_tag_prefer_delete">
+		DELETE FROM
+		tag_prefer where user_id = #{param1}
+	</delete>
+	
 	<!-- 프로필 변경  -->
 	<update id="profile_update" parameterType="com.eat.dto.MypageDTO">
 	update member
