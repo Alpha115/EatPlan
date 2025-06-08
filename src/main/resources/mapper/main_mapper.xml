@@ -467,8 +467,10 @@
 
 	<!-- filename return -->
 	<select id="findFileName" resultType="string">
-		SELECT new_filename FROM
-		photo WHERE img_idx=#{param1}
+		SELECT new_filename 
+		    FROM photo 
+		    WHERE img_idx=#{param1}
+		    LIMIT 1
 	</select>
 	
 	<!-- 좋아요 높은 순서대로 코스 리스트 불러오기 (주간) -->
