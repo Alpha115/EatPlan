@@ -66,4 +66,11 @@ public interface MypageDAO {
 	// 마이페이지 비밀번호 변경 (기존 비밀번호, 새 비밀번호)
 	int mypage_updatePassword(String user_id, String existing_pass, String new_pass);
 
+	// 유저가 선택한 태그 이름 조회 (아래 두 개)
+	List<TagPreferDTO> member_tag_idx(String user_id);
+
+	List<String> getTagNamesFromTagArea(List<Integer> areaTagIdxList);
+
+    List<String> getTagNamesFromTag(List<Integer> generalTagIdxList);
+
 }
