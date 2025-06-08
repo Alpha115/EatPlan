@@ -144,7 +144,7 @@
 		p.subject,
 		p.b_hit,
 		p.reg_date,
-		p.`public`,
+		p.`public` AS isPublic,
 		p.blind,
 		p.tmp,
 		p.post_cmt,
@@ -295,6 +295,8 @@
 		LEFT JOIN member m ON p.user_id = m.user_id
 
 		<where>
+
+			p.tmp = false
 
 			<!-- 제목 또는 닉네임이 있을 경우 조건 추가 -->
 			<if

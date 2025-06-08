@@ -35,6 +35,17 @@ public class CourseDTO {
 	private int total_comment_count; // 댓글 수
 	private double star_average; // 별점 평균
 	
+	
+	
+	
+	public boolean isPublic() {
+		return isPublic;
+	}
+
+	public void setIsPublic(boolean isPublic) {
+		this.isPublic = isPublic;
+	}
+
 	public List<LikedDTO> getLikeList() {
 		return likeList;
 	}
@@ -128,14 +139,6 @@ public class CourseDTO {
 
 	public void setTags(List<CourseTagDTO> tags) {
 		this.tags = tags;
-	}
-
-	public boolean isPublic() {
-		return isPublic;
-	}
-
-	public void setPublic(boolean isPublic) {
-		this.isPublic = isPublic;
 	}
 
 	public String getPost_cmt() {

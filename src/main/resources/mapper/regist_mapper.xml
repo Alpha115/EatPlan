@@ -64,7 +64,8 @@
 		SET
 		subject = #{content.subject},
 		post_cmt = #{content.post_cmt},
-		public = #{content.isPublic}
+		public = #{content.isPublic},
+		tmp = #{content.tmp}
 		WHERE post_idx = #{param2}
 	</update>
 
