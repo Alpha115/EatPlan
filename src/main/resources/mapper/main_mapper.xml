@@ -301,7 +301,7 @@
 			<!-- 제목 또는 닉네임이 있을 경우 조건 추가 -->
 			<if
 				test="(subject != null and subject != '') or (nickname != null and nickname != '')">
-				(
+				AND (
 				<if test="subject != null and subject != ''">
 					p.subject LIKE CONCAT('%', #{subject}, '%')
 				</if>
