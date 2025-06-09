@@ -69,18 +69,19 @@ public class AdTagService {
 
 		String cate = cate_name.getCate_name();
 		int cate_idx = cate_name.getCate_idx();
-		String tag_area_name = tag_area.getTag_name();
-		String tag_name = tag.getTag_name();
+
 		int row = 0;
 
 		if (cate != null) {
 			if (cate.equals("지역")) {
+				String tag_area_name = tag_area.getTag_name();
 				int area_overlay = dao.tag_area_overlay(tag_area_name);
 				if (area_overlay == 0) {
 					tag_area.setCate_idx(cate_idx);
 					row = dao.adtag_write_area(tag_area);
 				}
 			} else {
+				String tag_name = tag.getTag_name();
 				int tag_overlay = dao.tag_overlay(tag_name);
 				if (tag_overlay == 0) {
 					tag.setCate_idx(cate_idx);
@@ -117,6 +118,20 @@ public class AdTagService {
 		String areaTag=dao.getAreaTag(resta_name);
 		tags.add(areaTag);
 		return tags;
+	}
+
+	// 지역태그 대분류 삭제
+	public boolean adtag_del_city(String city) {
+
+		int row = dao.adtag_del_city(city);
+		return row > 0;
+	}
+
+	// 지역태그 중분류 삭제
+	public boolean adtag_del_dist(String dist) {
+		
+		int row = dao.adtag_del_dist(dist);
+		return row > 0;
 	}
 }
 

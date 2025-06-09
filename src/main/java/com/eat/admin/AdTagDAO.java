@@ -40,7 +40,13 @@ public interface AdTagDAO {
 	ArrayList<String> getDefaultTags(String resta_name);
 
 	// 식당의 지역 태그를 불러오는 함수(지역태그의 정보 전부를 불러와야 하면 String이 아니라 DTO로 반환
-	String getAreaTag(String resta_name);	
+	String getAreaTag(String resta_name);
+
+	// 대분류 삭제
+	int adtag_del_city(String city);
+
+	// 중분류 삭제
+	int adtag_del_dist(String dist);	
 	
 	
 

@@ -105,6 +105,18 @@
 	WHERE area_tag_idx = #{area_tag_idx}
 </delete>
 
+<!-- 대분류 삭제 -->
+<delete id="adtag_del_city">
+	DELETE FROM tag_area
+	WHERE city = #{params}
+</delete>
+
+<!-- 중분류 삭제 -->
+<delete id="adtag_del_dist">
+	DELETE FROM tag_area
+	WHERE dist = #{params}
+</delete>
+
 <!-- 태그 삭제 -->
 <delete id="adtag_del">
 	DELETE FROM tag

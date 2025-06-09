@@ -3,6 +3,8 @@ package com.eat.admin;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eat.tags.TagAreaDTO;
@@ -26,6 +29,7 @@ public class AdTagController {
 	AdTagService service;
 
 	Map<String, Object> resp = null;
+	Logger log = LoggerFactory.getLogger(getClass());
 
 	// (관리자 페이지)식당의 리스트를 불러와 페이징처리하는 함수입니다.
 	@GetMapping("/adtag_restaList/{page}/{sort}")
@@ -81,6 +85,8 @@ public class AdTagController {
 		TagCateDTO cate_name = req.getCate_name();
 		TagAreaDTO tag_area = req.getTag_area();
 		TagDTO tag = req.getTag();
+		
+		log.info("받아온 파람 : "+cate_name.getCate_name()+cate_name.getCate_idx()+tag_area.getTag_name());
 
 		boolean success = service.adtag_write(cate_name, tag_area, tag);
 
@@ -106,7 +112,25 @@ public class AdTagController {
 		resp.put("success", success);
 		return resp;
 	}
+	
+	// 지역태그 대분류 삭제
+	@DeleteMapping("/adtag_del_city")
+	public Map<String, Object> adtag_del_city(@RequestBody Map<String, String> params){
+		resp = new HashMap<String, Object>();
+		boolean success = service.adtag_del_city(params.get("city"));
+		resp.put("success", success);
+		return resp;
+	}
+	
+	// 지역태그 중분류 삭제
+	@DeleteMapping("/adtag_del_dist")
+	public Map<String, Object> adtag_del_dist(@RequestBody Map<String, String> params){
+		resp = new HashMap<String, Object>();
 
+		boolean success = service.adtag_del_dist(params.get("dist"));
+		resp.put("success", success);
+		return resp;
+	}
 }
 
 
