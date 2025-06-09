@@ -35,15 +35,23 @@ public class ReportController {
 
 	// 신고글 작성
 	@PostMapping(value="/report_write")
-	public Map<String, Object> report_write(
-			@ModelAttribute ReportDTO content){
-		
-		resp = new HashMap<String, Object>();
-		
-		boolean success = service.report_write(content);
-		resp.put("success", success);
-		
-		return resp;
+	public Map<String, Object> report_write(@ModelAttribute ReportDTO content) {
+	    resp = new HashMap<>();
+
+	    if (content.getSuspect_id() != null && !content.getSuspect_id().isEmpty()) {
+	        String suspectUserId = service.getUserIdByNickname(content.getSuspect_id());
+	        if (suspectUserId != null) {
+	            // suspect_id는 닉네임이므로 → 진짜 id로 변환하고 원래 닉네임도 저장
+	            content.setSuspect_nickname(content.getSuspect_id());
+	            content.setSuspect_id(suspectUserId);
+	        }
+	    }
+
+	    // 이건 if문 밖에 있어야 무조건 저장 로직 실행됨
+	    boolean success = service.report_write(content);
+	    resp.put("success", success);
+
+	    return resp;
 	}
 	
 	// 신고 목록 불러오기
@@ -70,6 +78,7 @@ public class ReportController {
 		resp = new HashMap<String, Object>();
 		
 		
+		
 		//신고 상세보기 - 몸통
 		ReportDTO detail = service.report_detail(report_idx);
 		if (detail == null) {
@@ -90,6 +99,9 @@ public class ReportController {
 	        resp.put("error", "신고 정보가 올바르지 않습니다.");
 	        return resp;
 	    }
+		
+		log.info("suspect_id: " + detail.getSuspect_id());
+	    log.info("suspect_nickname: " + detail.getSuspect_nickname());
 		
 		//신고 상세보기 - 분류
 		switch (isClass) {

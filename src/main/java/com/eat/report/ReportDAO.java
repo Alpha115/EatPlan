@@ -48,6 +48,8 @@ public interface ReportDAO {
 	// 신고 처리상태 변경
 	int report_done(String report_idx, String done);
 
+	String getUserIdByNickname(String suspect_id);
+
 	
 
 

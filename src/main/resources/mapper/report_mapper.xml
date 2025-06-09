@@ -24,6 +24,13 @@
   LIMIT #{param2} OFFSET #{param1}
 </select>
 
+<select id="getUserIdByNickname" resultType="String">
+    SELECT user_id
+    FROM member
+    WHERE nickname = #{param1}
+</select>
+
+
 <!-- 신고 글 쓰기 -->
  <insert id="report_write" parameterType="com.eat.dto.ReportDTO"
         useGeneratedKeys="true" keyColumn="report_idx" keyProperty="report_idx">

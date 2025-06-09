@@ -144,4 +144,8 @@ public class ReportService {
 		int row = dao.report_done(report_idx, done);
 		return row > 0;
 	}
+
+	public String getUserIdByNickname(String suspect_id) {
+		return dao.getUserIdByNickname(suspect_id);
+	}
 }
