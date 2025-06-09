@@ -6,66 +6,71 @@
 <!-- 신고목록 불러오기 -->
 <select id="report_list" resultType="com.eat.dto.ReportDTO">
 	 SELECT
-            r.report_idx,
-         r.reporter_id,
-         p.nickname  AS reporter_nickname,   <!-- 신고자 닉네임 JOIN-->
-         r.suspect_id,
-         m.nickname  AS suspect_nickname, <!-- 닉네임 컬럼 추가 -->
-            r.subject,
-            r.`class`   AS isClass,
-            r.report_date,
-            r.done,
-            r.`public`  AS isPublic,
-            r.img_idx
-        FROM report r
-        LEFT JOIN member p  ON r.reporter_id = p.user_id   <!-- reporter 테이블 alias p -->
-      LEFT JOIN member m  ON r.suspect_id   = m.user_id
-        LIMIT #{param2} OFFSET #{param1}
+    r.report_idx,
+    r.reporter_id,
+    p.nickname   AS reporter_nickname,
+    r.suspect_id,
+    m.nickname   AS suspect_nickname,
+    r.subject,
+    r.`class`    AS isClass,
+    r.report_date,
+    r.done,
+    r.`public`   AS isPublic,
+    r.img_idx
+  FROM report r
+    LEFT JOIN member p ON r.reporter_id = p.user_id
+    LEFT JOIN member m ON r.suspect_id  = m.user_id
+  ORDER BY r.report_date DESC   <!-- 이 줄을 추가 -->
+  LIMIT #{param2} OFFSET #{param1}
 </select>
 
 <!-- 신고 글 쓰기 -->
-<insert id="report_write" parameterType="com.eat.dto.ReportDTO"
-	useGeneratedKeys="true" keyColumn="report_idx" keyProperty="report_idx">
-	INSERT INTO report 
-	(suspect_id, 
-	reporter_id,
-	 <if test = "img_idx  !=null">
-	 img_idx,</if> 
-	 subject, 
-	 content, 
-	 `class`, 
-	 `public`)
-	VALUES 
-	(#{suspect_id}, 
-	#{reporter_id}, 
-	<if test = "img_idx  !=null">
-	#{img_idx}
-	,</if> 
-	#{subject}, 
-	#{content}, 
-	#{isClass}, 
-	#{isPublic})
+ <insert id="report_write" parameterType="com.eat.dto.ReportDTO"
+        useGeneratedKeys="true" keyColumn="report_idx" keyProperty="report_idx">
+  INSERT INTO report (
+      suspect_id,
+      reporter_id,
+  <if test="img_idx  != null">
+      img_idx,
+  </if>
+      subject,
+      content,
+      `class`,
+      `public`,
+      reported_idx       <!-- 이 줄을 추가 -->
+  ) VALUES (
+      #{suspect_id},
+      #{reporter_id},
+  <if test="img_idx  != null">
+      #{img_idx},
+  </if>
+      #{subject},
+      #{content},
+      #{isClass},
+      #{isPublic},
+      #{reported_idx}    <!-- 이 줄도 추가 -->
+  )
 </insert>
 
 <!-- 신고 사진 저장 -->
-<insert id="saveReportImg" parameterType="map"
-	useGeneratedKeys="true" keyColumn="img_idx" keyProperty="img_idx">
-	INSERT INTO photo (class, new_filename)
-	VALUES ('report', #{new_filename})
+<insert id="saveReportImg" parameterType="com.eat.dto.PhotoDTO"
+        useGeneratedKeys="true" keyColumn="img_idx" keyProperty="img_idx">
+  INSERT INTO photo (`class`, new_filename)
+  VALUES (#{photo_class}, #{new_filename})
 </insert>
 
 <!-- 신고 상세보기 몸통-->
 <select id="report_detail" resultType="com.eat.dto.ReportDTO">
-	 SELECT
-             r.reporter_id,
-         p.nickname AS reporter_nickname,
+	  SELECT
+         r.reporter_id,
+         p.nickname            AS reporter_nickname,
          r.suspect_id,
-         m.nickname AS suspect_nickname, <!-- 닉네임 추가 -->
-            r.subject,
-            r.content,
-            r.reported_idx,
-            r.reporter_id,
-            r.`class` AS isClass,
+         m.nickname            AS suspect_nickname,
+         r.subject,
+         r.content,
+         r.reported_idx,
+         r.img_idx,  
+         r.`class` AS isClass,
             r.done
         FROM report r
         LEFT JOIN member p ON r.reporter_id = p.user_id
@@ -110,10 +115,13 @@
 
 <!-- 신고 상세보기 -이미지 -->
 <select id="photo" resultType="com.eat.dto.PhotoDTO">
-	SELECT
-		new_filename
-	FROM photo
-	WHERE img_idx = #{param1} AND class = 'report'
+  SELECT
+    img_idx,
+    `class`      AS photo_class,
+    new_filename
+  FROM photo
+  WHERE img_idx = #{param1}
+    AND `class` = 'report'
 </select>
 
 <!-- 히스토리 작성 -->

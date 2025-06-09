@@ -41,9 +41,15 @@ public class MemberController {
 			
 			Map<String, Object> resp = new HashMap<String, Object>();
 			MemberDTO member = service.getMemberId(user_id);
+			if(member == null) {
+				resp.put("success", false);
+				resp.put("err", "해당 사용자가 존재하지 않습니다.");
+				return resp;
+			}
 			
-			resp.put(user_id, member.getUser_id());
+			resp.put("user_id", member.getUser_id());
 			resp.put("nickname", member.getNickname());
+			resp.put("success", true);
 			
 			return resp;
 		}

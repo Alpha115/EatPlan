@@ -83,7 +83,8 @@ public class ReportController {
 		
 		log.info("신고받은 idx : "+reported_idx);
 		log.info("신고 분류 : "+isClass);
-
+		log.info("이미지 idx : " + img_idx);
+		
 		if (isClass == null || reported_idx == null) {
 	        log.error("신고글 정보 누락: isClass=" + isClass + ", reported_idx=" + reported_idx);
 	        resp.put("error", "신고 정보가 올바르지 않습니다.");

@@ -44,9 +44,12 @@ public interface ReportDAO {
 	int his_pages(int content_cnt, int report_idx);
 
 	// 신고 이미지 저장
-	int saveReportImg(Map<String, Object> param);
+	int saveReportImg(PhotoDTO photo);
 
 	// 신고 처리상태 변경
 	int report_done(String report_idx, String done);
+
+	
+
 
 }

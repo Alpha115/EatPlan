@@ -2,6 +2,7 @@ package com.eat.report;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eat.dto.CourseDTO;
@@ -26,27 +28,31 @@ public class ReportService {
 	private int content_cnt = 10;
 
 	// 신고 글 쓰기
+	@Transactional
 	public boolean report_write(ReportDTO content) {
+	    MultipartFile[] files = content.getFiles();
 
-		MultipartFile[] files = content.getFiles();
-		
-		if (files != null && files.length > 0) {
-			for (MultipartFile file : files) {
-				String fileSaved = fileSave(file);
-				
-				Map<String, Object> param = new HashMap<String, Object>();
-				param.put("new_filename", fileSaved);
-				
-				int imgIdx = dao.saveReportImg(param); // 사진 DB에 저장
-				content.setImg_idx(imgIdx);
-			}
-		}else {
-			content.setImg_idx(null);
-		}
-		
-		int row = dao.report_write(content);
-		
-		return row>0;
+	    if (files != null && files.length > 0) {
+	        for (MultipartFile file : files) {
+	            String fileSaved = fileSave(file);
+
+	            // ➜ PhotoDTO 로 바꿔서
+	            PhotoDTO photo = new PhotoDTO();
+	            photo.setPhoto_class("report");     // 반드시 여기서 분류를 세팅
+	            photo.setNew_filename(fileSaved);
+
+	            // INSERT 후 photo.getImg_idx() 에 자동 채워짐
+	            dao.saveReportImg(photo);
+
+	            // ReportDTO 에 세팅
+	            content.setImg_idx(photo.getImg_idx());
+	        }
+	    } else {
+	        content.setImg_idx(null);
+	    }
+
+	    return dao.report_write(content) > 0;
+
 	}
 	
 	// 신고 목록 불러오기
