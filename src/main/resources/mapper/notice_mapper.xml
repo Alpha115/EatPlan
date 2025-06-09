@@ -3,48 +3,63 @@
 
 <mapper namespace="com.eat.notice.NoticeDAO">
 
-<select id="list" resultType="com.eat.dto.NoticeDTO">
-	SELECT 
-      notice_idx,
-      user_id,
-      subject,
-      content,
-      reg_date,
-      b_Hit,
-      highlight
-    FROM notice
-    ORDER BY 
-      highlight DESC,       <!-- highlight=true인 것들(필독)이 먼저 -->
-      reg_date DESC         <!-- 같은 highlight 그룹 내에선 최신순 -->
-    LIMIT #{param2} OFFSET #{param1}
-</select>
+	<select id="list" resultType="com.eat.dto.NoticeDTO">
+		SELECT
+		n.notice_idx,
+		n.user_id,
+		u.nickname AS writerNickname,    <!-- writerNickname 프로퍼티에 매핑 -->
+		n.subject,
+		n.content,
+		n.reg_date,
+		n.b_Hit,
+		n.highlight
+		FROM notice n
+		JOIN member u ON n.user_id = u.user_id
+		ORDER BY
+		n.highlight DESC,
+		n.reg_date DESC
+		LIMIT #{param2} OFFSET #{param1}
+	</select>
 
-<select id="pages" resultType="int">
-	SELECT CEIL(COUNT(notice_idx)/#{param1}) AS pages FROM notice
-</select>
+	<select id="pages" resultType="int">
+		SELECT CEIL(COUNT(notice_idx)/#{param1}) AS pages FROM notice
+	</select>
 
 
-<insert id="write" parameterType="map">
-	INSERT INTO notice (user_id, subject, content, highlight)
-		VALUES (#{user_id}, #{subject}, #{content}, #{highlight})
-</insert>
+	<insert id="write" parameterType="map">
+		INSERT INTO notice (user_id, subject, content, highlight)
+		VALUES (#{user_id},
+		#{subject}, #{content}, #{highlight})
+	</insert>
 
-<select id="detail" resultType="com.eat.dto.NoticeDTO">
-	SELECT * FROM notice WHERE notice_idx = #{param1}
-</select>
+	<select id="detail" resultType="com.eat.dto.NoticeDTO">
+		 SELECT
+    n.notice_idx,
+    n.user_id,
+    u.nickname   AS writerNickname,
+    n.subject,
+    n.content,
+    n.reg_date,
+    n.b_Hit,
+    n.highlight
+  FROM notice n
+  JOIN member u ON n.user_id = u.user_id
+  WHERE n.notice_idx = #{param1}
+	</select>
 
-<update id="upHit">
-	UPDATE notice SET b_Hit = b_Hit +1 WHERE notice_idx =#{param1}
-</update>
+	<update id="upHit">
+		UPDATE notice SET b_Hit = b_Hit +1 WHERE notice_idx =#{param1}
+	</update>
 
-<update id="update" parameterType="com.eat.dto.NoticeDTO">
-	UPDATE notice SET subject=#{subject} , content=#{content}, highlight=#{highlight}
-	WHERE notice_idx = #{notice_idx}
-</update>
+	<update id="update" parameterType="com.eat.dto.NoticeDTO">
+		UPDATE notice SET subject=#{subject} , content=#{content},
+		highlight=#{highlight}
+		WHERE notice_idx = #{notice_idx}
+	</update>
 
-<delete id="delete">
-	DELETE FROM notice WHERE notice_idx = #{param1}
-</delete>
+	<delete id="delete">
+		DELETE FROM notice WHERE notice_idx = #{param1}
+	</delete>
 
 
 </mapper>

@@ -8,6 +8,7 @@ public class ReportDTO {
 
 	private int report_idx;
 	private String reporter_id;
+	private String reporter_nickname;
 	private Integer img_idx;
 	private String suspect_id;
 	private String suspect_nickname;
@@ -20,6 +21,12 @@ public class ReportDTO {
 	private boolean isPublic;
 	private MultipartFile[] files;
 	
+	public String getReporter_nickname() {
+		return reporter_nickname;
+	}
+	public void setReporter_nickname(String reporter_nickname) {
+		this.reporter_nickname = reporter_nickname;
+	}
 	public String getSuspect_nickname() {
 		return suspect_nickname;
 	}
