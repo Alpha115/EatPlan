@@ -56,8 +56,9 @@ public interface MainDAO {
 	
 	//코스 검색
 	List<CourseDTO> search_course(@Param("subject") String subject, 
-			@Param("nickname")String nickname, 
-			@Param("tag")String tag);
+			@Param("nickname")String nickname,
+			@Param("tagList")List<String> tagList,
+			@Param("tagListSize") int tagListSize);
 	Collection<? extends TagDTO> searchTags(int idx);
 	Collection<? extends TagAreaDTO> searchTagsArea(int idx);
 	List<PhotoDTO>  getPhotosByPostIdx(@Param("post_idx") int post_idx);

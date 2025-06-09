@@ -77,12 +77,15 @@ public class MainController {
 	public ResponseEntity<List<CourseDTO>> search_course(
 			@RequestParam(value = "subject", required = false) String subject,
 			@RequestParam(value = "nickname", required = false) String nickname,
-			@RequestParam(value = "tag", required = false) String tag) {
+			@RequestParam(value = "tag", required = false) List<String> tag) {
 
 		List<CourseDTO> entity = null;
 		log.info("받아온 제목 : "+subject+" 받아온 아이디 : "+nickname+" 받아온 태그 : "+tag);
+		List<String> safeTagList = (tag == null) ? new ArrayList<>() : new ArrayList<>(tag);
+		
+		log.info("세이프태그리스트 : " +safeTagList);
 
-		entity = service.search_course(subject, nickname, tag);
+		entity = service.search_course(subject, nickname, safeTagList);
 		return ResponseEntity.ok(entity);
 
 	}
