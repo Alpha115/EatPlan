@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -96,6 +97,13 @@ public class CommentController {
 		}
 
 
+		return resp;
+	}
+	
+	// -----------댓글 세부내용 불러오기(관리자-신고히스토리 열람에 필요)
+	@GetMapping("/comment_detail/{comment_idx}")
+	public Map<String, Object> comment_detail(@PathVariable String comment_idx){
+		resp=service.comment_detail(comment_idx);
 		return resp;
 	}
 }

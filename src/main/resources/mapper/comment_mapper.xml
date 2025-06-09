@@ -48,5 +48,9 @@
 	<delete id="comment_del">
 	DELETE FROM comment WHERE comment_idx = #{param1}
 	</delete>
+	
+	<select id="comment_detail" resultType="map">
+		SELECT * FROM comment WHERE comment_idx=#{param1}
+	</select>
 
 </mapper>

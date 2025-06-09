@@ -27,6 +27,9 @@ public interface CommentDAO {
 			@Param("comment_count") int comment_count);
 
 	int comment_total_count(int post_idx);
+
+	// 댓글정보
+	Map<String, Object> comment_detail(String comment_idx);
 	
 
 }

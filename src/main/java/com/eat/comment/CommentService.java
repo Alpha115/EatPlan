@@ -57,4 +57,10 @@ public class CommentService {
 		return dao.comment_total_count(post_idx);
 	}
 
+	
+	public Map<String, Object> comment_detail(String comment_idx) {
+		
+		return dao.comment_detail(comment_idx);
+	}
+
 }
