@@ -5,6 +5,31 @@ import java.sql.Timestamp;
 public class MsgDTO {
 
 	private int msg_idx;
+	private String content;
+	private Timestamp msg_date;
+	private String recip;
+	private String sender;
+	private boolean recip_del;
+	private boolean sender_del;
+	private String subject;
+	private String user_id;
+	
+	private String senderNickname;
+	private String recipNickname;
+	
+	
+	public String getSenderNickname() {
+		return senderNickname;
+	}
+	public void setSenderNickname(String senderNickname) {
+		this.senderNickname = senderNickname;
+	}
+	public String getRecipNickname() {
+		return recipNickname;
+	}
+	public void setRecipNickname(String recipNickname) {
+		this.recipNickname = recipNickname;
+	}
 	public int getMsg_idx() {
 		return msg_idx;
 	}
@@ -59,14 +84,6 @@ public class MsgDTO {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	private String content;
-	private Timestamp msg_date;
-	private String recip;
-	private String sender;
-	private boolean recip_del;
-	private boolean sender_del;
-	private String subject;
-	private String user_id;
 	
 	
 }

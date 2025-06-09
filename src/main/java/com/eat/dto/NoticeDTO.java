@@ -10,8 +10,15 @@ public class NoticeDTO {
 	private Timestamp reg_date;
 	private int b_Hit;
 	private boolean highlight;
+	private String writerNickname;
 	
 	
+	public String getWriterNickname() {
+		return writerNickname;
+	}
+	public void setWriterNickname(String writerNickname) {
+		this.writerNickname = writerNickname;
+	}
 	public int getNotice_idx() {
 		return notice_idx;
 	}

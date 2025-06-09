@@ -7,9 +7,10 @@
 <select id="report_list" resultType="com.eat.dto.ReportDTO">
 	 SELECT
             r.report_idx,
-            r.reporter_id,
-            r.suspect_id,
-            m.nickname AS suspect_nickname,  <!-- 닉네임 컬럼 추가 -->
+         r.reporter_id,
+         p.nickname  AS reporter_nickname,   <!-- 신고자 닉네임 JOIN-->
+         r.suspect_id,
+         m.nickname  AS suspect_nickname, <!-- 닉네임 컬럼 추가 -->
             r.subject,
             r.`class`   AS isClass,
             r.report_date,
@@ -17,8 +18,8 @@
             r.`public`  AS isPublic,
             r.img_idx
         FROM report r
-        LEFT JOIN member m
-            ON r.suspect_id = m.user_id
+        LEFT JOIN member p  ON r.reporter_id = p.user_id   <!-- reporter 테이블 alias p -->
+      LEFT JOIN member m  ON r.suspect_id   = m.user_id
         LIMIT #{param2} OFFSET #{param1}
 </select>
 
@@ -56,8 +57,10 @@
 <!-- 신고 상세보기 몸통-->
 <select id="report_detail" resultType="com.eat.dto.ReportDTO">
 	 SELECT
-            r.suspect_id,
-            m.nickname AS suspect_nickname,  <!-- 닉네임 추가 -->
+             r.reporter_id,
+         p.nickname AS reporter_nickname,
+         r.suspect_id,
+         m.nickname AS suspect_nickname, <!-- 닉네임 추가 -->
             r.subject,
             r.content,
             r.reported_idx,
@@ -65,8 +68,8 @@
             r.`class` AS isClass,
             r.done
         FROM report r
-        LEFT JOIN member m
-            ON r.suspect_id = m.user_id
+        LEFT JOIN member p ON r.reporter_id = p.user_id
+      LEFT JOIN member m ON r.suspect_id   = m.user_id
         WHERE r.report_idx = #{param1}
 </select>
 

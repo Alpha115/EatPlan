@@ -15,22 +15,42 @@
 	<!-- 받은 쪽지 조회 -->
 	<select id="recip_msg" resultType="com.eat.dto.MsgDTO"
 		parameterType="map">
-		SELECT *
-		FROM message
-		WHERE recip = #{user_id}
-		AND recip_del = 0
-		ORDER BY msg_date DESC
-		LIMIT #{msg_count} OFFSET #{offset}
+		SELECT 
+    m.msg_idx,
+    m.subject,
+    m.content,
+    m.msg_date,
+    m.sender,
+    s.nickname      AS senderNickname,
+    m.recip,
+    r.nickname      AS recipNickname
+  FROM message m
+  JOIN member s ON m.sender = s.user_id
+  JOIN member r ON m.recip  = r.user_id
+  WHERE m.recip = #{user_id}
+    AND m.recip_del = 0
+  ORDER BY m.msg_date DESC
+  LIMIT #{msg_count} OFFSET #{offset}
 	</select>
 
 	<!-- 보낸 쪽지 조회 -->
 	<select id="send_msg" resultType="com.eat.dto.MsgDTO">
-		SELECT *
-		FROM message
-		WHERE sender = #{user_id}
-		AND sender_del = 0
-		ORDER BY msg_date DESC
-		LIMIT #{msg_count} OFFSET #{offset}
+		SELECT 
+    m.msg_idx,
+    m.subject,
+    m.content,
+    m.msg_date,
+    m.sender,
+    s.nickname      AS senderNickname,
+    m.recip,
+    r.nickname      AS recipNickname
+  FROM message m
+  JOIN member s ON m.sender = s.user_id
+  JOIN member r ON m.recip  = r.user_id
+  WHERE m.sender = #{user_id}
+    AND m.sender_del = 0
+  ORDER BY m.msg_date DESC
+  LIMIT #{msg_count} OFFSET #{offset}
 	</select>
 
 	<!-- 받은 쪽지 삭제 -->
@@ -51,14 +71,23 @@
 
 	<!-- 쪽지 상세보기 -->
 	<select id="msg_detail" resultType="com.eat.dto.MsgDTO">
-		SELECT *
-		FROM message
-		WHERE msg_idx = #{msg_idx}
-		AND (
-		(sender = #{user_id} AND sender_del = 0)
-		OR
-		(recip = #{user_id} AND recip_del = 0)
-		)
+		SELECT
+    m.msg_idx,
+    m.subject,
+    m.content,
+    m.msg_date,
+    m.sender,
+    s.nickname      AS senderNickname,
+    m.recip,
+    r.nickname      AS recipNickname
+  FROM message m
+  JOIN member s ON m.sender = s.user_id
+  JOIN member r ON m.recip  = r.user_id
+  WHERE m.msg_idx = #{msg_idx}
+    AND (
+        (m.sender = #{user_id}  AND m.sender_del = 0)
+     OR (m.recip  = #{user_id}  AND m.recip_del   = 0)
+    )
 	</select>
 
 
