@@ -18,7 +18,9 @@
 	
 	<!-- 태그 불러오기 -->
 	<select id="member_tag_list" resultType="com.eat.dto.TagPreferDTO">
-		SELECT * FROM tag_prefer tp 
+		SELECT 
+			user_id, pass, nickname, email, bio, location, img_idx, class AS isClass
+		 FROM tag_prefer tp 
 			WHERE user_id = #{user_id}
 	</select>
 
