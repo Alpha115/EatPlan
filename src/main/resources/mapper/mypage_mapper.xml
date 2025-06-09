@@ -62,7 +62,7 @@
 	
 	<!-- 마이페이지 태그 추가 (사용 중) -->
 	<insert id="member_tag_prefer_insert" parameterType="com.eat.dto.TagPreferDTO">
-		INSERT INTO tag_prefer (idx, isClass, user_id) VALUES
+		INSERT INTO tag_prefer (idx, class, user_id) VALUES
 		<foreach collection="tags" item="tag" separator=",">
 			 (#{tag.idx}, #{tag.isClass}, #{tag.user_id})
 		</foreach>
