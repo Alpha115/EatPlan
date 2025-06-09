@@ -160,7 +160,7 @@
 	
 	<!-- 유저가 선택한 태그 이름 조회 (아래 세 개) -->
 	<select id="member_tag_idx" resultType="com.eat.dto.TagPreferDTO">
-		SELECT idx, isClass, user_id FROM tag_prefer tp 
+		SELECT idx, class AS isClass, user_id FROM tag_prefer tp 
 			WHERE user_id = #{user_id}
 	</select>
 	

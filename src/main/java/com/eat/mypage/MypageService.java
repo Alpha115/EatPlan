@@ -267,7 +267,8 @@ public class MypageService {
 	    List<Integer> generalTagIdxs = new ArrayList<>();
 
 	    for (TagPreferDTO tag : tagPreferList) {
-	        if ("지역".equals(tag.getIsClass())) {
+	    	log.info("받아온 태그 클래스 : "+tag.getIsClass());
+	        if ("area_tag".equals(tag.getIsClass())) {
 	            areaTagIdxs.add(tag.getIdx()); // getIdx()는 int 반환
 	        } else {
 	            generalTagIdxs.add(tag.getIdx());
