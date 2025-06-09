@@ -26,8 +26,15 @@
         FROM member
         WHERE user_id = #{user_id}
     </select>
-	
 
+	<!-- 닉네임으로 user_id 조회 -->
+	<select id="findUserIdByNickname" resultType="string" parameterType="string">
+    SELECT user_id
+    FROM member
+    WHERE nickname = #{nickname}
+</select>
+	
+	
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.eat.dto.MemberDTO">
 		INSERT INTO member (

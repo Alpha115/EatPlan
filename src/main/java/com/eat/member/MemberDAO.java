@@ -42,5 +42,7 @@ public interface MemberDAO {
 	//user_id -> nickname으로 보이게 하는것
 	MemberDTO getMemberId(@Param("user_id") String user_id);
 
+	String findUserIdByNickname(String nickname);
+
 	
 }

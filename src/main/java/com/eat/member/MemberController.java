@@ -6,6 +6,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,11 +31,14 @@ public class MemberController {
 
 	@Autowired
 	MemberService service;
+	
 	@Autowired
 	AdminAuth auth;
 
 	Map<String, Object> resp = new HashMap<String, Object>();
 	Logger log = LoggerFactory.getLogger(getClass());
+	
+	
 	
 	//user_id -> nickname으로 보이게 하는것
 		@GetMapping("/{user_id}")
@@ -53,8 +58,19 @@ public class MemberController {
 			
 			return resp;
 		}
-	
-	
+		
+		@GetMapping("/member/nickname/{nickname}")
+		public ResponseEntity<Map<String, Object>> getUserIdByNickname(@PathVariable String nickname) {
+		    Map<String, Object> res = new HashMap<>();
+		    String userId = service.findUserIdByNickname(nickname); // 실제 닉네임으로 userId 찾기
+		    if (userId == null) {
+		        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
+		    }
+		    res.put("user_id", userId);
+		    return ResponseEntity.ok(res);
+		}
+		
+		
 	// 로그인
 	@PostMapping(value = "/login")
 	public Map<String, Object> login(@RequestBody Map<String, String> params) {

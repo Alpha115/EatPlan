@@ -149,6 +149,10 @@ public class MemberService {
 	    return row > tags.length;
 	}
 
+	public String findUserIdByNickname(String nickname) {
+		return dao.findUserIdByNickname(nickname);
+	}
+
 	
 
 }
