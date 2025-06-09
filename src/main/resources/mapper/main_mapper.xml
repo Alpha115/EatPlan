@@ -218,8 +218,7 @@
 		resta_name,
 		url,
 		lat,
-		lng,
-		resta_bio
+		lng
 		FROM restaurant
 		WHERE resta_idx = #{resta_idx}
 	</select>
