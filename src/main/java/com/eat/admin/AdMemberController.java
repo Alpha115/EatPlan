@@ -1,5 +1,6 @@
 package com.eat.admin;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,5 +60,12 @@ public class AdMemberController {
 
 		return resp;
 	}
+	
+	@GetMapping("/{user_id}/blockchk")
+    public Map<String, Object> blockCheck(@PathVariable("user_id") String userId) {
+        boolean blocked = service.blockchk(userId);
+        return Collections.singletonMap("blocked", blocked);
+    }
+	
 
 }

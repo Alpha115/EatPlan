@@ -38,9 +38,9 @@
 		SELECT user_id, nickname, email FROM member WHERE user_id = #{user_id}
 	</select>
 
-	<!-- 정지 회원 로그인 막기 -->
+	<!-- 정지 회원 로그인 막기 (비교연산자때문에 오류 생길 수 있어서 CDATA이걸로 감싸야한다고 함 )-->
 	<select id="blockchk" parameterType="String" resultType="int">
-		<![CDATA[ 비교연산자때문에 오류 생길 수 있어서 CDATA이걸로 감싸야한다고 함 
+		<![CDATA[ 
 		SELECT COUNT(*) FROM ban_peri
 		WHERE user_id = #{user_id}
 		AND start <= NOW()
