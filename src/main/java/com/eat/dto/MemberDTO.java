@@ -63,11 +63,8 @@ public class MemberDTO {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
-	public int getImg_idx() {
+	public Integer getImg_idx() {
 		return img_idx;
-	}
-	public void setImg_idx(int img_idx) {
-		this.img_idx = img_idx;
 	}
 	public void setImg_idx(Integer img_idx) {
 		this.img_idx = img_idx;

@@ -153,7 +153,7 @@ public class MainController {
 	    List<Integer> cmtIdxList = (List<Integer>) body.get("cmt_idx_list");
 	    List<Map<String, Object>> likeCheckCmt = new ArrayList<>();
 	    
-	    if (user_id != null && !user_id.equals("")) {
+	    if (user_id != null && !user_id.equals("") && cmtIdxList != null && cmtIdxList.size() >0) {
 	    	likeCheckCmt = service.likeCheckCmt(user_id, cmtIdxList);
 		}
 
