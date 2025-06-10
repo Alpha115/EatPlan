@@ -1,6 +1,5 @@
 package com.eat.member;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -96,6 +94,16 @@ public class MemberController {
 		    resp.put("admin", adminFlag);
 		    return ResponseEntity.ok(resp);
 		}
+		
+		// 탈퇴 유저 로그인 제어
+		@PostMapping(value="/withdraw_check")
+		public Map<String, Object> withdraw_check(@RequestBody MemberDTO dto) {
+			Map<String, Object> resp = new HashMap<String, Object>();
+			boolean success = service.withdraw_check(dto.getUser_id());
+			resp.put("success", success);
+			return resp;
+		}
+		
 
 	// 회원가입
 	@PostMapping(value = "/join")

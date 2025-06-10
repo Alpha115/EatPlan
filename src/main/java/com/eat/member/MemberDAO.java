@@ -44,5 +44,8 @@ public interface MemberDAO {
 
 	String findUserIdByNickname(String nickname);
 
+	// 탈퇴 유저 로그인 제어
+	int withdraw_check(String user_id);
+
 	
 }

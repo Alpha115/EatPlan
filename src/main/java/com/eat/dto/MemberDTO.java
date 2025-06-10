@@ -13,7 +13,7 @@ public class MemberDTO {
 	private boolean admin;
 	private Date reg_date;
 	private int img_idx;
-	
+	private boolean withdraw;
 	
 	public String getUser_id() {
 		return user_id;
@@ -68,6 +68,12 @@ public class MemberDTO {
 	}
 	public void setImg_idx(int img_idx) {
 		this.img_idx = img_idx;
+	}
+	public boolean isWithdraw() {
+		return withdraw;
+	}
+	public void setWithdraw(boolean withdraw) {
+		this.withdraw = withdraw;
 	}
 	
 }

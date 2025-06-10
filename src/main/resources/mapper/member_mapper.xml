@@ -33,7 +33,12 @@
     FROM member
     WHERE nickname = #{nickname}
 </select>
-	
+
+	<!-- 탈퇴 유저 로그인 제어 -->
+	<select id="withdraw_check" parameterType="string" resultType="int">
+		SELECT COUNT(user_id) FROM member 
+		WHERE user_id = #{user_id} AND withdraw = 1
+	</select>
 	
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.eat.dto.MemberDTO">

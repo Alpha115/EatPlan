@@ -152,6 +152,12 @@ public class MemberService {
 	public String findUserIdByNickname(String nickname) {
 		return dao.findUserIdByNickname(nickname);
 	}
+	
+	// 탈퇴 유저 로그인 제어
+	public boolean withdraw_check(String user_id) {
+		int count = dao.withdraw_check(user_id);
+		return count > 0 ? true : false;
+	}
 
 	
 
