@@ -62,8 +62,8 @@ public class AdMemberController {
 	}
 	
 	@GetMapping("/{user_id}/blockchk")
-    public Map<String, Object> blockCheck(@PathVariable("user_id") String userId) {
-        boolean blocked = service.blockchk(userId);
+    public Map<String, Object> blockCheck(@PathVariable String user_id) {
+        boolean blocked = service.blockchk(user_id);
         return Collections.singletonMap("blocked", blocked);
     }
 	
