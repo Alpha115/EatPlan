@@ -11,6 +11,7 @@
     c.user_id,
     m.nickname,
     c.reg_date,
+    c.blind,
     IFNULL(
     (
       SELECT COUNT(*)
