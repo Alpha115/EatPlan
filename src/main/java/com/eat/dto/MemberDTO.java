@@ -14,6 +14,7 @@ public class MemberDTO {
 	private Date reg_date;
 	private int img_idx;
 	
+	
 	public String getUser_id() {
 		return user_id;
 	}

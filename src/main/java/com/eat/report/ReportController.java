@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +29,7 @@ import com.eat.dto.MsgDTO;
 import com.eat.dto.PhotoDTO;
 import com.eat.dto.ReportDTO;
 import com.eat.dto.ReportHistoryDTO;
+import com.eat.utils.JwtUtil;
 
 @CrossOrigin
 @RestController
@@ -72,78 +78,97 @@ public class ReportController {
 	
 	// 신고 상세보기
 	@GetMapping(value="/report_detail/{report_idx}")
-	public Map<String, Object> report_detail(
-			@PathVariable int report_idx){
+	public ResponseEntity<Map<String,Object>> report_detail(
+			@PathVariable int report_idx,
+			@RequestHeader(value = "Authorization", required = false) String authHeader){
 		
 		resp = new HashMap<String, Object>();
 		
-		
-		
-		//신고 상세보기 - 몸통
-		ReportDTO detail = service.report_detail(report_idx);
-		if (detail == null) {
-			log.error("해당 신고가 존재하지 않습니다: " + report_idx);
-			resp.put("error", "해당 신고가 존재하지 않습니다.");
-		    return resp;
-		}
-		Integer reported_idx = detail.getReported_idx();
-		String isClass = detail.getIsClass();
-		Integer img_idx = detail.getImg_idx();
-		
-		log.info("신고받은 idx : "+reported_idx);
-		log.info("신고 분류 : "+isClass);
-		log.info("이미지 idx : " + img_idx);
-		
-		if (isClass == null || reported_idx == null) {
-	        log.error("신고글 정보 누락: isClass=" + isClass + ", reported_idx=" + reported_idx);
-	        resp.put("error", "신고 정보가 올바르지 않습니다.");
-	        return resp;
-	    }
-		
-		log.info("suspect_id: " + detail.getSuspect_id());
-	    log.info("suspect_nickname: " + detail.getSuspect_nickname());
-		
-		//신고 상세보기 - 분류
-		switch (isClass) {
-        case "course":
-            CourseDTO reported_course = service.report_course(reported_idx);
-            resp.put("reported_course", reported_course);
-            break;
-        case "message":
-            MsgDTO reported_msg = service.report_msg(reported_idx);
-            resp.put("reported_msg", reported_msg);
-            break;
-        case "comment":
-            MainDTO reported_cmt = service.report_cmt(reported_idx);
-            resp.put("reported_cmt", reported_cmt);
-            break;
-        default:
-            log.warn("알 수 없는 신고 분류: " + isClass);
-            resp.put("error", "지원되지 않는 신고 유형입니다.");
+		// 1) JWT 파싱
+        String loginId = null;
+        boolean isAdmin = false;
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            try {
+                Map<String,Object> claims = JwtUtil.readToken(token);
+                loginId = (String) claims.get("user_id");
+                Object rawAdmin = claims.get("admin");
+                if (rawAdmin instanceof Boolean) {
+                    isAdmin = (Boolean) rawAdmin;
+                } else if (rawAdmin instanceof Number) {
+                    isAdmin = ((Number) rawAdmin).intValue() == 1;
+                } else if (rawAdmin instanceof String) {
+                    isAdmin = Boolean.parseBoolean((String) rawAdmin);
+                }
+                log.info("JWT parsed → user_id: {}, admin: {}", loginId, isAdmin);
+            } catch (Exception e) {
+                resp.put("error", "유효하지 않은 토큰입니다.");
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body(resp);
+            }
+        }
+
+        // 2) 신고글 조회
+        ReportDTO detail = service.report_detail(report_idx);
+        if (detail == null) {
+            resp.put("error", "해당 신고가 존재하지 않습니다.");
+            return ResponseEntity
+                    .badRequest()
+                    .body(resp);
+        }
+
+        // 3) 필수 필드 확인
+        if (detail.getIsClass() == null || detail.getReported_idx() == 0) {
+            resp.put("error", "신고 정보가 올바르지 않습니다.");
+            return ResponseEntity
+                    .badRequest()
+                    .body(resp);
+        }
+
+        // 4) 비공개 글 접근 제어
+        if (!detail.isPublic()) {
+            boolean isWriter = loginId != null &&
+                    loginId.equals(detail.getReporter_id());
+            if (!isWriter && !isAdmin) {
+                resp.put("error", "권한이 없습니다.");
+                return ResponseEntity
+                        .status(HttpStatus.FORBIDDEN)
+                        .body(resp);
+            }
+        }
+
+        // 5) 분류별 콘텐츠 조회
+        switch (detail.getIsClass()) {
+            case "course":
+                resp.put("reported_course", service.report_course(detail.getReported_idx()));
+                break;
+            case "message":
+                resp.put("reported_msg", service.report_msg(detail.getReported_idx()));
+                break;
+            case "comment":
+                resp.put("reported_cmt", service.report_cmt(detail.getReported_idx()));
+                break;
+            default:
+                resp.put("error", "지원되지 않는 신고 유형입니다.");
+                return ResponseEntity
+                        .badRequest()
+                        .body(resp);
+        }
+
+        // 6) 이미지 첨부
+        Integer imgIdx = detail.getImg_idx();
+        if (imgIdx != null && imgIdx > 0) {
+            resp.put("photo", service.photo(imgIdx));
+        } else {
+            resp.put("photo", "no_image");
+        }
+
+        // 7) 최종 응답
+        resp.put("detail", detail);
+        return ResponseEntity.ok(resp);
     }
-		/*
-		 * if (isClass != null && isClass.equals("course") ) { CourseDTO reported_course
-		 * = service.report_course(reported_idx); resp.put("reported_course",
-		 * reported_course); }else if (isClass != null && isClass.equals("message")) {
-		 * MsgDTO reported_msg = service.report_msg(reported_idx);
-		 * resp.put("reported_msg", reported_msg); }else if (isClass != null &&
-		 * isClass.equals("comment")) { MainDTO reported_cmt =
-		 * service.report_cmt(reported_idx); resp.put("reported_cmt", reported_cmt);
-		 * }else { resp.put("reported_?", "신고 분류를 확인하세요"); }
-		 */
-		
-		//신고 상세보기 - 이미지
-		if (img_idx != null && img_idx > 0) {
-			PhotoDTO photo = service.photo(img_idx);
-			resp.put("photo", photo);
-		}else {
-			resp.put("photo", "no_image");
-		}
-		
-		resp.put("detail", detail);
-		
-		return resp;
-	}
+
 	
 	// 히스토리 작성
 	@PostMapping(value="/history_write")

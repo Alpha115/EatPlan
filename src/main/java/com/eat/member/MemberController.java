@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,25 +68,34 @@ public class MemberController {
 		    if (userId == null) {
 		        return ResponseEntity.notFound().build();
 		    }
-		    return ResponseEntity.ok(Collections.singletonMap("user_id", userId));
+		    return ResponseEntity.ok(Map.of("user_id", userId));
 		}
 		
 		
 	// 로그인
-	@PostMapping(value = "/login")
-	public Map<String, Object> login(@RequestBody Map<String, String> params) {
-		resp = new HashMap<String, Object>();
-		boolean success = service.login(params);
-		resp.put("success", success);
-		if (success) {
-			String id = params.get("user_id");
-			String token = JwtUtil.getToken("user_id", params.get("user_id"));
-			resp.put("token", token);
-			resp.put("user_id", id);
-			resp.put("admin", auth.authorization(id));	//관리자 권한 부여
+		@PostMapping(value = "/login")
+		public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> params) {
+		    Map<String, Object> resp = new HashMap<>();
+		    boolean success = service.login(params);
+		    resp.put("success", success);
+		    if (!success) {
+		        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resp);
+		    }
+
+		    String id = params.get("user_id");
+		    boolean adminFlag = auth.authorization(id);
+
+		    // ▼ admin 플래그까지 함께 담아서 JWT 생성
+		    Map<String,Object> claims = new HashMap<>();
+		    claims.put("user_id", id);
+		    claims.put("admin", adminFlag);
+		    String token = JwtUtil.getToken(claims);
+
+		    resp.put("token", token);
+		    resp.put("user_id", id);
+		    resp.put("admin", adminFlag);
+		    return ResponseEntity.ok(resp);
 		}
-		return resp;
-	}
 
 	// 회원가입
 	@PostMapping(value = "/join")
@@ -161,6 +171,9 @@ public class MemberController {
 	}
 
 }
+
+	
+
 
 // 멤버와 태그목록을 동시에받는거
 class Register {

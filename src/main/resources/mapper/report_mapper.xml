@@ -3,6 +3,7 @@
 
 <mapper namespace="com.eat.report.ReportDAO">
 
+
 <!-- 신고목록 불러오기 -->
 <select id="report_list" resultType="com.eat.dto.ReportDTO">
 	 SELECT
@@ -67,22 +68,25 @@
 </insert>
 
 <!-- 신고 상세보기 몸통-->
-<select id="report_detail" resultType="com.eat.dto.ReportDTO">
-	  SELECT
-         r.reporter_id,
-         p.nickname            AS reporter_nickname,
-         r.suspect_id,
-         m.nickname            AS suspect_nickname,
-         r.subject,
-         r.content,
-         r.reported_idx,
-         r.img_idx,  
-         r.`class` AS isClass,
-            r.done
-        FROM report r
-        LEFT JOIN member p ON r.reporter_id = p.user_id
-      LEFT JOIN member m ON r.suspect_id   = m.user_id
-        WHERE r.report_idx = #{param1}
+<select id="report_detail" resultMap="reportMap">
+	SELECT
+    r.report_idx,
+    r.reporter_id,
+    p.nickname           AS reporter_nickname,
+    r.suspect_id,
+    m.nickname           AS suspect_nickname,
+    r.subject,
+    r.content,
+    r.reported_idx,
+    r.img_idx,
+    r.`class`            AS class,    <!-- 여기 -->
+    r.done,
+    r.`public`           AS is_public,   <!-- 그리고 여기 -->
+    r.report_date
+  FROM report r
+    LEFT JOIN member p ON r.reporter_id = p.user_id
+    LEFT JOIN member m ON r.suspect_id   = m.user_id
+  WHERE r.report_idx = #{param1}
 </select>
 
 <!-- 신고 상세보기 - 신고된 코스 정보 -->
@@ -168,7 +172,9 @@
 </select>
 
 <resultMap id="reportMap" type="com.eat.dto.ReportDTO">
-    <result property="isClass" column="class"/>
+    <result property="isClass"    column="class"/>
+    <result property="isPublic"   column="is_public"/>
+    <result property="reported_idx" column="reported_idx"/>
 </resultMap>
 
 </mapper>
