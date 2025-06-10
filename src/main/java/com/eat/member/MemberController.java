@@ -1,5 +1,6 @@
 package com.eat.member;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class MemberController {
 	
 	
 	//user_id -> nickname으로 보이게 하는것
-		@GetMapping("/{user_id}")
+		@GetMapping("/member/{user_id}")
 		public Map<String, Object> getMemberId(@PathVariable String user_id) {
 			
 			Map<String, Object> resp = new HashMap<String, Object>();
@@ -59,15 +60,14 @@ public class MemberController {
 			return resp;
 		}
 		
-		@GetMapping("/member/nickname/{nickname}")
+		@GetMapping("/member/byNickname/{nickname}")
 		public ResponseEntity<Map<String, Object>> getUserIdByNickname(@PathVariable String nickname) {
-		    Map<String, Object> res = new HashMap<>();
+		   
 		    String userId = service.findUserIdByNickname(nickname); // 실제 닉네임으로 userId 찾기
 		    if (userId == null) {
-		        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
+		        return ResponseEntity.notFound().build();
 		    }
-		    res.put("user_id", userId);
-		    return ResponseEntity.ok(res);
+		    return ResponseEntity.ok(Collections.singletonMap("user_id", userId));
 		}
 		
 		
