@@ -138,6 +138,8 @@ public class MemberService {
 //
 //	            dto.setImg_idx(imgIdx);
 	        }
+	    } else {
+	    	dto.setImg_idx(null);
 	    }
 
 	    // 2. 회원 저장 (img_idx 포함)
