@@ -462,10 +462,17 @@
 	  FROM liked
 	  WHERE user_id = #{user_id}
 	    AND class = 'comment'
-	    AND cmt_idx IN
-	    <foreach item="idx" collection="list" open="(" separator="," close=")">
-	      #{idx}
-	    </foreach>
+	    <choose>
+	      <when test="list != null and list.size() > 0">
+	        AND cmt_idx IN
+	        <foreach item="idx" collection="list" open="(" separator="," close=")">
+	          #{idx}
+	        </foreach>
+	      </when>
+	      <otherwise>
+	        AND 1 = 0
+	      </otherwise>
+	    </choose>
 	</select>
 
 	<!-- 별점 -->
