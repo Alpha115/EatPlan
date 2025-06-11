@@ -84,15 +84,14 @@
 	</update>
 	
 	<!-- 프로필 삭제 -->
-	<delete id="profile_del">
-	DELETE FROM photo
-	WHERE img_idx = #{param1}
-	</delete>
+	<update id="profile_del">
+		UPDATE member SET img_idx = NULL WHERE user_id = #{param1}
+	</update>
 	
 	<!-- 프로필 db조회 -->
-	<select id="photo_del" resultType="map">
+	<!-- <select id="photo_del" resultType="map">
 	Select * from photo where img_idx = #{param1}
-	</select>
+	</select> -->
 	
 	<!-- 프로필 정보 가져오기 -->
 	<select id="imgInfo" resultType="map">

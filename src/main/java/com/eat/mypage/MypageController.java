@@ -102,11 +102,10 @@ public class MypageController {
 	}
 	
 	//프로필 삭제
-	@DeleteMapping(value="/profile_del/{user_id}/{img_idx}")
-	public Map<String, Object> profile_del (@PathVariable String user_id
-			,@PathVariable int img_idx) {
+	@PutMapping(value="/profile_del/{user_id}")
+	public Map<String, Object> profile_del (@PathVariable String user_id) {
 		resp = new HashMap<String, Object>();
-		boolean success = service.profile_del(img_idx);
+		boolean success = service.profile_del(user_id);
 		resp.put("success", success);
 		return resp;
 	}

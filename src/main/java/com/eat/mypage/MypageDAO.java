@@ -39,10 +39,10 @@ public interface MypageDAO {
 	int saveProfileImg(PhotoDTO photoDTO);
 
 	// 프로필 삭제
-	int profile_del(int img_idx);
+	int profile_del(String user_id);
 	
 	// 사진 정보 조회
-	List<Map<String, String>> photo_del(int img_idx);
+//	List<Map<String, String>> photo_del(int img_idx);
 
 	// 프로필 정보 가져오기
 	Map<String, String> imgInfo(int img_idx);

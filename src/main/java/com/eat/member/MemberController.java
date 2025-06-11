@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -176,6 +177,16 @@ public class MemberController {
 	    boolean success = service.joinWithImage(dto, tags, files);
 	    resp.put("success", success);
 	    return resp;
+	}
+	
+	// 사진 삭제 요청
+	@DeleteMapping(value="/profileImage_delete")
+	public Map<String, Object> profileImage_delete(@RequestBody Map<String, Object> params) {
+		Map<String, Object> resp = new HashMap<String, Object>();
+		int img_idx = (int) params.get("img_idx");
+		boolean success = service.profileImage_delete(img_idx);
+		resp.put("success", success);
+		return resp;
 	}
 
 }

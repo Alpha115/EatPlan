@@ -102,9 +102,13 @@
 	
 	<!-- 프로필 db저장 -->
 	<update id="profileUpload" parameterType="com.eat.dto.MemberDTO">
-    UPDATE member
-    SET img_idx = #{img_idx}
-    WHERE user_id = #{user_id}
-</update>
+	    UPDATE member
+	    SET img_idx = #{img_idx}
+	    WHERE user_id = #{user_id}
+	</update>
+	
+	<delete id="profileImage_delete">
+		DELETE FROM photo WHERE img_idx = #{param1}
+	</delete>
 
 </mapper>

@@ -47,5 +47,8 @@ public interface MemberDAO {
 	// 탈퇴 유저 로그인 제어
 	int withdraw_check(String user_id);
 
+	// 사진 삭제 요청
+	int profileImage_delete(int img_idx);
+
 	
 }

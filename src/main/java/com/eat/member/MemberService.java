@@ -161,6 +161,14 @@ public class MemberService {
 		return count > 0 ? true : false;
 	}
 
+	// 사진 삭제 요청
+	public boolean profileImage_delete(int img_idx) {
+		int count = dao.profileImage_delete(img_idx);
+		return count > 0 ? true : false;
+	}
+
+	
+
 	
 
 }
