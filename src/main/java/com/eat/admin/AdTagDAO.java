@@ -48,6 +48,8 @@ public interface AdTagDAO {
 	// 중분류 삭제
 	int adtag_del_dist(String dist);	
 	
+	int getAreaIdx();
+	
 	
 
 

@@ -123,4 +123,9 @@
 	WHERE tag_idx = #{tag_idx}
 </delete>
 
+<!-- 지역태그식별 -->
+<select id="getAreaIdx" parameterType="Integer">
+	SELECT cate_idx FROM tag_cate WHERE cate_name='지역'
+</select>
+
 </mapper>
