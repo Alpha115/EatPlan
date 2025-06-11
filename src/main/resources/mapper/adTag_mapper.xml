@@ -73,15 +73,15 @@
 <!-- 지역 태그 추가 -->
 <insert id="adtag_write_area" parameterType="com.eat.tags.TagAreaDTO"
 	useGeneratedKeys="true" keyColumn="area_tag_idx" keyProperty="area_tag_idx">
-	INSERT INTO tag_area (city, dist, tag_name)
-	VALUES (#{city}, #{dist}, #{tag_name})
+	INSERT INTO tag_area (cate_idx, city, dist, tag_name)
+	VALUES (#{cate_idx}, #{city}, #{dist}, #{tag_name})
 </insert>
 
 <!-- 태그 추가 -->
 <insert id="adtag_write" parameterType="com.eat.tags.TagDTO"
 	useGeneratedKeys="true" keyColumn="tag_idx" keyProperty="tag_idx">
-	INSERT INTO tag (class, tag_name)
-	VALUES (#{isClass}, #{tag_name})
+	INSERT INTO tag (cate_idx, class, tag_name)
+	VALUES (#{cate_idx}, #{isClass}, #{tag_name})
 </insert>
 
 <!-- 지역 태그 중복확인 -->
@@ -122,5 +122,10 @@
 	DELETE FROM tag
 	WHERE tag_idx = #{tag_idx}
 </delete>
+
+<!-- 지역태그식별 -->
+<select id="getAreaIdx" parameterType="Integer">
+	SELECT cate_idx FROM tag_cate WHERE cate_name='지역'
+</select>
 
 </mapper>

@@ -77,7 +77,7 @@ public class AdTagService {
 				String tag_area_name = tag_area.getTag_name();
 				int area_overlay = dao.tag_area_overlay(tag_area_name);
 				if (area_overlay == 0) {
-					tag_area.setCate_idx(cate_idx);
+					tag_area.setCate_idx(dao.getAreaIdx());
 					row = dao.adtag_write_area(tag_area);
 				}
 			} else {
